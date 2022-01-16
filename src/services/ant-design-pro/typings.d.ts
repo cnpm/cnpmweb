@@ -24,9 +24,12 @@ declare namespace API {
   };
 
   type LoginResult = {
-    status?: string;
-    type?: string;
-    currentAuthority?: string;
+    // status?: string;
+    // type?: string;
+    // currentAuthority?: string;
+    error?: string;
+    ok?: boolean;
+    token?: string;
   };
 
   type PageParams = {
@@ -84,7 +87,7 @@ declare namespace API {
     success?: boolean;
   };
 
-  type NoticeIconItemType = 'notification' | 'message' | 'event';
+  type NoticeIconItemType = "notification" | "message" | "event";
 
   type NoticeIconItem = {
     id?: string;

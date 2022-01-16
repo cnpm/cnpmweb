@@ -1,20 +1,18 @@
 import {
   AlipayCircleOutlined,
   LockOutlined,
-  MobileOutlined,
   TaobaoCircleOutlined,
   UserOutlined,
   WeiboCircleOutlined,
-} from '@ant-design/icons';
-import { Alert, message, Tabs } from 'antd';
-import React, { useState } from 'react';
-import { ProFormCaptcha, ProFormCheckbox, ProFormText, LoginForm } from '@ant-design/pro-form';
-import { useIntl, history, FormattedMessage, SelectLang, useModel } from 'umi';
-import Footer from '@/components/Footer';
-import { login } from '@/services/ant-design-pro/api';
-import { getFakeCaptcha } from '@/services/ant-design-pro/login';
+} from "@ant-design/icons";
+import { Alert, message } from "antd";
+import React, { useState } from "react";
+import { ProFormCheckbox, ProFormText, LoginForm } from "@ant-design/pro-form";
+import { useIntl, history, FormattedMessage, SelectLang, useModel } from "umi";
+import Footer from "@/components/Footer";
+import { login } from "@/services/ant-design-pro/api";
 
-import styles from './index.less';
+import styles from "./index.less";
 
 const LoginMessage: React.FC<{
   content: string;
@@ -31,8 +29,8 @@ const LoginMessage: React.FC<{
 
 const Login: React.FC = () => {
   const [userLoginState, setUserLoginState] = useState<API.LoginResult>({});
-  const [type, setType] = useState<string>('account');
-  const { initialState, setInitialState } = useModel('@@initialState');
+  const [type] = useState<string>("account");
+  const { initialState, setInitialState } = useModel("@@initialState");
 
   const intl = useIntl();
 
@@ -50,10 +48,10 @@ const Login: React.FC = () => {
     try {
       // 登录
       const msg = await login({ ...values, type });
-      if (msg.status === 'ok') {
+      if (msg.ok) {
         const defaultLoginSuccessMessage = intl.formatMessage({
-          id: 'pages.login.success',
-          defaultMessage: '登录成功！',
+          id: "pages.login.success",
+          defaultMessage: "登录成功！",
         });
         message.success(defaultLoginSuccessMessage);
         await fetchUserInfo();
@@ -61,21 +59,23 @@ const Login: React.FC = () => {
         if (!history) return;
         const { query } = history.location;
         const { redirect } = query as { redirect: string };
-        history.push(redirect || '/');
+        history.push(redirect || "/");
         return;
       }
       console.log(msg);
       // 如果失败去设置用户错误信息
       setUserLoginState(msg);
-    } catch (error) {
-      const defaultLoginFailureMessage = intl.formatMessage({
-        id: 'pages.login.failure',
-        defaultMessage: '登录失败，请重试！',
-      });
+    } catch (err: any) {
+      const defaultLoginFailureMessage =
+        err.data?.error ??
+        intl.formatMessage({
+          id: "pages.login.failure",
+          defaultMessage: "登录失败，请重试！",
+        });
       message.error(defaultLoginFailureMessage);
     }
   };
-  const { status, type: loginType } = userLoginState;
+  const { error } = userLoginState;
 
   return (
     <div className={styles.container}>
@@ -85,8 +85,10 @@ const Login: React.FC = () => {
       <div className={styles.content}>
         <LoginForm
           logo={<img alt="logo" src="/logo.svg" />}
-          title="Ant Design"
-          subTitle={intl.formatMessage({ id: 'pages.layouts.userLayout.title' })}
+          title="CNPM Console"
+          subTitle={intl.formatMessage({
+            id: "pages.layouts.userLayout.title",
+          })}
           initialValues={{
             autoLogin: true,
           }}
@@ -96,15 +98,24 @@ const Login: React.FC = () => {
               id="pages.login.loginWith"
               defaultMessage="其他登录方式"
             />,
-            <AlipayCircleOutlined key="AlipayCircleOutlined" className={styles.icon} />,
-            <TaobaoCircleOutlined key="TaobaoCircleOutlined" className={styles.icon} />,
-            <WeiboCircleOutlined key="WeiboCircleOutlined" className={styles.icon} />,
+            <AlipayCircleOutlined
+              key="AlipayCircleOutlined"
+              className={styles.icon}
+            />,
+            <TaobaoCircleOutlined
+              key="TaobaoCircleOutlined"
+              className={styles.icon}
+            />,
+            <WeiboCircleOutlined
+              key="WeiboCircleOutlined"
+              className={styles.icon}
+            />,
           ]}
           onFinish={async (values) => {
             await handleSubmit(values as API.LoginParams);
           }}
         >
-          <Tabs activeKey={type} onChange={setType}>
+          {/* <Tabs activeKey={type} onChange={setType}>
             <Tabs.TabPane
               key="account"
               tab={intl.formatMessage({
@@ -119,27 +130,28 @@ const Login: React.FC = () => {
                 defaultMessage: '手机号登录',
               })}
             />
-          </Tabs>
+          </Tabs> */}
 
-          {status === 'error' && loginType === 'account' && (
+          {error && (
             <LoginMessage
               content={intl.formatMessage({
-                id: 'pages.login.accountLogin.errorMessage',
-                defaultMessage: '账户或密码错误(admin/ant.design)',
+                id: "pages.login.accountLogin.errorMessage",
+                // defaultMessage: '账户或密码错误(admin/ant.design)',
+                defaultMessage: error,
               })}
             />
           )}
-          {type === 'account' && (
+          {type === "account" && (
             <>
               <ProFormText
                 name="username"
                 fieldProps={{
-                  size: 'large',
+                  size: "large",
                   prefix: <UserOutlined className={styles.prefixIcon} />,
                 }}
                 placeholder={intl.formatMessage({
-                  id: 'pages.login.username.placeholder',
-                  defaultMessage: '用户名: admin or user',
+                  id: "pages.login.username.placeholder",
+                  defaultMessage: "用户名",
                 })}
                 rules={[
                   {
@@ -156,12 +168,12 @@ const Login: React.FC = () => {
               <ProFormText.Password
                 name="password"
                 fieldProps={{
-                  size: 'large',
+                  size: "large",
                   prefix: <LockOutlined className={styles.prefixIcon} />,
                 }}
                 placeholder={intl.formatMessage({
-                  id: 'pages.login.password.placeholder',
-                  defaultMessage: '密码: ant.design',
+                  id: "pages.login.password.placeholder",
+                  defaultMessage: "密码",
                 })}
                 rules={[
                   {
@@ -178,7 +190,7 @@ const Login: React.FC = () => {
             </>
           )}
 
-          {status === 'error' && loginType === 'mobile' && <LoginMessage content="验证码错误" />}
+          {/* {status === 'error' && loginType === 'mobile' && <LoginMessage content="验证码错误" />}
           {type === 'mobile' && (
             <>
               <ProFormText
@@ -259,21 +271,27 @@ const Login: React.FC = () => {
                 }}
               />
             </>
-          )}
+          )} */}
           <div
             style={{
               marginBottom: 24,
             }}
           >
             <ProFormCheckbox noStyle name="autoLogin">
-              <FormattedMessage id="pages.login.rememberMe" defaultMessage="自动登录" />
+              <FormattedMessage
+                id="pages.login.rememberMe"
+                defaultMessage="自动登录"
+              />
             </ProFormCheckbox>
             <a
               style={{
-                float: 'right',
+                float: "right",
               }}
             >
-              <FormattedMessage id="pages.login.forgotPassword" defaultMessage="忘记密码" />
+              <FormattedMessage
+                id="pages.login.forgotPassword"
+                defaultMessage="忘记密码"
+              />
             </a>
           </div>
         </LoginForm>
