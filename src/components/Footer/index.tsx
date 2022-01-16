@@ -16,15 +16,21 @@ export default () => {
       copyright={`${currentYear} ${defaultMessage}`}
       links={[
         {
-          key: 'Ant Design Pro',
-          title: 'Ant Design Pro',
-          href: 'https://pro.ant.design',
+          key: 'github',
+          title: <GithubOutlined />,
+          href: 'https://github.com/cnpm/cnpmweb',
           blankTarget: true,
         },
         {
-          key: 'github',
-          title: <GithubOutlined />,
-          href: 'https://github.com/ant-design/ant-design-pro',
+          key: 'CNPM Registry',
+          title: 'CNPM Registry',
+          href: 'https://github.com/cnpm/cnpmcore',
+          blankTarget: true,
+        },
+        {
+          key: 'Ant Design Pro',
+          title: 'Ant Design Pro',
+          href: 'https://pro.ant.design',
           blankTarget: true,
         },
         {

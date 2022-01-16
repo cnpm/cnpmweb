@@ -114,6 +114,7 @@ const Workplace: FC = () => {
 
   return (
     <PageContainer
+      breadcrumbRender={false}
       content={
         <PageHeaderContent
           currentUser={{
