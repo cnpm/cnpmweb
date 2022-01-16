@@ -27,13 +27,12 @@ function updateCurrentUser(user: API.CurrentUser) {
   );
 }
 
-/** 获取当前的用户 GET /api/currentUser */
+/** 获取当前的用户 */
 export async function currentUser(options?: { [key: string]: any }) {
   const token = localStorage.getItem(CURRENT_USER_TOKEN);
-  const user = getCurrentUser();
-  if (!token || !user?.name) return undefined;
+  if (!token) return { data: undefined };
   const result = await request<API.CurrentUser>(
-    `${REGISTRY}/-/user/org.couchdb.user:${user.name}`,
+    `${REGISTRY}/-/npm/v1/user`,
     {
       method: "GET",
       ...(options || {}),
@@ -43,10 +42,10 @@ export async function currentUser(options?: { [key: string]: any }) {
     }
   );
   if (result.email) {
-    result.avatar = gravatar.url(result.email);
+    result.avatar = gravatar.url(result.email, { protocol: 'https' });
     updateCurrentUser(result);
   }
-  return result;
+  return { data: result };
 }
 
 /** 退出登录接口 POST /api/login/outLogin */
@@ -92,7 +91,6 @@ export async function login(
   );
   if (result.token) {
     localStorage.setItem(CURRENT_USER_TOKEN, result.token);
-    updateCurrentUser({ name: body.username });
   }
   return result;
 }
