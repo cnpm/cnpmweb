@@ -1,34 +1,36 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🪞 cnpmweb
 
-## Getting Started
+[🚀 在线示例](https://cnpmweb.vercel.app/)
 
-First, run the development server:
+> cnpmweb: A missing UI for custom registry.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+![screenshot](https://github.com/elrrrrrrr/cnpmweb/blob/main/snap.png)
+
+* 🏗️ 支持一键部署
+* 🛠️ 支持二次集成开发，支持任意 npm registry
+* 🚀 基于 [Next.js](https://nextjs.org/docs/app/building-your-application/data-fetching) 服务端组件
+* 🔍 基于 [algolia](https://github.com/algolia/npm-search#using-the-public-index) 实现强大的在线搜索功能
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/elrrrrrrr/cnpmweb)
+
+## 项目简介
+
+cnpmweb 是独立的前端应用，期望为 [npmmirror](https://npmmirror.com) 提供一个新的制品库界面，目前仍在 alpha 阶段。
+## 开发指南
+
+```shell
+# 使用你的首选的包管理工具进行依赖安装
+$ cnpm i
+
+# 启动本地开发环境
+$ cnpm run dev
+
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 功能计划
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- [ ] 产物预览
+- [ ] 依赖信息
+- [ ] 版本列表
+- [ ] 版本选择
+- [ ] 搜索结果
