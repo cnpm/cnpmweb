@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './page.module.css';
+import 'antd/dist/reset.css';
 import LandingSearch from '@/components/LandingSearch';
 
 export default function Home() {

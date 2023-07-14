@@ -1,10 +1,13 @@
-import PageVersions from './versions'
-import PageDeps from './deps'
 import PageHome from './home'
 import PageFiles from './files'
+import PageVersions from './versions'
+import PageDeps from './deps'
 import { redirect } from 'next/navigation';
+import 'antd/dist/reset.css';
+import styles from './page.module.css';
+import CustomTabs from '@/components/CustomTabs';
 
-const PageMap: Record<string, () => JSX.Element> = {
+const PageMap: Record<string, (params: { manifest: any }) => JSX.Element> = {
   home: PageHome,
   deps: PageDeps,
   files: PageFiles,
@@ -14,8 +17,10 @@ const PageMap: Record<string, () => JSX.Element> = {
 // 需要在页面中自行解析
 export default async function PackagePage({
   params,
+  searchParams,
 }: {
   params: { slug: string[] };
+  searchParams: { [key: string]: string | string[] | undefined }
 }) {
 
   // 设置页面信息
@@ -38,29 +43,26 @@ export default async function PackagePage({
     redirect(`/package/${pkgName}/home`);
   }
 
-  const resData = await getData(pkgName);
+  const resData = await getData(pkgName, searchParams.version as string);
 
   return (
     <>
-      <header>我是一个可爱的导航头</header>
+      <header className={styles.header}>
+        <div className={styles.container}>{resData.name}@{resData['dist-tags']?.latest}</div>
+      </header>
+      <section style={{ paddingLeft: 16 }}>
+        <CustomTabs activateKey={type}></CustomTabs>
+      </section>
       <main>
-        我是一些 tabs 信息
-        <Component/>
-        <code>{JSON.stringify(resData['dist-tags'], null, 2)}</code>
+        <Component manifest={resData} />
       </main>
     </>
   );
 }
 
-
 async function getData(pkgName: string, version = 'latest') {
   const res = await fetch(`https://registry.npmmirror.com/${pkgName}`)
-  // The return value is *not* serialized
-  // You can return Date, Map, Set, etc.
-
-  // Recommendation: handle errors
   if (!res.ok) {
-    // This will activate the closest `error.js` Error Boundary
     throw new Error('Failed to fetch data')
   }
 

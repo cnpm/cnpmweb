@@ -1,0 +1,6 @@
+.preview-card {
+  min-height: calc(100vh - 200px);
+  margin: 0 auto;
+  margin-top: 16px;
+  padding: 40px 80px;
+}

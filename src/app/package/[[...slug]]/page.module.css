@@ -1,0 +1,15 @@
+.container {
+  height: 3rem;
+  display: flex;
+  padding-inline-start: 16px;
+  align-items: center;
+}
+
+.header {
+  background-color: rgb(255, 255, 255);
+  border-bottom-color: rgb(226, 232, 240);
+  border: 0 solid #e5e7eb;
+  border-bottom-width: 1px;
+  top: 0;
+  position: sticky;
+}

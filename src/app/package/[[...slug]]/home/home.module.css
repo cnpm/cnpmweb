@@ -1,0 +1,26 @@
+.homeCon {
+  position: relative;
+  padding-top: 80px;
+  overflow: hidden;
+  background: white;
+}
+
+.tagCon {
+  display: inline-flex;
+  flex-wrap: wrap;
+  padding: 0;
+  list-style: none;
+  row-gap: 8px;
+}
+
+.tagItem {
+  margin-right: 8px;
+  padding: 0 8px;
+  font-size: 12px;
+  line-height: 22px;
+  white-space: nowrap;
+  color: white;
+  /* background: rgb(255 255 255 / 25%); */
+  background: #2db7f5;
+  border-radius: 2px;
+}
