@@ -8,6 +8,8 @@ import ReadmeContent from '@/components/ReadmeContent';
 import { ContributorContent } from '@/components/ContributorContent';
 import { LinkContent } from '@/components/LinkContnet';
 import { PageProps } from '../page';
+import AdBanner from '@/components/AdBanner';
+import AdVPS from '@/components/AdVPS';
 
 export default function Home({ manifest, version }: PageProps) {
   const pkg = manifest;
@@ -16,6 +18,9 @@ export default function Home({ manifest, version }: PageProps) {
   const contentNode = (
     <Row gutter={[16, 16]}>
       <Col flex='1 1 0'>
+        <div style={{ marginBottom: 16, borderRadius: 8, overflow: 'hidden' }}>
+          <AdBanner />
+        </div>
         <PresetCard title='项目文档' style={{ minHeight: '100%' }}>
           <ReadmeContent name={manifest.name} version={'latest'} />
         </PresetCard>
@@ -31,6 +36,7 @@ export default function Home({ manifest, version }: PageProps) {
               dist={manifest.versions?.[version!].dist}
             />
           </PresetCard>
+          <AdVPS/>
         </Space>
       </Col>
     </Row>

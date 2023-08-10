@@ -7,6 +7,7 @@ import 'antd/dist/reset.css';
 import styles from './page.module.css';
 import CustomTabs from '@/components/CustomTabs';
 import { PackageManifest } from '@/hooks/useManifest';
+import AdBanner from '@/components/AdBanner';
 
 export type PageProps = {
   manifest: PackageManifest;
