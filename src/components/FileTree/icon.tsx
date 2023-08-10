@@ -25,7 +25,7 @@ function getIconHelper() {
   cache.set('txt', <AiFillFileText color='white' />);
   cache.set('closedDirectory', <FcFolder />);
   cache.set('openDirectory', <FcOpenedFolder />);
-  return function (extension: string, name: string): ReactNode {
+  return function Icon (extension: string, name: string): ReactNode {
     if (cache.has(extension)) return cache.get(extension);
     else if (cache.has(name)) return cache.get(name);
     else return <FcFile />;

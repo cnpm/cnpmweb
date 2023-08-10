@@ -10,6 +10,8 @@ export interface NpmPackageVersion {
   deprecated?: string;
   _npmUser: Record<string, string>;
   _cnpmcore_publish_time: string;
+  dependencies: Record<string, string>;
+  devDependencies: Record<string, string>;
 }
 
 export type PackageManifest = {

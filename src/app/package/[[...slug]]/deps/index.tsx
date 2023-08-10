@@ -20,19 +20,23 @@ const columns: TableColumnsType<object> = [
   },
   {
     title: '版本范围',
-    dataIndex: 'semVersion',
+    dataIndex: 'spec',
   },
 ];
 
 export default function Deps({ manifest: pkg, version }: PageProps) {
   const depsInfo = React.useMemo(() => {
     const targetVersion = pkg!['versions'][version!];
-    const res = { dependencies: [], devDependencies: [], dependents: [] };
-    ['dependencies', 'devDependencies'].forEach((k) => {
+    const deps = ['dependencies', 'devDependencies'] as const;
+    const res: Record<string, { package: string; spec: string }[]> = {
+      dependencies: [],
+      devDependencies: [],
+    };
+    deps.forEach((k) => {
       if (targetVersion?.[k]) {
         res[k] = Object.keys(targetVersion[k]).map((pkg) => ({
           package: pkg,
-          semVersion: targetVersion[k][pkg],
+          spec: targetVersion[k][pkg],
         }));
       }
     });
