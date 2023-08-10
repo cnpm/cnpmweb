@@ -1,6 +1,77 @@
 'use client';
-import { Result } from "antd";
+import type { TableColumnsType } from 'antd';
+import { Card, Col, Row, Table } from 'antd';
+import React from 'react';
+import SizeContainer from "@/components/SizeContianer";
+import Link from "next/link";
 
-export default function Deps () {
-  return <Result status="404" title="这里将展示依赖分析" subTitle="但我现在还没有准备好"></Result>
+const columns: TableColumnsType<object> = [
+  {
+    title: '名称',
+    dataIndex: 'package',
+    render: (pkg: string) => {
+      return (
+        <Link href={`/${pkg}`} target="_blank">
+          {pkg}
+        </Link>
+      );
+    },
+  },
+  {
+    title: '版本范围',
+    dataIndex: 'semVersion',
+  },
+];
+
+export default function Deps({ manifest: pkg, version }: any) {
+  const depsInfo = React.useMemo(() => {
+    const targetVersion = pkg!['versions'][version!];
+    const res = { dependencies: [], devDependencies: [], dependents: [] };
+    ['dependencies', 'devDependencies'].forEach((k) => {
+      if (targetVersion?.[k]) {
+        res[k] = Object.keys(targetVersion[k]).map((pkg) => ({
+          package: pkg,
+          semVersion: targetVersion[k][pkg],
+        }));
+      }
+    });
+    return res;
+  }, [pkg, version]);
+
+  const loading = depsInfo === undefined;
+
+  const { dependencies = [], devDependencies = [] } = depsInfo || {};
+
+  return (
+    <SizeContainer maxWidth='90%'>
+      <Row gutter={[8, 8]}>
+        <Col span={12}>
+          <Card
+            title={`Dependencies (${loading ? '-' : dependencies.length})`}
+            loading={loading}
+          >
+            <Table
+              dataSource={dependencies}
+              columns={columns}
+              pagination={{ size: 'small' }}
+            />
+          </Card>
+        </Col>
+        <Col span={12}>
+          <Card
+            title={`DevDependencies (${
+              loading ? '-' : devDependencies.length
+            })`}
+            loading={loading}
+          >
+            <Table
+              dataSource={devDependencies}
+              columns={columns}
+              pagination={{ size: 'small' }}
+            />
+          </Card>
+        </Col>
+      </Row>
+    </SizeContainer>
+  );
 }
