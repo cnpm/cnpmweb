@@ -8,11 +8,15 @@ import { useState } from "react";
 import { PageProps } from "../page";
 
 const Viewer = ({ manifest, version }: PageProps) => {
-  const [selectedFile, setSelectedFile] = useState<File | undefined>(undefined);
+  const [_selectedFile, setSelectedFile] = useState<File | undefined>();
   const { data: rootDir, isLoading } = useDirs({
     fullname: manifest.name,
     spec: version || 'latest',
   });
+
+  const selectedFile =
+    _selectedFile ||
+    rootDir?.files?.find((item: File) => item?.path === '/package.json');
 
   const onSelect = (file: File) => setSelectedFile(file);
 

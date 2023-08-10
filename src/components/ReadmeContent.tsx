@@ -79,7 +79,7 @@ export default function Readme({
   version: string;
 }) {
   return (
-    <SizeContainer maxWidth={1000}>
+    <SizeContainer maxWidth={800}>
       <ReadmeContent name={name} version={version} />
     </SizeContainer>
   );

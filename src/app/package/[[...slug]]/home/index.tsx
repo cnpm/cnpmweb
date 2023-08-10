@@ -18,7 +18,13 @@ export default function Home({ manifest, version }: PageProps) {
   const contentNode = (
     <Row gutter={[16, 16]}>
       <Col flex='1 1 0'>
-        <div style={{ marginBottom: 16, borderRadius: 8, overflow: 'hidden' }}>
+        <div
+          style={{
+            marginBottom: 16,
+            borderRadius: 8,
+            overflow: 'hidden',
+          }}
+        >
           <AdBanner />
         </div>
         <PresetCard title='项目文档' style={{ minHeight: '100%' }}>
@@ -36,7 +42,7 @@ export default function Home({ manifest, version }: PageProps) {
               dist={manifest.versions?.[version!].dist}
             />
           </PresetCard>
-          <AdVPS/>
+          <AdVPS />
         </Space>
       </Col>
     </Row>
