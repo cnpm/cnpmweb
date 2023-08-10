@@ -20,7 +20,7 @@ export interface File {
 
 type PkgInfo = {
   fullname: string;
-  spec: string;
+  spec?: string;
 };
 
 
@@ -54,7 +54,7 @@ export const useDirs = (info: PkgInfo) => {
 }
 
 export const useFileContent = (info: PkgInfo, path: string) => {
-  return useSwr(`file: ${info.fullname}_${info.spec}_${path}`, async () => {
+  return useSwr(`file: ${info.fullname}_${info.spec || 'latest'}_${path}`, async () => {
     return fetch(`${REGISTRY}/${info.fullname}/${info.spec}/files${path}`).then((res) => res.text());
   });
 };

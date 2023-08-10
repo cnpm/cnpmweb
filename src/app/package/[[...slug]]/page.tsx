@@ -13,7 +13,7 @@ export type PageProps = {
   version?: string;
 };
 
-const PageMap: Record<string, (params: { manifest: PackageManifest }) => JSX.Element> = {
+const PageMap: Record<string, (params: PageProps) => JSX.Element> = {
   home: PageHome,
   deps: PageDeps,
   files: PageFiles,
@@ -51,7 +51,7 @@ export default async function PackagePage({
 
   const resData = await getData(pkgName, searchParams.version as string);
 
-  const version = resData['dist-tags']?.latest;
+  const version:string = resData['dist-tags']?.latest;
 
   return (
     <>

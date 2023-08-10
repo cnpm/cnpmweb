@@ -11,7 +11,7 @@ const Viewer = ({ manifest, version }: PageProps) => {
   const [selectedFile, setSelectedFile] = useState<File | undefined>(undefined);
   const { data: rootDir, isLoading } = useDirs({
     fullname: manifest.name,
-    spec: version,
+    spec: version || 'latest',
   });
 
   const onSelect = (file: File) => setSelectedFile(file);

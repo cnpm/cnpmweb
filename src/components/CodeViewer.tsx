@@ -13,7 +13,7 @@ export const CodeViewer = ({
 }: {
   selectedFile: File | undefined;
   pkgName: string;
-  spec: string;
+  spec?: string;
 }) => {
 
   const { data: code, isLoading } = useFileContent(

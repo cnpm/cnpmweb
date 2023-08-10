@@ -17,7 +17,7 @@ export default function Home({ manifest, version }: PageProps) {
     <Row gutter={[16, 16]}>
       <Col flex='1 1 0'>
         <PresetCard title='项目文档' style={{ minHeight: '100%' }}>
-          <ReadmeContent name={manifest.name} version={manifest.version} />
+          <ReadmeContent name={manifest.name} version={'latest'} />
         </PresetCard>
       </Col>
       <Col flex='0 0 378px'>

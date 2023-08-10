@@ -4,7 +4,10 @@ import { orderBy } from 'lodash';
 export interface NpmPackageVersion {
   name: string;
   version: string;
-  dist: Record<string, number | string>;
+  dist?: {
+    tarball: string;
+    size: string;
+  };
   publish_time: number;
   keywords: string[];
   deprecated?: string;
@@ -17,6 +20,7 @@ export interface NpmPackageVersion {
 export type PackageManifest = {
   name: string;
   maintainers: { name: string; email: string }[];
+  keywords?: string[];
   description: string;
   _source_registry_name: string;
   versions: Record<
