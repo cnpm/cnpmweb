@@ -4,14 +4,14 @@
 
 > cnpmweb: A missing UI for custom registry.
 
-![screenshot](https://github.com/elrrrrrrr/cnpmweb/blob/main/snap.png)
+![screenshot](https://github.com/cnpm/cnpmweb/blob/main/snap.png)
 
 * 🏗️ 支持一键部署
 * 🛠️ 支持二次集成开发，支持任意 npm registry
 * 🚀 基于 [Next.js](https://nextjs.org/docs/app/building-your-application/data-fetching) 服务端组件
 * 🔍 基于 [algolia](https://github.com/algolia/npm-search#using-the-public-index) 实现强大的在线搜索功能
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/elrrrrrrr/cnpmweb)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/cnpm/cnpmweb)
 
 ## 项目简介
 
@@ -29,8 +29,8 @@ $ cnpm run dev
 
 ## 功能计划
 
-- [ ] 产物预览
-- [ ] 依赖信息
-- [ ] 版本列表
+- [x] 产物预览
+- [x] 依赖信息
+- [x] 版本列表
 - [ ] 版本选择
 - [ ] 搜索结果
