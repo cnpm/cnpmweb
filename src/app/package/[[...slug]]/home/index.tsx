@@ -1,7 +1,7 @@
 'use client';
 import { Col, Row, Space, Typography } from 'antd';
 import style from './home.module.css';
-import SizeContainer from '@/components/SizeContianer';
+import SizeContainer from '@/components/SizeContainer';
 import PresetCard from '@/components/PresetCard';
 import AntdStyle from '@/components/AntdStyle';
 import ReadmeContent from '@/components/ReadmeContent';

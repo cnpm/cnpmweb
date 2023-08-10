@@ -1,0 +1,21 @@
+.versionsCon {
+  font-size: 16px;
+  color: #111;
+  padding: 0 16px;
+  margin-top: 16px;
+}
+
+.versionsItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  margin: 16px;
+}
+
+.dot {
+  display: block;
+  flex-grow: 1;
+  border-bottom: 1px dotted #ccc;
+  transform: translate(0, -11px);
+  margin: 0 8px;
+}

@@ -2,7 +2,7 @@
 import type { TableColumnsType } from 'antd';
 import { Card, Col, Row, Table } from 'antd';
 import React from 'react';
-import SizeContainer from "@/components/SizeContianer";
+import SizeContainer from "@/components/SizeContainer";
 import Link from "next/link";
 
 const columns: TableColumnsType<object> = [

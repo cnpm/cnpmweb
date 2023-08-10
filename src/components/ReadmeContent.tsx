@@ -9,7 +9,7 @@ import styles from './ReadmeContent.module.css';
 
 import 'highlight.js/styles/github.css';
 import { Card, Result, Skeleton, Typography } from 'antd';
-import SizeContainer from './SizeContianer';
+import SizeContainer from './SizeContainer';
 
 const slugger = new Slugger();
 
