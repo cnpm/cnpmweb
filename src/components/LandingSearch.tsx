@@ -61,7 +61,7 @@ export default function LandingSearch() {
       >
         <Input.Search
           size='large'
-          placeholder='fly me to the moon ...'
+          placeholder='搜索服务由 Algolia 提供'
           enterButton
           loading={!!(search && isLoading)}
         />

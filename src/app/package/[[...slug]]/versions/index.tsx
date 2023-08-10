@@ -23,6 +23,7 @@ import semver from 'semver';
 import styles from './versions.module.css';
 import Link from 'next/link';
 import { PageProps } from '../page';
+import AntdStyle from '@/components/AntdStyle';
 
 function TagsList({
   tagsInfo,
@@ -232,10 +233,12 @@ export default function ReadOnlyVersions({ manifest: pkg }: PageProps) {
   return (
     <>
       <SizeContainer maxWidth={1072}>
-        <Card style={{ marginTop: 24 }}>
-          <TagsList pkg={pkg} tagsInfo={tagsInfo}></TagsList>
-          <VersionsList pkg={pkg} versions={versions}></VersionsList>
-        </Card>
+        <AntdStyle>
+          <Card style={{ marginTop: 24 }}>
+            <TagsList pkg={pkg} tagsInfo={tagsInfo}></TagsList>
+            <VersionsList pkg={pkg} versions={versions}></VersionsList>
+          </Card>
+        </AntdStyle>
       </SizeContainer>
     </>
   );
