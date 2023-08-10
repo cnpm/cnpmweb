@@ -13,7 +13,7 @@ export default function Home({ manifest }: { manifest: any }) {
   const tags: string[] = pkg?.keywords || [];
 
   const contentNode = (
-    <Row>
+    <Row gutter={[16, 16]}>
       <Col flex='1 1 0'>
         <PresetCard title='项目文档' style={{ minHeight: '100%' }}>
           <ReadmeContent name={manifest.name} version={manifest.version} />
@@ -39,7 +39,7 @@ export default function Home({ manifest }: { manifest: any }) {
     <AntdStyle>
       <div className={style.homeCon}>
         <SizeContainer
-          maxWidth={1184}
+          maxWidth={1440}
           style={{ position: 'relative', marginTop: 0 }}
         >
           <div className={style.sloganCon}>

@@ -1,7 +1,49 @@
 'use client';
-import { Result } from "antd";
-import Link from "next/link";
+import { CodeViewer } from "@/components/CodeViewer";
+import { FileTree } from "@/components/FileTree";
+import { Sidebar } from "@/components/Sidebar";
+import { useDirs, File } from "@/hooks/useFile";
+import { Spin } from "antd";
+import { useState } from "react";
 
-export default function Files() {
-  return <Result status="404" title="这里将实现产物预览" subTitle={<>效果大概和<Link target="_blank" href="https://uncap.elrrrrrrr.cloud/cnpmcore@3.x">这里</Link>类似</>}></Result>
-}
+const Viewer = ({ manifest, version }: any) => {
+  const [selectedFile, setSelectedFile] = useState<File | undefined>(undefined);
+  const { data: rootDir, isLoading } = useDirs({
+    fullname: manifest.name,
+    spec: version,
+  });
+
+  const onSelect = (file: File) => setSelectedFile(file);
+
+  if (isLoading) {
+    return (
+      <Spin
+        style={{
+          position: 'fixed',
+          left: '50%',
+          top: '50%',
+          transform: 'translate(-50%, -50%)',
+        }}
+      />
+    );
+  }
+
+  return (
+    <div style={{ display: 'flex', marginTop: -16 }}>
+      <Sidebar>
+        <FileTree
+          rootDir={rootDir}
+          selectedFile={selectedFile}
+          onSelect={onSelect}
+        />
+      </Sidebar>
+      <CodeViewer
+        selectedFile={selectedFile}
+        pkgName={manifest.name}
+        spec={version}
+      />
+    </div>
+  );
+};
+
+export default Viewer;

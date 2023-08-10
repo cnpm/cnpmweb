@@ -45,16 +45,18 @@ export default async function PackagePage({
 
   const resData = await getData(pkgName, searchParams.version as string);
 
+  const version = resData['dist-tags']?.latest;
+
   return (
     <>
       <header className={styles.header}>
-        <div className={styles.container}>{resData.name}@{resData['dist-tags']?.latest}</div>
+        <div className={styles.container}>{resData.name}@{version}</div>
       </header>
       <section style={{ paddingLeft: 16 }}>
         <CustomTabs activateKey={type}></CustomTabs>
       </section>
       <main>
-        <Component manifest={resData} />
+        <Component manifest={resData} version={version}/>
       </main>
     </>
   );
