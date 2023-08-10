@@ -46,7 +46,7 @@ export default function Home({ manifest, version }: PageProps) {
     <AntdStyle>
       <div className={style.homeCon}>
         <SizeContainer
-          maxWidth={1440}
+          maxWidth={1280}
           style={{ position: 'relative', marginTop: 0 }}
         >
           <div className={style.sloganCon}>

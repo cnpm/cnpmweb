@@ -8,6 +8,7 @@ import styles from './page.module.css';
 import CustomTabs from '@/components/CustomTabs';
 import { PackageManifest } from '@/hooks/useManifest';
 import AdBanner from '@/components/AdBanner';
+import { revalidateTag } from 'next/cache';
 
 export type PageProps = {
   manifest: PackageManifest;
@@ -70,10 +71,18 @@ export default async function PackagePage({
 }
 
 async function getData(pkgName: string, version = 'latest') {
-  const res = await fetch(`https://registry.npmmirror.com/${pkgName}`)
+  const tag = `${pkgName}_manifest`;
+  const res = await fetch(`https://registry.npmmirror.com/${pkgName}`, {
+    next: {
+      tags: [tag],
+    },
+  });
+
   if (!res.ok) {
     throw new Error('Failed to fetch data')
   }
 
-  return res.json()
+  revalidateTag(tag);
+  const data = await res.json();
+  return data;
 }
