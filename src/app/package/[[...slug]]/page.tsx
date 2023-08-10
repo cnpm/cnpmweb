@@ -6,8 +6,14 @@ import { redirect } from 'next/navigation';
 import 'antd/dist/reset.css';
 import styles from './page.module.css';
 import CustomTabs from '@/components/CustomTabs';
+import { PackageManifest } from '@/hooks/useManifest';
 
-const PageMap: Record<string, (params: { manifest: any }) => JSX.Element> = {
+export type PageProps = {
+  manifest: PackageManifest;
+  version?: string;
+};
+
+const PageMap: Record<string, (params: { manifest: PackageManifest }) => JSX.Element> = {
   home: PageHome,
   deps: PageDeps,
   files: PageFiles,

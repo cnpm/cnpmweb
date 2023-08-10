@@ -5,8 +5,9 @@ import { Sidebar } from "@/components/Sidebar";
 import { useDirs, File } from "@/hooks/useFile";
 import { Spin } from "antd";
 import { useState } from "react";
+import { PageProps } from "../page";
 
-const Viewer = ({ manifest, version }: any) => {
+const Viewer = ({ manifest, version }: PageProps) => {
   const [selectedFile, setSelectedFile] = useState<File | undefined>(undefined);
   const { data: rootDir, isLoading } = useDirs({
     fullname: manifest.name,

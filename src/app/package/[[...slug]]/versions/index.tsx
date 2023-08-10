@@ -22,6 +22,7 @@ import React from 'react';
 import semver from 'semver';
 import styles from './versions.module.css';
 import Link from 'next/link';
+import { PageProps } from '../page';
 
 function TagsList({
   tagsInfo,
@@ -215,7 +216,7 @@ function VersionsList({
   );
 }
 
-export default function ReadOnlyVersions({ manifest: pkg }: any) {
+export default function ReadOnlyVersions({ manifest: pkg }: PageProps) {
   const versions = useVersions(pkg);
   const tagsInfo = useVersionTags(pkg);
   const publishedVersions = versions;

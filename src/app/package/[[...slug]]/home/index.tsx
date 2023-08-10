@@ -7,8 +7,9 @@ import AntdStyle from '@/components/AntdStyle';
 import ReadmeContent from '@/components/ReadmeContent';
 import { ContributorContent } from '@/components/ContributorContent';
 import { LinkContent } from '@/components/LinkContnet';
+import { PageProps } from '../page';
 
-export default function Home({ manifest }: { manifest: any }) {
+export default function Home({ manifest, version }: PageProps) {
   const pkg = manifest;
   const tags: string[] = pkg?.keywords || [];
 
@@ -27,7 +28,7 @@ export default function Home({ manifest }: { manifest: any }) {
           <PresetCard title='相关链接'>
             <LinkContent
               git={manifest.repository?.url}
-              dist={manifest.versions?.[manifest['dist-tags'].latest].dist}
+              dist={manifest.versions?.[version!].dist}
             />
           </PresetCard>
         </Space>
