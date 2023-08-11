@@ -2,8 +2,7 @@ import './globals.css'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'cnpmweb',
-  description: 'A missing ui for cnpmcore.',
+  title: 'npmmirror 镜像站',
 }
 
 export default function RootLayout({
