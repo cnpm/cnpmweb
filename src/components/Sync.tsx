@@ -16,7 +16,7 @@ export default function Sync({ pkgName }: SyncProps) {
       title: '同步日志',
       content: (
         <>
-          创建同步任务成功，
+          创建同步任务成功，正在等待调度，通常需要几十秒钟的时间
           <Link
             target='_blank'
             href={`https://registry.npmmirror.com/-/package/${pkgName}/syncs/${id}/log`}

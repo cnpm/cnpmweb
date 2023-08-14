@@ -57,8 +57,6 @@ export default function SyncAlert({pkg, needSync}: SyncAlertProps) {
           {registry !== 'self' && (
             <Button
               size='small'
-              danger
-              type='link'
               href={sourceLink}
               target='_blank'
             >
