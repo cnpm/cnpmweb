@@ -31,7 +31,7 @@ export default function SyncAlert({pkg, needSync}: SyncAlertProps) {
       pkg!.name
     } 为私有包，发布流程在 registry.npmmirror.com 上，无需进行同步`;
   } else {
-    description = `${pkg!.name} 为公网包，目前会从公网进行同步`;
+    description = `${pkg!.name} 为公网包，目前会从 registry.npmjs.org 进行同步`;
     sourceLink = `${NPM_REGISTRY}/${pkg!.name}?activeTab=versions`;
   }
 
@@ -58,6 +58,8 @@ export default function SyncAlert({pkg, needSync}: SyncAlertProps) {
             <Button
               size='small'
               href={sourceLink}
+              type='link'
+              ghost
               target='_blank'
             >
               查看源站

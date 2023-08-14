@@ -182,28 +182,23 @@ function VersionsList({
                 </Link>
               </span>
               <span className={styles.dot}></span>
-              <Typography.Text type="secondary">
-                <Space size="small">
+              <Typography.Text type='secondary'>
+                <Space size='small'>
                   {item._npmUser?.name ? (
                     <>
                       <span>由</span>
                       <Tooltip title={item._npmUser.name.replace('buc:', '')}>
-                        <Link
-                          href={`/users/${item._npmUser.name}`}
-                          target="_blank"
-                        >
-                            <Gravatar
-                              email={item._npmUser.email}
-                              name={item._npmUser.name}
-                            />
-                        </Link>
+                        <Gravatar
+                          email={item._npmUser.email}
+                          name={item._npmUser.name}
+                        />
                       </Tooltip>
                       <span>发布于</span>
                     </>
                   ) : null}
                   <Tooltip
                     title={dayjs(item.publish_time).format(
-                      'YYYY-MM-DD HH:mm:SS',
+                      'YYYY-MM-DD HH:mm:SS'
                     )}
                   >
                     {dayjs(item.publish_time).format('YYYY-MM-DD')}

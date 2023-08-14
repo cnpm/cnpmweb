@@ -2,6 +2,7 @@
 import { Tabs } from 'antd';
 import Link from 'next/link';
 import AntdStyle from './AntdStyle';
+import { useSearchParams } from 'next/navigation';
 
 const presetTabs = [
   {
@@ -23,6 +24,7 @@ const presetTabs = [
 ];
 
 export default function CustomTabs({ activateKey }: { activateKey: string }) {
+  const params = useSearchParams();
   return (
     <AntdStyle>
       <Tabs
@@ -31,7 +33,7 @@ export default function CustomTabs({ activateKey }: { activateKey: string }) {
         items={presetTabs.map((tab) => {
           return {
             label: (
-              <Link key={tab.key} href={tab.key}>
+              <Link key={tab.key} href={`${tab.key}?${params.toString()}`}>
                 {tab.name}
               </Link>
             ),

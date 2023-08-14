@@ -76,7 +76,7 @@ export default function Readme({
   version,
 }: {
   name: string;
-  version: string;
+  version?: string;
 }) {
   return (
     <SizeContainer maxWidth={800}>

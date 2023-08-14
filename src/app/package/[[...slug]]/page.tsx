@@ -58,7 +58,7 @@ export default async function PackagePage({
 
   const resData = await getData(pkgName, searchParams.version as string);
 
-  const version:string = resData['dist-tags']?.latest;
+  const version:string = searchParams.version || resData['dist-tags']?.latest;
 
   const additionalInfo = AdditionalInfo[type as 'versions']
     ? await AdditionalInfo[type as 'versions'](resData)
