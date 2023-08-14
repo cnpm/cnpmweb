@@ -9,6 +9,7 @@ import CustomTabs from '@/components/CustomTabs';
 import { PackageManifest } from '@/hooks/useManifest';
 import { revalidateTag } from 'next/cache';
 import { getNeedSync } from '@/initData/getNeedSync';
+import Footer from '@/components/Footer';
 
 export type PageProps = {
   manifest: PackageManifest;
@@ -81,6 +82,7 @@ export default async function PackagePage({
           additionalInfo={additionalInfo}
         />
       </main>
+      <Footer/>
     </>
   );
 }
