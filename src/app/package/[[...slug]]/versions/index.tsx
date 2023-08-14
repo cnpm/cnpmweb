@@ -24,6 +24,7 @@ import styles from './versions.module.css';
 import Link from 'next/link';
 import { PageProps } from '../page';
 import AntdStyle from '@/components/AntdStyle';
+import SyncAlert from '@/components/SyncAlert';
 
 function TagsList({
   tagsInfo,
@@ -217,7 +218,7 @@ function VersionsList({
   );
 }
 
-export default function ReadOnlyVersions({ manifest: pkg }: PageProps) {
+export default function ReadOnlyVersions({ manifest: pkg, additionalInfo: needSync }: PageProps) {
   const versions = useVersions(pkg);
   const tagsInfo = useVersionTags(pkg);
   const publishedVersions = versions;
@@ -234,6 +235,7 @@ export default function ReadOnlyVersions({ manifest: pkg }: PageProps) {
     <>
       <SizeContainer maxWidth={1072}>
         <AntdStyle>
+          <SyncAlert pkg={pkg} needSync={needSync} />
           <Card style={{ marginTop: 24 }}>
             <TagsList pkg={pkg} tagsInfo={tagsInfo}></TagsList>
             <VersionsList pkg={pkg} versions={versions}></VersionsList>

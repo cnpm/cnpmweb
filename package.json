@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@ant-design/cssinjs": "^1.11.1",
+    "@ant-design/icons": "^5.2.5",
     "@gravatar/js": "^1.1.1",
     "@monaco-editor/react": "^4.4.2",
     "@types/node": "20.4.1",

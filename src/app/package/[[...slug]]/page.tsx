@@ -7,12 +7,13 @@ import 'antd/dist/reset.css';
 import styles from './page.module.css';
 import CustomTabs from '@/components/CustomTabs';
 import { PackageManifest } from '@/hooks/useManifest';
-import AdBanner from '@/components/AdBanner';
 import { revalidateTag } from 'next/cache';
+import { getNeedSync } from '@/initData/getNeedSync';
 
 export type PageProps = {
   manifest: PackageManifest;
   version?: string;
+  additionalInfo?: any;
 };
 
 const PageMap: Record<string, (params: PageProps) => JSX.Element> = {
@@ -20,6 +21,10 @@ const PageMap: Record<string, (params: PageProps) => JSX.Element> = {
   deps: PageDeps,
   files: PageFiles,
   versions: PageVersions,
+} as const;
+
+const AdditionalInfo = {
+  versions: getNeedSync
 };
 // 由于路由不支持 @scope 可选参数
 // 需要在页面中自行解析
@@ -35,7 +40,7 @@ export default async function PackagePage({
   const { slug } = params;
   let scope;
   let name;
-  let type;
+  let type: keyof typeof PageMap;
 
   if (slug?.[0].startsWith('%40')) {
     [scope, name, type] = slug;
@@ -55,16 +60,26 @@ export default async function PackagePage({
 
   const version:string = resData['dist-tags']?.latest;
 
+  const additionalInfo = AdditionalInfo[type as 'versions']
+    ? await AdditionalInfo[type as 'versions'](resData)
+    : null;
+
   return (
     <>
       <header className={styles.header}>
-        <div className={styles.container}>{resData.name}@{version}</div>
+        <div className={styles.container}>
+          {resData.name}@{version}
+        </div>
       </header>
       <section style={{ paddingLeft: 16 }}>
         <CustomTabs activateKey={type}></CustomTabs>
       </section>
       <main>
-        <Component manifest={resData} version={version}/>
+        <Component
+          manifest={resData}
+          version={version}
+          additionalInfo={additionalInfo}
+        />
       </main>
     </>
   );
@@ -72,11 +87,14 @@ export default async function PackagePage({
 
 async function getData(pkgName: string, version = 'latest') {
   const tag = `${pkgName}_manifest`;
-  const res = await fetch(`https://registry.npmmirror.com/${pkgName}`, {
-    next: {
-      tags: [tag],
-    },
-  });
+  const res = await fetch(
+    `https://registry.npmmirror.com/${pkgName}`,
+    {
+      next: {
+        tags: [tag],
+      },
+    }
+  );
 
   if (!res.ok) {
     throw new Error('Failed to fetch data')
