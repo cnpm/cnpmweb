@@ -72,7 +72,7 @@ export default async function PackagePage({
         </div>
       </header>
       <section style={{ paddingLeft: 16 }}>
-        <CustomTabs activateKey={type}></CustomTabs>
+        <CustomTabs activateKey={type} pkg={resData}></CustomTabs>
       </section>
       <main>
         <Component
