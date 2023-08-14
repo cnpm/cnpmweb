@@ -58,7 +58,7 @@ export default async function PackagePage({
 
   const resData = await getData(pkgName, searchParams.version as string);
 
-  const version:string = resData['dist-tags']?.latest;
+  const version:string = searchParams.version || resData['dist-tags']?.latest;
 
   const additionalInfo = AdditionalInfo[type as 'versions']
     ? await AdditionalInfo[type as 'versions'](resData)
@@ -72,7 +72,7 @@ export default async function PackagePage({
         </div>
       </header>
       <section style={{ paddingLeft: 16 }}>
-        <CustomTabs activateKey={type}></CustomTabs>
+        <CustomTabs activateKey={type} pkg={resData}></CustomTabs>
       </section>
       <main>
         <Component

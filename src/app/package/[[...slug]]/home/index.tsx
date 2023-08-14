@@ -28,7 +28,7 @@ export default function Home({ manifest, version }: PageProps) {
           <AdBanner />
         </div>
         <PresetCard title='项目文档' style={{ minHeight: '100%' }}>
-          <ReadmeContent name={manifest.name} version={'latest'} />
+          <ReadmeContent name={manifest.name} version={version} />
         </PresetCard>
       </Col>
       <Col flex='0 0 378px'>
@@ -39,7 +39,7 @@ export default function Home({ manifest, version }: PageProps) {
           <PresetCard title='相关链接'>
             <LinkContent
               git={manifest.repository?.url}
-              dist={manifest.versions?.[version!].dist}
+              dist={manifest.versions?.[version!]?.dist}
             />
           </PresetCard>
           <AdVPS />

@@ -37,7 +37,7 @@ const renderer = {
 };
 marked.use({ renderer });
 
-export function ReadmeContent({name, version = 'latest'}: {name: string; version: string}) {
+export function ReadmeContent({name, version = 'latest'}: {name: string; version?: string}) {
   const content = useReadme(name, version);
 
   const contentNode = React.useMemo(() => {
@@ -76,7 +76,7 @@ export default function Readme({
   version,
 }: {
   name: string;
-  version: string;
+  version?: string;
 }) {
   return (
     <SizeContainer maxWidth={800}>
