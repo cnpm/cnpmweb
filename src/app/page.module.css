@@ -4,3 +4,7 @@
   margin: 0 auto;
   margin-top: 15rem;
 }
+
+.main {
+  min-height: calc(100vh - 32px);
+}
