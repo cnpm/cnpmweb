@@ -57,7 +57,7 @@ export default async function PackagePage({
     redirect(`/package/${pkgName}/home`);
   }
 
-  const resData = await getData(pkgName, searchParams.version as string);
+  const resData = await getData(pkgName);
 
   const version:string = searchParams.version || resData['dist-tags']?.latest;
 
@@ -88,21 +88,14 @@ export default async function PackagePage({
 }
 
 async function getData(pkgName: string) {
-  const tag = `${pkgName}_manifest`;
-  const res = await fetch(
-    `https://registry.npmmirror.com/${pkgName}`,
-    {
-      next: {
-        tags: [tag],
-      },
-    }
-  );
+  const res = await fetch(`https://registry.npmmirror.com/${pkgName}`, {
+    cache: 'no-store',
+  });
 
   if (!res.ok) {
     throw new Error('Failed to fetch data')
   }
 
-  revalidateTag(tag);
   const data = await res.json();
   return data;
 }
