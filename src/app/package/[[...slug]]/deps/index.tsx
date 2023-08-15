@@ -34,7 +34,7 @@ export default function Deps({ manifest: pkg, version }: PageProps) {
     };
     deps.forEach((k) => {
       if (targetVersion?.[k]) {
-        res[k] = Object.keys(targetVersion[k]).map((pkg) => ({
+        res[k] = Object.keys(targetVersion[k] || {}).map((pkg) => ({
           package: pkg,
           spec: targetVersion[k][pkg],
         }));
