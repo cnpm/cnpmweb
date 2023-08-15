@@ -16,8 +16,8 @@ export async function getNeedSync(pkg: PackageManifest) {
   const alreadySync =
     isEqual(pkg?.['dist-tags'], sourceRegistryInfo?.['dist-tags']) &&
     isEqual(
-      Object.keys(pkg?.versions || {}),
-      Object.keys(sourceRegistryInfo?.versions || {})
+      Object.keys(pkg?.versions || {}).sort(),
+      Object.keys(sourceRegistryInfo?.versions || {}).sort(),
     );
 
 

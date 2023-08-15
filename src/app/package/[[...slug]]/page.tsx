@@ -87,7 +87,7 @@ export default async function PackagePage({
   );
 }
 
-async function getData(pkgName: string, version = 'latest') {
+async function getData(pkgName: string) {
   const tag = `${pkgName}_manifest`;
   const res = await fetch(
     `https://registry.npmmirror.com/${pkgName}`,
