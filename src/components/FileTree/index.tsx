@@ -23,7 +23,7 @@ const SubTree = (props: SubTreeProps) => {
     <div>
       {props.directory.files
         // .sort((item) => (item.type === 'directory' ? -1 : 1))
-        .map((item) => (
+        ?.map((item) => (
           <React.Fragment key={item.path}>
             {item.type === 'directory' ? (
               <DirDiv
