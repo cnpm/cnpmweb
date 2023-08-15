@@ -16,7 +16,7 @@ export default function Home({ manifest, version }: PageProps) {
   const tags: string[] = pkg?.keywords || [];
 
   const contentNode = (
-    <Row gutter={[16, 16]}>
+    <Row gutter={[16, 16]} style={{ marginBottom: 96 }}>
       <Col flex='1 1 0'>
         <div
           style={{
