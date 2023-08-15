@@ -69,7 +69,7 @@ function TagsList({
           <span className={styles.dot}></span>
           <span>Tag</span>
         </li>
-        {Object.keys(tagsInfo).map((item) => {
+        {Object.keys(tagsInfo || {}).map((item) => {
           if (onlyProd && semver.parse(item)?.prerelease.length) {
             return null;
           }
@@ -82,7 +82,7 @@ function TagsList({
               </span>
               <span className={styles.dot}></span>
               <Space size='small'>
-                {tagsInfo[item].map((tag) => {
+                {tagsInfo[item]?.map((tag) => {
                   if (tag === 'latest') {
                     return (
                       <Tooltip title='默认匹配的版本' key={tag}>

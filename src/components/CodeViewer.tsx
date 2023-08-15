@@ -5,7 +5,6 @@ import { File, useFileContent } from '@/hooks/useFile';
 
 loader.config({ monaco });
 
-
 export const CodeViewer = ({
   selectedFile,
   pkgName,
@@ -45,3 +44,5 @@ export const CodeViewer = ({
     </div>
   );
 };
+
+export default CodeViewer;

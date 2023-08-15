@@ -2,11 +2,9 @@ import { Gravatar } from './Gravatar';
 import {
   Col,
   Row,
-  Tooltip,
 } from 'antd';
 
 import React from 'react';
-import style from './ContributorContent.module.css';
 
 type ContributorContentProps = {
   members: {name: string; email: string}[];
