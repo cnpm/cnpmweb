@@ -38,7 +38,7 @@ export type PackageManifest = {
 
 export function useVersions(manifest: PackageManifest): NpmPackageVersion[] {
   return React.useMemo(() => {
-    const versions = [...Object.values(manifest.versions)];
+    const versions = [...Object.values(manifest.versions || {})];
     const patchedVersions = versions.map((item) => {
       if (item.publish_time) {
         return item;

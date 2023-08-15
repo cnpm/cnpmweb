@@ -152,7 +152,7 @@ export default function NPMVersionSelect ({
       />
       <Select
         size='small'
-        options={Object.keys(tags).map((t) => ({ label: t, value: tags[t] }))}
+        options={Object.keys(tags || {}).map((t) => ({ label: t, value: tags[t] }))}
         placeholder='选择 Tag'
         value={hasTag ? targetVersion : undefined}
         popupMatchSelectWidth={180}

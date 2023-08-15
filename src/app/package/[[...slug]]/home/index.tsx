@@ -33,9 +33,11 @@ export default function Home({ manifest, version }: PageProps) {
       </Col>
       <Col flex='0 0 378px'>
         <Space direction={'vertical'} size='middle' style={{ minWidth: 378 }}>
-          <PresetCard title='项目成员'>
-            <ContributorContent members={manifest.maintainers} />
-          </PresetCard>
+          {manifest.maintainers?.length > 0 && (
+            <PresetCard title='项目成员'>
+              <ContributorContent members={manifest.maintainers} />
+            </PresetCard>
+          )}
           <PresetCard title='相关链接'>
             <LinkContent
               git={manifest.repository?.url}

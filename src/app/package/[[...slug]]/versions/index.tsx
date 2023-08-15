@@ -159,7 +159,7 @@ function VersionsList({
           <span className={styles.dot}></span>
           <span>发布信息</span>
         </li>
-        {versions.map((item) => {
+        {versions?.map((item) => {
           if (onlyProd && semver.parse(item.version)?.prerelease.length) {
             return null;
           }
