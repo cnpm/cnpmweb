@@ -1,11 +1,9 @@
 'use client';
 import { Tabs } from 'antd';
 import Link from 'next/link';
-import AntdStyle from './AntdStyle';
-import { useSearchParams } from 'next/navigation';
 import NPMVersionSelect from './NPMVersionSelect';
 import { PackageManifest } from '@/hooks/useManifest';
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/router';
 
 const presetTabs = [
   {
@@ -33,38 +31,42 @@ export default function CustomTabs({
   activateKey: string;
   pkg: PackageManifest;
 }) {
-  const params = useSearchParams();
-  const { replace } = useRouter();
+  const { push, query } = useRouter();
+
+  const targetVersion = (query.version as string) || pkg?.['dist-tags']?.latest;
+
   return (
-    <AntdStyle>
-      <Tabs
-        activeKey={activateKey}
-        type={'line'}
-        tabBarExtraContent={
-          <NPMVersionSelect
-            versions={Object.keys(pkg?.versions || {})}
-            tags={pkg?.['dist-tags']}
-            targetVersion={params.get('version') || pkg?.['dist-tags']?.latest}
-            setVersionStr={(v) => {
-              if (v === pkg?.['dist-tags']?.latest) {
-                replace(`${activateKey}`);
-              } else {
-                replace(`${activateKey}?version=${v}`);
-              }
-            }}
-          />
-        }
-        items={presetTabs.map((tab) => {
-          return {
-            label: (
-              <Link key={tab.key} href={`${tab.key}?${params.toString()}`}>
-                {tab.name}
-              </Link>
-            ),
-            key: tab.key,
-          };
-        })}
-      ></Tabs>
-    </AntdStyle>
+    <Tabs
+      activeKey={activateKey}
+      type={'line'}
+      tabBarExtraContent={
+        <NPMVersionSelect
+          versions={Object.keys(pkg?.versions || {})}
+          tags={pkg?.['dist-tags']}
+          targetVersion={targetVersion}
+          setVersionStr={(v) => {
+            if (v === pkg?.['dist-tags']?.latest) {
+              push(`${activateKey}`, undefined, { shallow: true });
+            } else {
+              push(`${activateKey}?version=${v}`, undefined, { shallow: true });
+            }
+          }}
+        />
+      }
+      items={presetTabs.map((tab) => {
+        return {
+          label: (
+            <Link
+              key={tab.key}
+              shallow
+              href={`/package/${pkg.name}/${tab.key}?version=${targetVersion}`}
+            >
+              {tab.name}
+            </Link>
+          ),
+          key: tab.key,
+        };
+      })}
+    ></Tabs>
   );
 }

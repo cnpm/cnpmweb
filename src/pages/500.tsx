@@ -1,11 +1,10 @@
 'use client';
 
-import { Button, Result } from 'antd'
-import { useEffect } from 'react'
+import { Result } from 'antd';
+import { useEffect } from 'react';
 
 export default function Error({
   error,
-  reset,
 }: {
   error: Error
   reset: () => void
@@ -17,13 +16,8 @@ export default function Error({
   return (
     <Result
       status='500'
-      title={error.message}
+      title={error?.message || '系统错误'}
       subTitle={'服务异常，请稍后再试'}
-      extra={
-        <Button type='primary' onClick={reset}>
-          重试
-        </Button>
-      }
     />
   );
 
