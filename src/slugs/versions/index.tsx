@@ -8,21 +8,12 @@ import {
   useVersionTags,
 } from '@/hooks/useManifest';
 
-import {
-  Card,
-  Result,
-  Segmented,
-  Space,
-  Tag,
-  Tooltip,
-  Typography,
-} from 'antd';
+import { Card, Result, Segmented, Space, Tag, Tooltip, Typography } from 'antd';
 import dayjs from 'dayjs';
 import React from 'react';
 import semver from 'semver';
 import styles from './versions.module.css';
 import Link from 'next/link';
-import AntdStyle from '@/components/AntdStyle';
 import SyncAlert from '@/components/SyncAlert';
 import { PageProps } from '@/pages/package/[...slug]';
 
@@ -118,7 +109,7 @@ function TagsList({
 
 function VersionsList({
   versions,
-  pkg
+  pkg,
 }: {
   versions: NpmPackageVersion[];
   pkg: PackageManifest;
@@ -213,7 +204,10 @@ function VersionsList({
   );
 }
 
-export default function ReadOnlyVersions({ manifest: pkg, additionalInfo: needSync }: PageProps) {
+export default function ReadOnlyVersions({
+  manifest: pkg,
+  additionalInfo: needSync,
+}: PageProps) {
   const versions = useVersions(pkg);
   const tagsInfo = useVersionTags(pkg);
   const publishedVersions = versions;
@@ -229,13 +223,11 @@ export default function ReadOnlyVersions({ manifest: pkg, additionalInfo: needSy
   return (
     <>
       <SizeContainer maxWidth={1072}>
-        <AntdStyle>
-          <SyncAlert pkg={pkg} needSync={needSync} />
-          <Card style={{ marginTop: 24 }}>
-            <TagsList pkg={pkg} tagsInfo={tagsInfo}></TagsList>
-            <VersionsList pkg={pkg} versions={versions}></VersionsList>
-          </Card>
-        </AntdStyle>
+        <SyncAlert pkg={pkg} needSync={needSync} />
+        <Card style={{ marginTop: 24 }}>
+          <TagsList pkg={pkg} tagsInfo={tagsInfo}></TagsList>
+          <VersionsList pkg={pkg} versions={versions}></VersionsList>
+        </Card>
       </SizeContainer>
     </>
   );
