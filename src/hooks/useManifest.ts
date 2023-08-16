@@ -68,8 +68,16 @@ export function useVersionTags(manifest: PackageManifest) {
 
 export function useInfo(pkgName: string | undefined) {
   return useSwr(pkgName ? `info: ${pkgName}` : null, async () => {
-    return fetch(`/api/info?pkgName=${pkgName}`)
-      .then((res) => res.json());
+    const res = await fetch(`/api/info?pkgName=${pkgName}`);
+
+    if (res.status === 404) {
+      throw new Error(`Not Found ${pkgName}`);
+    }
+
+    if (!res.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return res.json();
   });
 
 }

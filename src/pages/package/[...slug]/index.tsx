@@ -9,7 +9,7 @@ import { PackageManifest, useInfo } from '@/hooks/useManifest';
 import Footer from '@/components/Footer';
 import { useRouter } from 'next/router';
 import { useMemo } from 'react';
-import { Spin } from 'antd';
+import { Result, Spin } from 'antd';
 
 export type PageProps = {
   manifest: PackageManifest;
@@ -66,13 +66,26 @@ export default function PackagePage({
     return getPkgName(pathGroups);
   }, [router.query]);
 
-  const { data, isLoading } = useInfo(pkgName);
+  const { data, isLoading, error } = useInfo(pkgName);
 
   const resData = data?.data;
   const needSync = data?.needSync;
 
+  if (error) {
+    return <Result status="error" title="Error" subTitle={error.message} />;
+  }
+
   if (isLoading || !resData?.name) {
-    return <Spin />;
+    return (
+      <Spin
+        style={{
+          position: 'fixed',
+          left: '50%',
+          top: '50%',
+          transform: 'translate(-50%, -50%)',
+        }}
+      />
+    );
   }
 
   let type =
