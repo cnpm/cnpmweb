@@ -4,9 +4,9 @@ import Document, { Head, Html, Main, NextScript } from 'next/document';
 import type { DocumentContext } from 'next/document';
 
 const MyDocument = () => (
-  <Html lang="en">
+  <Html lang='zh-cn'>
     <Head />
-    <body>
+    <body style={{ minWidth: 1280 }}>
       <Main />
       <NextScript />
     </body>

@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 export default function AdVPS() {
   return (
-    <div style={{ textAlign: 'center' }}>
+    <div style={{ textAlign: 'center', width: '100%' }}>
       <Link
         href='https://render.alipay.com/p/s/taobaonpm_click/npmtaobao_click'
         target='_blank'

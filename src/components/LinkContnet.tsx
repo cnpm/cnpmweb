@@ -28,7 +28,7 @@ export function LinkContent({
   const url = gitUrl.parse(git);
   const tarball = dist?.tarball;
   return (
-    <Space direction='vertical'>
+    <Space direction='vertical' style={{whiteSpace: 'nowrap'}}>
       {url && (
         <Link href={gitUrl.parse(url)} target='_blank'>
           <Space size='small'>
