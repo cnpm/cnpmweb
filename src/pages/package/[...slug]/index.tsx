@@ -10,6 +10,8 @@ import Footer from '@/components/Footer';
 import { useRouter } from 'next/router';
 import { useMemo } from 'react';
 import { Result, Spin } from 'antd';
+import { GithubOutlined } from '@ant-design/icons';
+import Link from 'next/link';
 
 export type PageProps = {
   manifest: PackageManifest;
@@ -104,9 +106,28 @@ export default function PackagePage({
   return (
     <>
       <header className={styles.header}>
-        <div className={styles.container}>
-          {resData.name}@{version}
-        </div>
+        <nav className={styles.container}>
+          <span style={{ flex: 1 }}>
+            <Link href='/'>
+              <img
+                src='/cnpm.png'
+                width={24}
+                alt='logo'
+                style={{ marginRight: 8 }}
+              />
+            </Link>
+            {resData.name}@{version}
+          </span>
+          <span style={{ marginRight: 80 }}>
+            <Link
+              href='https://github.com/cnpm/cnpmweb'
+              target='_blank'
+              style={{ color: 'inherit' }}
+            >
+              <GithubOutlined />
+            </Link>
+          </span>
+        </nav>
       </header>
       <section style={{ paddingLeft: 16 }}>
         <CustomTabs activateKey={type} pkg={resData}></CustomTabs>
@@ -118,7 +139,7 @@ export default function PackagePage({
           additionalInfo={needSync}
         />
       </main>
-      <Footer/>
+      <Footer />
     </>
   );
 }
