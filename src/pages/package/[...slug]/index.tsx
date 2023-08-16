@@ -76,13 +76,12 @@ export async function getServerSideProps(ctx: any) {
 
   let scope = null;
   let name;
-  let type: keyof typeof PageMap = 'home';
 
   if (slug.join('/').startsWith('@')) {
-    [scope, name, type] = slug;
+    [scope, name] = slug;
     scope = decodeURIComponent(scope);
   } else {
-    [name, type] = slug || [];
+    [name] = slug || [];
   }
 
   const pkgName = scope ? `${scope}/${name}` : name;
@@ -133,12 +132,12 @@ export async function getServerSideProps(ctx: any) {
         tarball: data?.dist?.tarball || '',
         size: data?.dist?.size || '0',
       },
-      publish_time: data.publish_time || 0,
-      _npmUser: data._npmUser,
+      publish_time: data.publish_time || data._cnpmcore_publish_time || 0,
+      _npmUser: data._npmUser || null,
     };
   });
   const data = {
-    name,
+    name: pkg.name,
     maintainers,
     repository,
     'dist-tags': pkg['dist-tags'],

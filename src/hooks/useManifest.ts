@@ -8,7 +8,7 @@ export interface NpmPackageVersion {
     tarball: string;
     size: string;
   };
-  publish_time: number;
+  publish_time: number | string;
   keywords: string[];
   deprecated?: string;
   _npmUser: Record<string, string>;
