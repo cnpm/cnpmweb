@@ -1,6 +1,15 @@
 import React, {useState} from 'react'
 import {getIcon} from "./icon";
 import type { Directory, File } from '@/hooks/useFile';
+import { createStyles } from 'antd-style';
+
+const useStyles = createStyles(({ token, css }) => {
+  return {
+    selected: css`
+      background: ${token.colorBorderSecondary};
+    `,
+  };
+});
 
 interface FileTreeProps {
   rootDir: Directory;   // 根目录
@@ -54,25 +63,24 @@ const FileDiv = ({file, icon, selectedFile, onClick}: {
   const pathArray = file.path.split('/');
   const depth = pathArray.length;
   const name = pathArray[pathArray.length - 1];
+  const { styles } = useStyles();
   return (
     <div
-    style={{
-      display: 'flex',
-      alignItems: 'center',
-      paddingLeft: depth * 16,
-      backgroundColor: isSelected ? "#eee" : "transparent",
-      cursor: "pointer",
-      minWidth: 'max-content',
-    }}
-      onClick={onClick}>
-      <FileIcon
-        name={icon}
-        extension={file.path.split('.').pop() || ""}/>
-      <span style={{marginLeft: 1}}>
-        {name}
-      </span>
+      className={isSelected ? styles.selected : ''}
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        paddingLeft: depth * 16,
+        // backgroundColor: isSelected ? "#eee" : "transparent",
+        cursor: 'pointer',
+        minWidth: 'max-content',
+      }}
+      onClick={onClick}
+    >
+      <FileIcon name={icon} extension={file.path.split('.').pop() || ''} />
+      <span style={{ marginLeft: 1 }}>{name}</span>
     </div>
-  )
+  );
 }
 
 

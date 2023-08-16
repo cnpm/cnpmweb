@@ -1,17 +1,17 @@
+import { ThemeMode, ThemeProvider, cx, useThemeMode } from 'antd-style';
 import PageHome from '@/slugs/home'
 import PageFiles from '@/slugs/files'
 import PageVersions from '@/slugs/versions'
 import PageDeps from '@/slugs/deps'
 import 'antd/dist/reset.css';
-import styles from './page.module.css';
 import CustomTabs from '@/components/CustomTabs';
 import { PackageManifest, useInfo } from '@/hooks/useManifest';
 import Footer from '@/components/Footer';
 import { useRouter } from 'next/router';
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Result, Spin } from 'antd';
-import { GithubOutlined } from '@ant-design/icons';
-import Link from 'next/link';
+import { createStyles } from 'antd-style';
+import Header from '@/components/Header';
 
 export type PageProps = {
   manifest: PackageManifest;
@@ -51,8 +51,15 @@ const PageMap: Record<string, (params: PageProps) => JSX.Element> = {
 export default function PackagePage({
 }: {
 }) {
-
   const router = useRouter();
+
+  const [themeMode, setThemeMode] = useState<ThemeMode>('light');
+
+  useEffect(() => {
+    document
+      .querySelector('html')
+      ?.setAttribute('style', `color-scheme: ${themeMode};`);
+  }, [themeMode]);
 
   const pkgName = useMemo(() => {
     const { slug } = router.query;
@@ -74,7 +81,7 @@ export default function PackagePage({
   const needSync = data?.needSync;
 
   if (error) {
-    return <Result status="error" title="Error" subTitle={error.message} />;
+    return <Result status='error' title='Error' subTitle={error.message} />;
   }
 
   if (isLoading || !resData?.name) {
@@ -90,12 +97,11 @@ export default function PackagePage({
     );
   }
 
-  let type =
-    (router.asPath.split('?')[0].replace(
-      `/package/${resData.name}/`,
-      ''
-    ) as keyof typeof PageMap);
-  const version = (router.query.version as string) || resData?.['dist-tags']?.latest;
+  let type = router.asPath
+    .split('?')[0]
+    .replace(`/package/${resData.name}/`, '') as keyof typeof PageMap;
+  const version =
+    (router.query.version as string) || resData?.['dist-tags']?.latest;
 
   if (PageMap[type] === undefined) {
     type = 'home';
@@ -104,42 +110,25 @@ export default function PackagePage({
   const Component = PageMap[type];
 
   return (
-    <>
-      <header className={styles.header}>
-        <nav className={styles.container}>
-          <span style={{ flex: 1 }}>
-            <Link href='/'>
-              <img
-                src='/cnpm.png'
-                width={24}
-                alt='logo'
-                style={{ marginRight: 8 }}
-              />
-            </Link>
-            {resData.name}@{version}
-          </span>
-          <span style={{ marginRight: 80 }}>
-            <Link
-              href='https://github.com/cnpm/cnpmweb'
-              target='_blank'
-              style={{ color: 'inherit' }}
-            >
-              <GithubOutlined />
-            </Link>
-          </span>
-        </nav>
-      </header>
-      <section style={{ paddingLeft: 16 }}>
-        <CustomTabs activateKey={type} pkg={resData}></CustomTabs>
-      </section>
-      <main>
-        <Component
-          manifest={resData}
-          version={version}
-          additionalInfo={needSync}
+    <ThemeProvider themeMode={themeMode}>
+      <div>
+        <Header
+          title={`${resData.name}@${version}`}
+          themeMode={themeMode}
+          setThemeMode={setThemeMode}
         />
-      </main>
-      <Footer />
-    </>
+        <section style={{ paddingLeft: 16 }}>
+          <CustomTabs activateKey={type} pkg={resData}></CustomTabs>
+        </section>
+        <main>
+          <Component
+            manifest={resData}
+            version={version}
+            additionalInfo={needSync}
+          />
+        </main>
+        <Footer />
+      </div>
+    </ThemeProvider>
   );
 }

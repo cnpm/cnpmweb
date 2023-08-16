@@ -12,10 +12,37 @@ import { Card, Result, Segmented, Space, Tag, Tooltip, Typography } from 'antd';
 import dayjs from 'dayjs';
 import React from 'react';
 import semver from 'semver';
-import styles from './versions.module.css';
 import Link from 'next/link';
 import SyncAlert from '@/components/SyncAlert';
 import { PageProps } from '@/pages/package/[...slug]';
+import { createStyles } from 'antd-style';
+
+const useStyles = createStyles(({ token, css }) => {
+  return {
+    versionsCon: css`
+      font-size: 16px;
+      color: ${token.colorTextBase};
+      padding: 0 16px;
+      margin-top: 16px;
+    `,
+    versionsItem: css`
+      display: flex;
+      justify-content: space-between;
+      align-items: stretch;
+      margin: 16px;
+    `,
+    dot: css`
+      display: block;
+      flex-grow: 1;
+      transform: translate(0, -11px);
+      margin: 0 8px;
+      border-bottom: 1px dotted ${token.colorBorder};
+    `,
+    border: css`
+      border-bottom: 1px dotted ${token.colorBorder};
+    `
+  };
+});
 
 function TagsList({
   tagsInfo,
@@ -24,18 +51,19 @@ function TagsList({
   tagsInfo: Record<string, string[]>;
   pkg: PackageManifest;
 }) {
+  const { styles } = useStyles();
   const [onlyProd, setOnlyProd] = React.useState(true);
   return (
     <div style={{ position: 'relative' }}>
       <Typography.Title
         level={4}
+        className={styles.border}
         style={{
           fontSize: 16,
           paddingBottom: 16,
-          borderBottom: '1px dotted #ccc',
-          color: '#111',
           position: 'relative',
         }}
+
       >
         当前 Tags
       </Typography.Title>
@@ -114,16 +142,16 @@ function VersionsList({
   versions: NpmPackageVersion[];
   pkg: PackageManifest;
 }) {
+  const { styles } = useStyles();
   const [onlyProd, setOnlyProd] = React.useState(true);
   return (
     <div style={{ position: 'relative' }}>
       <Typography.Title
         level={4}
+        className={styles.border}
         style={{
           fontSize: 18,
           paddingBottom: 16,
-          borderBottom: '1px dotted #ccc',
-          color: '#111',
           position: 'relative',
         }}
       >
