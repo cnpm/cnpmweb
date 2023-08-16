@@ -1,5 +1,5 @@
 'use client';
-import { DynamicCodeViewer as CodeViewer } from "@/components/DynamicCodeViewer";
+import { CodeViewer } from "@/components/CodeViewer";
 import { FileTree } from "@/components/FileTree";
 import { Sidebar } from "@/components/Sidebar";
 import { useDirs, File } from "@/hooks/useFile";

@@ -1,5 +1,6 @@
 import React from "react";
 import { orderBy } from 'lodash';
+import useSwr from 'swr';
 
 export interface NpmPackageVersion {
   name: string;
@@ -63,4 +64,12 @@ export function useVersionTags(manifest: PackageManifest) {
     });
     return res;
   }, [manifest]);
+}
+
+export function useInfo(pkgName: string | undefined) {
+  return useSwr(pkgName ? `info: ${pkgName}` : null, async () => {
+    return fetch(`/api/info?pkgName=${pkgName}`)
+      .then((res) => res.json());
+  });
+
 }

@@ -34,7 +34,7 @@ export const CodeViewer = ({
       <Editor
         height='100vh'
         language={language}
-        value={isLoading ? 'Loading...' : code}
+        value={code ? code : 'Loading...'}
         theme='vs-light'
         options={{ readOnly: true, fontSize: 16 }}
       />
