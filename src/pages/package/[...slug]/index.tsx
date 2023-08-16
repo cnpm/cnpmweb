@@ -1,4 +1,4 @@
-import { ThemeMode, ThemeProvider, cx, useThemeMode } from 'antd-style';
+import { ThemeMode, ThemeProvider as _ThemeProvider  } from 'antd-style';
 import PageHome from '@/slugs/home'
 import PageFiles from '@/slugs/files'
 import PageVersions from '@/slugs/versions'
@@ -10,8 +10,9 @@ import Footer from '@/components/Footer';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo, useState } from 'react';
 import { Result, Spin } from 'antd';
-import { createStyles } from 'antd-style';
 import Header from '@/components/Header';
+
+const ThemeProvider = _ThemeProvider as any;
 
 export type PageProps = {
   manifest: PackageManifest;
@@ -110,8 +111,8 @@ export default function PackagePage({
   const Component = PageMap[type];
 
   return (
-    <ThemeProvider themeMode={themeMode}>
-      <div>
+    <div>
+      <ThemeProvider themeMode={themeMode}>
         <Header
           title={`${resData.name}@${version}`}
           themeMode={themeMode}
@@ -128,7 +129,7 @@ export default function PackagePage({
           />
         </main>
         <Footer />
-      </div>
-    </ThemeProvider>
+      </ThemeProvider>
+    </div>
   );
 }

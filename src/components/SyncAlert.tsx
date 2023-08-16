@@ -1,7 +1,6 @@
 'use client';
 
 import { PackageManifest } from "@/hooks/useManifest";
-import { LoadingOutlined } from "@ant-design/icons";
 import { Alert, AlertProps, Button, Space } from "antd";
 import Sync from "./Sync";
 
