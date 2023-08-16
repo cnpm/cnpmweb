@@ -3,7 +3,6 @@ import { Col, Row, Space, Typography } from 'antd';
 import style from './home.module.css';
 import SizeContainer from '@/components/SizeContainer';
 import PresetCard from '@/components/PresetCard';
-import AntdStyle from '@/components/AntdStyle';
 import ReadmeContent from '@/components/ReadmeContent';
 import { ContributorContent } from '@/components/ContributorContent';
 import { LinkContent } from '@/components/LinkContnet';
@@ -51,32 +50,30 @@ export default function Home({ manifest, version }: PageProps) {
   );
 
   return (
-    <AntdStyle>
-      <div className={style.homeCon}>
-        <SizeContainer
-          maxWidth={1280}
-          style={{ position: 'relative', marginTop: 0 }}
-        >
-          <div className={style.sloganCon}>
-            <Typography.Title>{pkg!.name}</Typography.Title>
-            <Typography.Paragraph ellipsis>
-              {pkg!.description}
-            </Typography.Paragraph>
-            <div>
-              <ul className={style.tagCon}>
-                {tags?.map((tag) => {
-                  return (
-                    <li key={tag} className={style.tagItem}>
-                      {tag}
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
+    <div className={style.homeCon}>
+      <SizeContainer
+        maxWidth={1280}
+        style={{ position: 'relative', marginTop: 0 }}
+      >
+        <div className={style.sloganCon}>
+          <Typography.Title>{pkg!.name}</Typography.Title>
+          <Typography.Paragraph ellipsis>
+            {pkg!.description}
+          </Typography.Paragraph>
+          <div>
+            <ul className={style.tagCon}>
+              {tags?.map((tag) => {
+                return (
+                  <li key={tag} className={style.tagItem}>
+                    {tag}
+                  </li>
+                );
+              })}
+            </ul>
           </div>
-          {contentNode}
-        </SizeContainer>
-      </div>
-    </AntdStyle>
+        </div>
+        {contentNode}
+      </SizeContainer>
+    </div>
   );
 }
