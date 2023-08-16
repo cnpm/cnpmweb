@@ -5,6 +5,7 @@ import React from 'react';
 import SizeContainer from "@/components/SizeContainer";
 import Link from "next/link";
 import { PageProps } from '@/pages/package/[...slug]';
+import { useFileContent } from '@/hooks/useFile';
 
 const columns: TableColumnsType<object> = [
   {
@@ -25,8 +26,13 @@ const columns: TableColumnsType<object> = [
 ];
 
 export default function Deps({ manifest: pkg, version }: PageProps) {
+  const {data: versionManifest, isLoading } = useFileContent(
+    { fullname: pkg.name, spec: version },
+    '/package.json'
+  );
   const depsInfo = React.useMemo(() => {
-    const targetVersion = pkg!['versions'][version!];
+    if (isLoading) return undefined;
+    const targetVersion = JSON.parse(versionManifest || '{}');
     const deps = ['dependencies', 'devDependencies'] as const;
     const res: Record<string, { package: string; spec: string }[]> = {
       dependencies: [],
@@ -41,7 +47,7 @@ export default function Deps({ manifest: pkg, version }: PageProps) {
       }
     });
     return res;
-  }, [pkg, version]);
+  }, [versionManifest, isLoading]);
 
   const loading = depsInfo === undefined;
 

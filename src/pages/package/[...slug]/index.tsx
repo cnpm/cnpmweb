@@ -91,7 +91,11 @@ export async function getServerSideProps(ctx: any) {
     fetch(`https://registry.npmmirror.com/${pkgName}`, {
       cache: 'no-store',
     }).then((res) => res.json()),
-    fetch(`https://registry.npmjs.org/${pkgName}`, { cache: 'no-store' }).then(
+    fetch(`https://registry.npmjs.org/${pkgName}`, { cache: 'no-store',
+      headers: {
+        'Accept': 'application/vnd.npm.install-v1+json',
+      },
+     }).then(
       (res) => res.json()
     ),
   ]);
@@ -114,5 +118,33 @@ export async function getServerSideProps(ctx: any) {
   }
 
 
-  return { props: { data: pkg, scope, name, needSync: !alreadySync } };
+  // 剪裁一下 pkg 的数据
+  const {
+    versions,
+    maintainers = null,
+    repository = null,
+  } = pkg as PackageManifest;
+  const simpleVersions: Record<string, Partial<PackageManifest['versions'][string]>> = {};
+
+  Object.entries(versions).forEach(([version, data]) => {
+    simpleVersions[version] = {
+      version: data.version,
+      dist: {
+        tarball: data?.dist?.tarball || '',
+        size: data?.dist?.size || '0',
+      },
+      publish_time: data.publish_time || 0,
+      _npmUser: data._npmUser,
+    };
+  });
+  const data = {
+    name,
+    maintainers,
+    repository,
+    'dist-tags': pkg['dist-tags'],
+    versions: simpleVersions,
+  };
+
+
+  return { props: { data, scope, name, needSync: !alreadySync } };
 }
