@@ -7,9 +7,9 @@ import AntdStyle from '@/components/AntdStyle';
 import ReadmeContent from '@/components/ReadmeContent';
 import { ContributorContent } from '@/components/ContributorContent';
 import { LinkContent } from '@/components/LinkContnet';
-import { PageProps } from '../page';
 import AdBanner from '@/components/AdBanner';
 import AdVPS from '@/components/AdVPS';
+import { PageProps } from '@/pages/package/[...slug]';
 
 export default function Home({ manifest, version }: PageProps) {
   const pkg = manifest;

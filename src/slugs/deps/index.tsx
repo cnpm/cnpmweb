@@ -4,7 +4,7 @@ import { Card, Col, Row, Table } from 'antd';
 import React from 'react';
 import SizeContainer from "@/components/SizeContainer";
 import Link from "next/link";
-import { PageProps } from '../page';
+import { PageProps } from '@/pages/package/[...slug]';
 
 const columns: TableColumnsType<object> = [
   {

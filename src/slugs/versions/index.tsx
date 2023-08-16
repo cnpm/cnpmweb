@@ -22,9 +22,9 @@ import React from 'react';
 import semver from 'semver';
 import styles from './versions.module.css';
 import Link from 'next/link';
-import { PageProps } from '../page';
 import AntdStyle from '@/components/AntdStyle';
 import SyncAlert from '@/components/SyncAlert';
+import { PageProps } from '@/pages/package/[...slug]';
 
 function TagsList({
   tagsInfo,

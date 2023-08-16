@@ -3,9 +3,9 @@ import { DynamicCodeViewer as CodeViewer } from "@/components/DynamicCodeViewer"
 import { FileTree } from "@/components/FileTree";
 import { Sidebar } from "@/components/Sidebar";
 import { useDirs, File } from "@/hooks/useFile";
+import { PageProps } from "@/pages/package/[...slug]";
 import { Spin } from "antd";
 import { useState } from "react";
-import { PageProps } from "../page";
 
 const Viewer = ({ manifest, version }: PageProps) => {
   const [_selectedFile, setSelectedFile] = useState<File | undefined>();

@@ -1,9 +1,6 @@
 'use client';
-import Editor, { loader } from '@monaco-editor/react';
-import * as monaco from 'monaco-editor';
+import Editor from '@monaco-editor/react';
 import { File, useFileContent } from '@/hooks/useFile';
-
-loader.config({ monaco });
 
 export const CodeViewer = ({
   selectedFile,
@@ -37,7 +34,7 @@ export const CodeViewer = ({
       <Editor
         height='100vh'
         language={language}
-        value={isLoading ? 'Loading ...' : code}
+        value={isLoading ? 'Loading...' : code}
         theme='vs-light'
         options={{ readOnly: true, fontSize: 16 }}
       />
