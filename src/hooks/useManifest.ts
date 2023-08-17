@@ -1,5 +1,6 @@
 import React from "react";
 import { orderBy } from 'lodash';
+import useSwr from 'swr';
 
 export interface NpmPackageVersion {
   name: string;
@@ -63,4 +64,20 @@ export function useVersionTags(manifest: PackageManifest) {
     });
     return res;
   }, [manifest]);
+}
+
+export function useInfo(pkgName: string | undefined) {
+  return useSwr(pkgName ? `info: ${pkgName}` : null, async () => {
+    const res = await fetch(`/api/info?pkgName=${pkgName}`);
+
+    if (res.status === 404) {
+      throw new Error(`Not Found ${pkgName}`);
+    }
+
+    if (!res.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return res.json();
+  });
+
 }

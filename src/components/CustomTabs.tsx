@@ -46,9 +46,9 @@ export default function CustomTabs({
           targetVersion={targetVersion}
           setVersionStr={(v) => {
             if (v === pkg?.['dist-tags']?.latest) {
-              push(`${activateKey}`, undefined, { shallow: true });
+              push(`/package/${pkg.name}/${activateKey}`, undefined, { shallow: true });
             } else {
-              push(`${activateKey}?version=${v}`, undefined, { shallow: true });
+              push(`/package/${pkg.name}/${activateKey}?version=${v}`, undefined, { shallow: true });
             }
           }}
         />

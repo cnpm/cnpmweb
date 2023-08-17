@@ -150,55 +150,59 @@ function VersionsList({
           <span className={styles.dot}></span>
           <span>发布信息</span>
         </li>
-        {versions?.map((item) => {
-          if (onlyProd && semver.parse(item.version)?.prerelease.length) {
-            return null;
-          }
+        {versions
+          .sort((a, b) =>
+            dayjs(a.publish_time).isAfter(b.publish_time) ? -1 : 1
+          )
+          ?.map((item) => {
+            if (onlyProd && semver.parse(item.version)?.prerelease.length) {
+              return null;
+            }
 
-          return (
-            <li className={styles.versionsItem} key={item.version}>
-              <span>
-                <Link
-                  style={
-                    item.deprecated
-                      ? {
-                          color: 'rgba(0,0,0,.25)',
-                          textDecoration: 'line-through',
-                        }
-                      : {}
-                  }
-                  href={`/package/${pkg!.name}?version=${item.version}`}
-                >
-                  {item.version}
-                </Link>
-              </span>
-              <span className={styles.dot}></span>
-              <Typography.Text type='secondary'>
-                <Space size='small'>
-                  {item._npmUser?.name ? (
-                    <>
-                      <span>由</span>
-                      <Tooltip title={item._npmUser.name.replace('buc:', '')}>
-                        <Gravatar
-                          email={item._npmUser.email}
-                          name={item._npmUser.name}
-                        />
-                      </Tooltip>
-                      <span>发布于</span>
-                    </>
-                  ) : null}
-                  <Tooltip
-                    title={dayjs(item.publish_time).format(
-                      'YYYY-MM-DD HH:mm:SS'
-                    )}
+            return (
+              <li className={styles.versionsItem} key={item.version}>
+                <span>
+                  <Link
+                    style={
+                      item.deprecated
+                        ? {
+                            color: 'rgba(0,0,0,.25)',
+                            textDecoration: 'line-through',
+                          }
+                        : {}
+                    }
+                    href={`/package/${pkg!.name}?version=${item.version}`}
                   >
-                    {dayjs(item.publish_time).format('YYYY-MM-DD')}
-                  </Tooltip>
-                </Space>
-              </Typography.Text>
-            </li>
-          );
-        })}
+                    {item.version}
+                  </Link>
+                </span>
+                <span className={styles.dot}></span>
+                <Typography.Text type='secondary'>
+                  <Space size='small'>
+                    {item._npmUser?.name ? (
+                      <>
+                        <span>由</span>
+                        <Tooltip title={item._npmUser.name.replace('buc:', '')}>
+                          <Gravatar
+                            email={item._npmUser.email}
+                            name={item._npmUser.name}
+                          />
+                        </Tooltip>
+                        <span>发布于</span>
+                      </>
+                    ) : null}
+                    <Tooltip
+                      title={dayjs(item.publish_time).format(
+                        'YYYY-MM-DD HH:mm:SS'
+                      )}
+                    >
+                      {dayjs(item.publish_time).format('YYYY-MM-DD')}
+                    </Tooltip>
+                  </Space>
+                </Typography.Text>
+              </li>
+            );
+          })}
       </ul>
     </div>
   );

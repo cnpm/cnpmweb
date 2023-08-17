@@ -26,6 +26,11 @@ export default async function middleware(req: NextRequest) {
 
   const pathGroups = pathname.split("/").filter(Boolean);
 
+  // logo
+  if (pathname === '/cnpm.png') {
+    return NextResponse.next();
+  }
+
   let pkgName = getPkgName(pathGroups);
   if (pkgName) {
     return NextResponse.redirect(
