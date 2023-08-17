@@ -78,7 +78,7 @@ export default function Home({ manifest, version, additionalInfo: needSync }: Pa
           <PresetCard
             title='最近更新'
             subTitle={
-              !needSync ? (
+              needSync ? (
                 <Sync pkgName={pkg.name} />
               ) : (
                 <Tooltip title={'和源站数据比对一致'}>无需同步</Tooltip>

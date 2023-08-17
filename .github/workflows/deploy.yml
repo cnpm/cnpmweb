@@ -1,0 +1,17 @@
+name: deploy npmmirror.com
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  send_request:
+    runs-on: ubuntu-latest
+    if: github.secrets.PIPELINE_WEBHOOK != ''
+    steps:
+    - name: Trigger pipeline webhook
+      run: |
+        curl -X POST '${{ secrets.PIPELINE_WEBHOOK }}' \
+        -H 'Content-Type: application/json' \
+        -d '{}'
