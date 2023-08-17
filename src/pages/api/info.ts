@@ -57,6 +57,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const data = {
       name: pkg.name,
       maintainers,
+      description: pkg.description,
       repository,
       'dist-tags': pkg['dist-tags'],
       versions: simpleVersions,

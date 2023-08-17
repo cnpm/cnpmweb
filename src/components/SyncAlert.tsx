@@ -21,7 +21,7 @@ export default function SyncAlert({pkg, needSync}: SyncAlertProps) {
   const registry = pkg?._source_registry_name;
   // const { needSync, isLoading } = useNeedSync(pkg!, registry);
   let type: AlertProps['type'] = 'success';
-  let message = '版本已同步';
+  let message = '所有版本均已同步';
   let sourceLink;
   let description;
 

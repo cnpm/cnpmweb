@@ -221,7 +221,7 @@ function VersionsList({
                     ) : null}
                     <Tooltip
                       title={dayjs(item.publish_time).format(
-                        'YYYY-MM-DD HH:mm:SS'
+                        'YYYY-MM-DD HH:mm:ss Z'
                       )}
                     >
                       {dayjs(item.publish_time).format('YYYY-MM-DD')}

@@ -13,10 +13,10 @@ export default function Sync({ pkgName }: SyncProps) {
 
   async function showLog(id: string) {
     modal.success({
-      title: '同步日志',
+      title: '等待调度',
       content: (
         <>
-          创建同步任务成功，正在等待调度，通常需要几十秒钟的时间
+          创建同步任务成功，正在等待调度，如遇日志 404 请稍后刷新重试，通常需要几十秒钟的时间
           <Link
             target='_blank'
             href={`https://registry.npmmirror.com/-/package/${pkgName}/syncs/${id}/log`}
