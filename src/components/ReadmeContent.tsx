@@ -1,6 +1,5 @@
 'use client';
 import { useReadme } from '@/hooks/useReadme';
-import {cx} from 'antd-style';
 import Slugger from 'github-slugger';
 import hljs from 'highlight.js';
 import marked from 'marked';

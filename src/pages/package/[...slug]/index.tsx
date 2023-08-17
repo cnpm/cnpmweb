@@ -1,4 +1,4 @@
-import { ThemeMode, ThemeProvider as _ThemeProvider  } from 'antd-style';
+import { ThemeMode, ThemeProvider as _ThemeProvider } from 'antd-style';
 import PageHome from '@/slugs/home'
 import PageFiles from '@/slugs/files'
 import PageVersions from '@/slugs/versions'
@@ -13,6 +13,8 @@ import { Result, Spin } from 'antd';
 import Header from '@/components/Header';
 
 const ThemeProvider = _ThemeProvider as any;
+
+const LOCAL_STORAGE_THEME = 'themeMode';
 
 export type PageProps = {
   manifest: PackageManifest;
@@ -55,6 +57,13 @@ export default function PackagePage({
   const router = useRouter();
 
   const [themeMode, setThemeMode] = useState<ThemeMode>('light');
+
+  useEffect(() => {
+    const themeMode = localStorage.getItem(LOCAL_STORAGE_THEME) as ThemeMode;
+    if (themeMode) {
+      setThemeMode(themeMode);
+    }
+  }, []);
 
   useEffect(() => {
     document
@@ -116,7 +125,10 @@ export default function PackagePage({
         <Header
           title={`${resData.name}@${version}`}
           themeMode={themeMode}
-          setThemeMode={setThemeMode}
+          setThemeMode={(v: ThemeMode) => {
+            localStorage.setItem(LOCAL_STORAGE_THEME, v);
+            setThemeMode(v);
+          }}
         />
         <section style={{ paddingLeft: 16 }}>
           <CustomTabs activateKey={type} pkg={resData}></CustomTabs>
