@@ -8,6 +8,7 @@ on:
 jobs:
   send_request:
     runs-on: ubuntu-latest
+    if: github.secrets.PIPELINE_WEBHOOK != ''
     steps:
     - name: Trigger pipeline webhook
       run: |
