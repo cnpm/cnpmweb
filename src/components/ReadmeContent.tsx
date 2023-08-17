@@ -1,15 +1,16 @@
 'use client';
 import { useReadme } from '@/hooks/useReadme';
-import 'github-markdown-css/github-markdown-light.css';
 import Slugger from 'github-slugger';
 import hljs from 'highlight.js';
 import marked from 'marked';
 import React, { useEffect } from 'react';
 import styles from './ReadmeContent.module.css';
-
+import light from './light.module.css';
+import dark from './dark.module.css';
 import 'highlight.js/styles/github.css';
-import { Card, Result, Skeleton, Typography } from 'antd';
+import { Result, Skeleton, Typography } from 'antd';
 import SizeContainer from './SizeContainer';
+import { useThemeMode } from 'antd-style';
 
 const slugger = new Slugger();
 
@@ -39,6 +40,7 @@ marked.use({ renderer });
 
 export function ReadmeContent({name, version = 'latest'}: {name: string; version?: string}) {
   const content = useReadme(name, version);
+  const { themeMode } = useThemeMode();
 
   const contentNode = React.useMemo(() => {
     const loading = content === undefined;
@@ -50,16 +52,17 @@ export function ReadmeContent({name, version = 'latest'}: {name: string; version
     }
     return (
       <div
-        className= "markdown-body"
-    dangerouslySetInnerHTML = {{
-      __html: marked(content, {
-        headerIds: true,
-      }),
+        className={
+          themeMode === 'dark' ? dark['markdown-body'] : light['markdown-body']
         }
-  }
+        dangerouslySetInnerHTML={{
+          __html: marked(content, {
+            headerIds: true,
+          }),
+        }}
       />
-  );
-}, [content]);
+    );
+}, [content, themeMode]);
 
 useEffect(() => {
   if (location.hash) {
@@ -79,7 +82,7 @@ export default function Readme({
   version?: string;
 }) {
   return (
-    <SizeContainer maxWidth={800}>
+    <SizeContainer maxWidth={800} style={{ colorScheme: 'dark' }}>
       <ReadmeContent name={name} version={version} />
     </SizeContainer>
   );

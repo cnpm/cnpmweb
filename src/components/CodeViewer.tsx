@@ -1,6 +1,7 @@
 'use client';
 import Editor from '@monaco-editor/react';
 import { File, useFileContent } from '@/hooks/useFile';
+import { useThemeMode } from 'antd-style';
 
 export const CodeViewer = ({
   selectedFile,
@@ -11,6 +12,7 @@ export const CodeViewer = ({
   pkgName: string;
   spec?: string;
 }) => {
+  const { themeMode: theme } = useThemeMode();
 
   const { data: code, isLoading } = useFileContent(
     { fullname: pkgName, spec },
@@ -35,7 +37,7 @@ export const CodeViewer = ({
         height='100vh'
         language={language}
         value={code ? code : 'Loading...'}
-        theme='vs-light'
+        theme={`vs-${theme}`}
         options={{ readOnly: true, fontSize: 16 }}
       />
     </div>

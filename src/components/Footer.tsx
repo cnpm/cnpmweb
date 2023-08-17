@@ -17,7 +17,6 @@ export default function Footer() {
         target='_blank'
         style={{
           color: '#2db7f5',
-          background: 'transparent',
           textDecoration: 'none',
           outline: 'none',
         }}
