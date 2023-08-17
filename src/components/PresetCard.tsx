@@ -15,10 +15,13 @@ const useStyles = createStyles(({ token, css }) => {
       background: ${token.colorBgContainer};
     `,
     title: css`
-      margin-bottom: 24px;
       color: ${token.colorTextLabel};
       font-size: 16px;
-      line-height: 22px;
+      letter-spacing: 0;
+    `,
+    subTitle: css`
+      color: ${token.colorTextSecondary};
+      font-size: 14px;
       letter-spacing: 0;
     `,
   };
@@ -28,10 +31,12 @@ export interface PresetCardProps {
   children?: React.ReactNode;
   title?: React.ReactNode;
   style?: React.CSSProperties;
+  subTitle?: React.ReactNode;
 }
 
 export default function PresetCard({
   title,
+  subTitle,
   children,
   style = {},
 }: PresetCardProps) {
@@ -40,13 +45,27 @@ export default function PresetCard({
   return (
     <div className={styles.container} style={style}>
       {title && (
-        <Typography.Title
-          level={3}
-          className={styles.title}
-          style={{ fontSize: 16, marginBottom: '1rem' }}
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            marginBottom: '1rem',
+          }}
         >
-          {title}
-        </Typography.Title>
+          <Typography.Title
+            level={3}
+            className={styles.title}
+            style={{ fontSize: 16, marginBottom: 0, flex: 1 }}
+          >
+            {title}
+          </Typography.Title>
+          <Typography.Text
+            style={{ fontSize: 14, marginBottom: 0, marginTop: 0 }}
+            className={styles.subTitle}
+          >
+            {subTitle}
+          </Typography.Text>
+        </div>
       )}
       {children}
     </div>

@@ -1,5 +1,5 @@
 'use client';
-import { Col, Row, Space, Typography } from 'antd';
+import { Button, Col, Row, Space, Tooltip, Typography } from 'antd';
 import SizeContainer from '@/components/SizeContainer';
 import PresetCard from '@/components/PresetCard';
 import ReadmeContent from '@/components/ReadmeContent';
@@ -9,12 +9,15 @@ import AdBanner from '@/components/AdBanner';
 import AdVPS from '@/components/AdVPS';
 import { PageProps } from '@/pages/package/[...slug]';
 import { createStyles } from 'antd-style';
+import RecentVersion from '@/components/RecentVersion';
+import Sync from '@/components/Sync';
+import { QuestionCircleFilled } from '@ant-design/icons';
 
 const useStyles = createStyles(({ token, css }) => {
   return {
     homeCon: css`
       position: relative;
-      padding-top: 80px;
+      padding-top: 48px;
       overflow: hidden;
     `,
     tagCon: css`
@@ -37,7 +40,7 @@ const useStyles = createStyles(({ token, css }) => {
   };
 });
 
-export default function Home({ manifest, version }: PageProps) {
+export default function Home({ manifest, version, additionalInfo: needSync }: PageProps) {
   const pkg = manifest;
   const tags: string[] = pkg?.keywords || [];
   const { styles: style } = useStyles();
@@ -60,6 +63,7 @@ export default function Home({ manifest, version }: PageProps) {
       </Col>
       <Col flex='0 0 378px'>
         <Space direction={'vertical'} size='middle' style={{ minWidth: 378 }}>
+          <AdVPS />
           {manifest.maintainers?.length > 0 && (
             <PresetCard title='项目成员'>
               <ContributorContent members={manifest.maintainers} />
@@ -71,7 +75,18 @@ export default function Home({ manifest, version }: PageProps) {
               dist={manifest.versions?.[version!]?.dist}
             />
           </PresetCard>
-          <AdVPS />
+          <PresetCard
+            title='最近更新'
+            subTitle={
+              !needSync ? (
+                <Sync pkgName={pkg.name} />
+              ) : (
+                <Tooltip title={'和源站数据比对一致'}>无需同步</Tooltip>
+              )
+            }
+          >
+            <RecentVersion pkg={pkg} />
+          </PresetCard>
         </Space>
       </Col>
     </Row>
@@ -84,7 +99,9 @@ export default function Home({ manifest, version }: PageProps) {
         style={{ position: 'relative', marginTop: 0 }}
       >
         <div>
-          <Typography.Title>{pkg!.name}</Typography.Title>
+          <Typography.Title>
+            {pkg!.name}
+          </Typography.Title>
           <Typography.Paragraph ellipsis>
             {pkg!.description}
           </Typography.Paragraph>

@@ -1,6 +1,7 @@
 import React from "react";
 import { orderBy } from 'lodash';
 import useSwr from 'swr';
+import dayjs from "dayjs";
 
 export interface NpmPackageVersion {
   name: string;
@@ -46,10 +47,10 @@ export function useVersions(manifest: PackageManifest): NpmPackageVersion[] {
       }
       return {
         ...item,
-        publish_time: new Date(item._cnpmcore_publish_time).valueOf(),
+        publish_time: new Date(item._cnpmcore_publish_time || item.publish_time).valueOf(),
       };
     });
-    return orderBy(patchedVersions, 'publish_time', 'desc');
+    return patchedVersions.sort((a, b) => dayjs(a.publish_time).isAfter(b.publish_time) ? -1 : 1);
   }, [manifest]);
 }
 

@@ -34,7 +34,7 @@ const Viewer = ({ manifest, version }: PageProps) => {
   }
 
   return (
-    <div style={{ display: 'flex', marginTop: -16 }}>
+    <div style={{ display: 'flex', marginTop: -16, minHeight: '100%' }}>
       <Sidebar>
         <FileTree
           rootDir={rootDir}

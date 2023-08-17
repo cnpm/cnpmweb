@@ -121,7 +121,7 @@ export default function PackagePage({
         <section style={{ paddingLeft: 16 }}>
           <CustomTabs activateKey={type} pkg={resData}></CustomTabs>
         </section>
-        <main>
+        <main style={{ minHeight: 'calc( 100vh - 110px )' }}>
           <Component
             manifest={resData}
             version={version}
