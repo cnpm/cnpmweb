@@ -1,5 +1,5 @@
 import { GithubOutlined } from "@ant-design/icons";
-import { Segmented } from "antd";
+import { Dropdown, Segmented } from "antd";
 import { createStyles, cx } from "antd-style";
 import Link from "next/link";
 
@@ -37,7 +37,10 @@ export default function Header({title, themeMode, setThemeMode}: any) {
         <span style={{ marginRight: 16 }}>
           <Segmented
             value={themeMode}
-            options={[{label: '🌞', value: 'light'}, {label: '🌛', value: 'dark'}]}
+            options={[
+              { label: '🌞', value: 'light' },
+              { label: '🌛', value: 'dark' },
+            ]}
             onChange={(v) => {
               setThemeMode(v as 'dark' | 'light');
             }}
@@ -49,7 +52,16 @@ export default function Header({title, themeMode, setThemeMode}: any) {
             target='_blank'
             style={{ color: 'inherit' }}
           >
-            <GithubOutlined />
+            <Dropdown
+              menu={{
+                items: [
+                  { key: 'cnpmweb', label: <Link target="_blank" href={"https://github.com/cnpm/cnpmweb"}>🪞 cnpmweb</Link> },
+                  { key: 'cnpmcore', label: <Link target="_blank" href={"https://github.com/cnpm/cnpmcore"}>📦 cnpmcore</Link> },
+                ],
+              }}
+            >
+              <GithubOutlined />
+            </Dropdown>
           </Link>
         </span>
       </nav>

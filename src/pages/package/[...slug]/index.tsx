@@ -8,13 +8,12 @@ import CustomTabs from '@/components/CustomTabs';
 import { PackageManifest, useInfo } from '@/hooks/useManifest';
 import Footer from '@/components/Footer';
 import { useRouter } from 'next/router';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { Result, Spin } from 'antd';
 import Header from '@/components/Header';
+import { useTheme } from '@/hooks/useTheme';
 
 const ThemeProvider = _ThemeProvider as any;
-
-const LOCAL_STORAGE_THEME = 'themeMode';
 
 export type PageProps = {
   manifest: PackageManifest;
@@ -56,20 +55,7 @@ export default function PackagePage({
 }) {
   const router = useRouter();
 
-  const [themeMode, setThemeMode] = useState<ThemeMode>('light');
-
-  useEffect(() => {
-    const themeMode = localStorage.getItem(LOCAL_STORAGE_THEME) as ThemeMode;
-    if (themeMode) {
-      setThemeMode(themeMode);
-    }
-  }, []);
-
-  useEffect(() => {
-    document
-      .querySelector('html')
-      ?.setAttribute('style', `color-scheme: ${themeMode};`);
-  }, [themeMode]);
+  const [themeMode, setThemeMode] = useTheme();
 
   const pkgName = useMemo(() => {
     const { slug } = router.query;
@@ -125,10 +111,7 @@ export default function PackagePage({
         <Header
           title={`${resData.name}@${version}`}
           themeMode={themeMode}
-          setThemeMode={(v: ThemeMode) => {
-            localStorage.setItem(LOCAL_STORAGE_THEME, v);
-            setThemeMode(v);
-          }}
+          setThemeMode={setThemeMode}
         />
         <section style={{ paddingLeft: 16 }}>
           <CustomTabs activateKey={type} pkg={resData}></CustomTabs>

@@ -25,7 +25,7 @@ export default function LandingSearch() {
         label: (
           <>
             <Typography.Text>
-              {hit.name}@{hit.version}
+              {hit.name}
             </Typography.Text>
             <br />
             <Typography.Text type='secondary'>
@@ -62,7 +62,7 @@ export default function LandingSearch() {
     >
       <Input.Search
         size='large'
-        placeholder='搜索服务由 Algolia 提供...'
+        placeholder='输入 NPM 包名、作者、关键字等信息即可搜索，服务由 Algolia 提供...'
         enterButton
         loading={!!(search && isLoading)}
       />
