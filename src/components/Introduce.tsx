@@ -66,10 +66,10 @@ export default function Introduce() {
         </pre>
         或者你直接通过添加 npm 参数 alias 一个新命令:
         <pre>
-          alias cnpm="npm --registry=https://registry.npmmirror.com \
+          alias cnpm=&quot;npm --registry=https://registry.npmmirror.com \
           --cache=$HOME/.npm/.cache/cnpm \
           --disturl=https://npmmirror.com/mirrors/node \
-          --userconfig=$HOME/.cnpmrc"
+          --userconfig=$HOME/.cnpmrc&quot;
         </pre>
         当然，你也可以使用任意你心仪的命令行工具，只要配置 registry 即可
         <pre>$ npm config set registry https://registry.npmmirror.com</pre>

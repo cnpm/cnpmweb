@@ -6,9 +6,11 @@ import AdBanner from '@/components/AdBanner';
 import AdVPS from '@/components/AdVPS';
 import Footer from '@/components/Footer';
 import Introduce from '@/components/Introduce';
-import { ThemeMode, ThemeProvider } from 'antd-style';
+import { ThemeMode, ThemeProvider as _ThemeProvider } from 'antd-style';
 import Header from '@/components/Header';
 import { useTheme } from '@/hooks/useTheme';
+
+const ThemeProvider = _ThemeProvider as any;
 
 export default function Home() {
 
