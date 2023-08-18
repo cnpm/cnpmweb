@@ -6,10 +6,20 @@ import AdBanner from '@/components/AdBanner';
 import AdVPS from '@/components/AdVPS';
 import Footer from '@/components/Footer';
 import Introduce from '@/components/Introduce';
+import { ThemeMode, ThemeProvider } from 'antd-style';
+import Header from '@/components/Header';
+import { useTheme } from '@/hooks/useTheme';
 
 export default function Home() {
+
+  const [themeMode, setThemeMode] = useTheme();
+
   return (
-    <>
+    <ThemeProvider themeMode={themeMode as ThemeMode}>
+      <Header
+        themeMode={themeMode}
+        setThemeMode={setThemeMode}
+      />
       <main className={styles.main}>
         <AdBanner />
         <div className={styles.search}>
@@ -22,6 +32,6 @@ export default function Home() {
         </div>
       </main>
       <Footer />
-    </>
+    </ThemeProvider>
   );
 }
