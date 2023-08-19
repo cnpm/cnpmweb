@@ -16,6 +16,7 @@ import Link from 'next/link';
 import SyncAlert from '@/components/SyncAlert';
 import { PageProps } from '@/pages/package/[...slug]';
 import { createStyles } from 'antd-style';
+import VersionTags from '@/components/VersionTags';
 
 const useStyles = createStyles(({ token, css }) => {
   return {
@@ -100,33 +101,7 @@ function TagsList({
                 </Link>
               </span>
               <span className={styles.dot}></span>
-              <Space size='small'>
-                {tagsInfo[item]?.map((tag) => {
-                  if (tag === 'latest') {
-                    return (
-                      <Tooltip title='默认匹配的版本' key={tag}>
-                        <Tag color={'green'}>{tag}</Tag>
-                      </Tooltip>
-                    );
-                  }
-                  if (/latest-\d/.test(tag)) {
-                    const version = tag.split('-')[1];
-                    return (
-                      <Tooltip
-                        key={tag}
-                        title={`对于 ${version}.x.x 的版本，优先返回 ${item}`}
-                      >
-                        <Tag color={'green'}>{tag}</Tag>
-                      </Tooltip>
-                    );
-                  }
-                  return (
-                    <Tag key={item} color='lime'>
-                      {tag}
-                    </Tag>
-                  );
-                })}
-              </Space>
+              <VersionTags tags={tagsInfo[item]} max={8}></VersionTags>
             </li>
           );
         })}
