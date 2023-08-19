@@ -11,7 +11,7 @@ export default function Introduce() {
       <Title level={2}>站点介绍</Title>
       <Paragraph>
         <blockquote>
-          这是一个完整
+          这是一个完整{' '}
           <Link target={'_blank'} href='https://www.npmjs.com'>
             npmjs.com
           </Link>{' '}
