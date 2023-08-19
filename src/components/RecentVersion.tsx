@@ -9,6 +9,7 @@ import {
 } from '@/hooks/useManifest';
 import dayjs from 'dayjs';
 import Link from 'next/link';
+import VersionTags from './VersionTags';
 
 const useStyles = createStyles(({ token, css }) => {
   return {
@@ -90,17 +91,15 @@ export default function RecentVersion({ pkg }: PresetCardProps) {
                       : {}
                   }
                 >
-                  <Space size='small'>
+                  <Space size='small' style={{ flex: 1 }}>
                     {item.version}
-                    {tags[item.version] ? (
-                      tags[item.version].map((tag) => (
-                        <Tag key={tag} color='lime'>
-                          {tag}
-                        </Tag>
-                      ))
-                    ) : (
-                      <></>
-                    )}
+                    <VersionTags
+                      tags={tags[item.version]}
+                      style={{
+                        marginLeft: 8,
+                      }}
+                      max={1}
+                    />
                   </Space>
                   {isNew && !deprecated ? (
                     <span className={styles.newTag}>New</span>
