@@ -36,7 +36,7 @@ export default function Introduce() {
           <li>
             最近更新的包为
             <Link
-              href={`/${data?.sync_changes_steam.last_package}`}
+              href={`/package/${data?.sync_changes_steam.last_package}`}
               style={{ marginLeft: 8 }}
               disabled={!data}
             >
