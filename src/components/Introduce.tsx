@@ -13,7 +13,7 @@ export default function Introduce() {
         <blockquote>
           这是一个完整
           <Link target={'_blank'} href='https://www.npmjs.com'>
-            npmjs.org
+            npmjs.com
           </Link>{' '}
           镜像，你可以用此代替官方版本(只读)，我们将尽量与官方服务
           <Text strong>实时同步</Text>。
@@ -56,10 +56,10 @@ export default function Introduce() {
 
       <Title level={2}>使用说明</Title>
       <Paragraph>
-        你可以使用我们定制的 <Link href='/cnpm'>cnpm</Link> 命令行工具代替默认的
+        你可以使用我们定制的 <Link href='/package/cnpm'>cnpm</Link> 命令行工具代替默认的
         npm。
         <br />
-        cnpm 支持了写相关操作外的所有命令，例如 install、info、view 等。
+        cnpm 支持除了写相关操作外的所有命令，例如 install、info、view 等。
         <br />
         <pre>
           $ npm install -g cnpm --registry=https://registry.npmmirror.com
@@ -89,7 +89,7 @@ export default function Introduce() {
       <Paragraph>
         <ul>
           <li>
-            <Link href='https://registry.npmmiorror.com' target='_blank'>
+            <Link href='https://registry.npmmirror.com' target='_blank'>
               registry 站点
             </Link>
           </li>
@@ -97,7 +97,7 @@ export default function Introduce() {
             <Link href='/'>web 站点</Link>
           </li>
           <li>
-            <Link href='/mirrors'>二进制文件镜像</Link>
+            <Link href='/mirrors' target='_blank'>二进制文件镜像</Link>
           </li>
         </ul>
       </Paragraph>
