@@ -1,7 +1,7 @@
-import { GithubOutlined } from "@ant-design/icons";
-import { Dropdown, Segmented } from "antd";
-import { createStyles, cx } from "antd-style";
-import Link from "next/link";
+import { GithubOutlined } from '@ant-design/icons';
+import { Dropdown, Segmented } from 'antd';
+import { createStyles, cx } from 'antd-style';
+import Link from 'next/link';
 
 const useStyles = createStyles(({ token, css }) => {
   return {
@@ -18,7 +18,7 @@ const useStyles = createStyles(({ token, css }) => {
   };
 });
 
-export default function Header({title, themeMode, setThemeMode}: any) {
+export default function Header({ title, themeMode, setThemeMode }: any) {
   const { styles } = useStyles();
   return (
     <header className={cx(styles.header)}>
@@ -47,22 +47,36 @@ export default function Header({title, themeMode, setThemeMode}: any) {
           />
         </span>
         <span style={{ marginRight: 80 }}>
-          <Link
-            href='https://github.com/cnpm/cnpmweb'
-            target='_blank'
-            style={{ color: 'inherit' }}
+          <Dropdown
+            menu={{
+              items: [
+                {
+                  key: 'cnpmweb',
+                  label: (
+                    <Link
+                      target='_blank'
+                      href={'https://github.com/cnpm/cnpmweb'}
+                    >
+                      🪞 cnpmweb
+                    </Link>
+                  ),
+                },
+                {
+                  key: 'cnpmcore',
+                  label: (
+                    <Link
+                      target='_blank'
+                      href={'https://github.com/cnpm/cnpmcore'}
+                    >
+                      📦 cnpmcore
+                    </Link>
+                  ),
+                },
+              ],
+            }}
           >
-            <Dropdown
-              menu={{
-                items: [
-                  { key: 'cnpmweb', label: <Link target="_blank" href={"https://github.com/cnpm/cnpmweb"}>🪞 cnpmweb</Link> },
-                  { key: 'cnpmcore', label: <Link target="_blank" href={"https://github.com/cnpm/cnpmcore"}>📦 cnpmcore</Link> },
-                ],
-              }}
-            >
-              <GithubOutlined />
-            </Dropdown>
-          </Link>
+            <GithubOutlined />
+          </Dropdown>
         </span>
       </nav>
     </header>

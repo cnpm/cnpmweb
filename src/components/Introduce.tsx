@@ -17,7 +17,7 @@ export default function Introduce() {
           </Link>{' '}
           镜像，你可以用此代替官方版本(只读)，我们将尽量与官方服务
           <Text strong>实时同步</Text>。
-          <br/>
+          <br />
           我们的前后端应用代码均已开源，前端应用为{' '}
           <Link target='_blank' href='https://github.com/cnpm/cnpmweb'>
             cnpmweb
@@ -45,19 +45,20 @@ export default function Introduce() {
           </li>
           <li>
             最近同步的时间为
-            <Tooltip title={'由于近期功能升级，同步预计与8月26日凌晨恢复'}>
-              <Text strong style={{ paddingLeft: 8 }}>
-                {data?.sync_changes_steam.last_package_created || '-'}
-              </Text>
-            </Tooltip>
+            <Text strong style={{ paddingLeft: 8 }}>
+              {data?.sync_changes_steam.last_package_created || '-'}
+            </Text>
           </li>
         </ul>
       </Paragraph>
 
       <Title level={2}>使用说明</Title>
       <Paragraph>
-        你可以使用我们定制的 <Link href='/package/cnpm'>cnpm</Link> 命令行工具代替默认的
-        npm。
+        你可以使用我们定制的
+        <Link href='/package/cnpm' style={{ margin: '0 4px' }}>
+          cnpm
+        </Link>
+        命令行工具代替默认的 npm。
         <br />
         cnpm 支持除了写相关操作外的所有命令，例如 install、info、view 等。
         <br />
@@ -97,7 +98,9 @@ export default function Introduce() {
             <Link href='/'>web 站点</Link>
           </li>
           <li>
-            <Link href='/mirrors' target='_blank'>二进制文件镜像</Link>
+            <Link href='/mirrors' target='_blank'>
+              二进制文件镜像
+            </Link>
           </li>
         </ul>
       </Paragraph>
