@@ -4,12 +4,12 @@ import loader from '@monaco-editor/loader';
 import { File, useFileContent } from '@/hooks/useFile';
 import useHighlightHash, { parseHash } from '@/hooks/useHighlightHash';
 import { useThemeMode } from 'antd-style';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 loader.config({
   paths: {
-    vs: 'https://registry.npmmirror.com/monaco-editor/0.41.0/files/min/vs'
-  }
+    vs: 'https://registry.npmmirror.com/monaco-editor/0.41.0/files/min/vs',
+  },
 });
 
 function highlightEditor(editor: any) {
@@ -37,8 +37,14 @@ export const CodeViewer = ({
   );
 
   let language = selectedFile?.path.split('.').pop();
-  if (language === 'js' || language === 'jsx') language = 'javascript';
+  if (
+    language === 'js' ||
+    language === 'jsx' ||
+    language === 'map'
+  )
+    language = 'javascript';
   else if (language === 'ts' || language === 'tsx') language = 'typescript';
+  else if (language === 'md') language = 'markdown';
 
   const [_, setRange] = useHighlightHash();
 
@@ -52,6 +58,7 @@ export const CodeViewer = ({
 
   if (!selectedFile) return <></>;
 
+
   return (
     <div
       style={{
@@ -62,8 +69,8 @@ export const CodeViewer = ({
     >
       <Editor
         height='100vh'
-        language={language}
         value={code ? code : 'Loading...'}
+        language={language}
         theme={`vs-${theme}`}
         options={{ readOnly: true, fontSize: 16 }}
         onMount={(editor) => {
