@@ -1,4 +1,4 @@
-import { ThemeMode, ThemeProvider as _ThemeProvider } from 'antd-style';
+import { ThemeProvider as _ThemeProvider } from 'antd-style';
 import PageHome from '@/slugs/home'
 import PageFiles from '@/slugs/files'
 import PageVersions from '@/slugs/versions'
@@ -93,9 +93,8 @@ export default function PackagePage({
     );
   }
 
-  let type = router.asPath
-    .split('?')[0]
-    .replace(`/package/${resData.name}/`, '') as keyof typeof PageMap;
+  let type = router.query?.slug?.[1] as keyof typeof PageMap;
+
   const version =
     (router.query.version as string) || resData?.['dist-tags']?.latest;
 

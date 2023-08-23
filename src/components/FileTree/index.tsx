@@ -71,7 +71,6 @@ const FileDiv = ({file, icon, selectedFile, onClick}: {
         display: 'flex',
         alignItems: 'center',
         paddingLeft: depth * 16,
-        // backgroundColor: isSelected ? "#eee" : "transparent",
         cursor: 'pointer',
         minWidth: 'max-content',
       }}
