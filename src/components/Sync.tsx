@@ -30,7 +30,7 @@ export default function Sync({ pkgName }: SyncProps) {
 
   async function doSync() {
     try {
-      const res = await fetch(`https://registry.npmmirror.com/-/package/${pkgName}/syncs`, {
+      const res = await fetch(`https://registry-direct.npmmirror.com/-/package/${pkgName}/syncs`, {
         method: 'PUT',
       }).then((res) => res.json());
       if (res.ok) {
