@@ -63,6 +63,7 @@ export default function Deps({ manifest: pkg, version }: PageProps) {
           >
             <Table
               dataSource={dependencies}
+              rowKey={'package'}
               columns={columns}
               pagination={{ size: 'small' }}
             />
@@ -78,6 +79,7 @@ export default function Deps({ manifest: pkg, version }: PageProps) {
             <Table
               dataSource={devDependencies}
               columns={columns}
+              rowKey={'package'}
               pagination={{ size: 'small' }}
             />
           </Card>
