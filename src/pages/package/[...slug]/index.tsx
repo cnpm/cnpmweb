@@ -41,6 +41,21 @@ function getPkgName(pathGroups: string[]) {
   return scope ? `${scope}/${name}` : name;
 }
 
+function getPageType(pathGroups: string[]) {
+  let type: keyof typeof PageMap;
+  let [scope, name] = pathGroups;
+  if (!name) {
+    name = scope;
+    scope = '';
+  }
+
+  if (scope && !scope.startsWith('@')) {
+    type = pathGroups[2];
+  }
+  type = pathGroups[2] || 'home';
+  return type;
+}
+
 const PageMap: Record<string, (params: PageProps) => JSX.Element> = {
   home: PageHome,
   deps: PageDeps,
@@ -57,10 +72,10 @@ export default function PackagePage({
 
   const [themeMode, setThemeMode] = useTheme();
 
-  const pkgName = useMemo(() => {
+  const [pkgName, type] = useMemo(() => {
     const { slug } = router.query;
     if (!slug) {
-      return '';
+      return [];
     }
     let pathGroups = [];
     if (typeof slug === 'string') {
@@ -68,7 +83,7 @@ export default function PackagePage({
     } else {
       pathGroups = [...slug];
     }
-    return getPkgName(pathGroups);
+    return [getPkgName(pathGroups), getPageType(pathGroups)];
   }, [router.query]);
 
   const { data, isLoading, error } = useInfo(pkgName);
@@ -76,8 +91,8 @@ export default function PackagePage({
   const resData = data?.data;
   const needSync = data?.needSync;
 
-  if (error) {
-    return <Result status='error' title='Error' subTitle={error.message} />;
+  if (error || !pkgName || !type) {
+    return <Result status='error' title='Error' subTitle={error?.message} />;
   }
 
   if (isLoading || !resData?.name) {
@@ -93,14 +108,8 @@ export default function PackagePage({
     );
   }
 
-  let type = router.query?.slug?.[1] as keyof typeof PageMap;
-
   const version =
     (router.query.version as string) || resData?.['dist-tags']?.latest;
-
-  if (PageMap[type] === undefined) {
-    type = 'home';
-  }
 
   const Component = PageMap[type];
 

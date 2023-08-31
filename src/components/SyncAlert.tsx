@@ -58,7 +58,6 @@ export default function SyncAlert({pkg, needSync}: SyncAlertProps) {
               size='small'
               href={sourceLink}
               type='link'
-              ghost
               target='_blank'
             >
               查看源站
