@@ -52,7 +52,7 @@ function getPageType(pathGroups: string[]) {
   if (scope && !scope.startsWith('@')) {
     type = pathGroups[2];
   }
-  type = pathGroups[2] || 'home';
+  type = pathGroups[1] || 'home';
   return type;
 }
 
