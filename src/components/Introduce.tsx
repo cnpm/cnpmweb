@@ -28,8 +28,7 @@ export default function Introduce() {
           </Link>{' '}
           欢迎共建。
         </blockquote>
-        目前我们已累积同步了 <Text strong>{data?.doc_count || '-'}</Text>{' '}
-        个包，近7日下载量为 <Text strong>{data?.download.thisweek || '-'}</Text>
+        目前我们已累积同步了 <Text strong>{data?.doc_count ? data?.doc_count.toLocaleString('en-US') : '-'}</Text> 个包，近7日下载量为 <Text strong>{data?.download.thisweek ? data?.download.thisweek.toLocaleString('en-US') : '-'}</Text>
         。
         <Divider />
         <ul>
