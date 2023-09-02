@@ -13,6 +13,7 @@ import { Result, Spin } from 'antd';
 import Header from '@/components/Header';
 import { useTheme } from '@/hooks/useTheme';
 
+const DEFAULT_TYPE = 'home';
 const ThemeProvider = _ThemeProvider as any;
 
 export type PageProps = {
@@ -42,18 +43,23 @@ function getPkgName(pathGroups: string[]) {
 }
 
 function getPageType(pathGroups: string[]) {
-  let type: keyof typeof PageMap;
-  let [scope, name] = pathGroups;
-  if (!name) {
+  let [scope, name, type] = pathGroups;
+
+  if (!scope?.startsWith('@')) {
+    // [antd, home]
+    // [antd]
+    type = name;
     name = scope;
-    scope = '';
   }
 
-  if (scope && !scope.startsWith('@')) {
-    type = pathGroups[2];
+  // invalid
+  // [@antd, home]
+  if (!PageMap[type]) {
+    return DEFAULT_TYPE;
   }
-  type = pathGroups[1] || 'home';
+
   return type;
+
 }
 
 const PageMap: Record<string, (params: PageProps) => JSX.Element> = {
@@ -72,7 +78,7 @@ export default function PackagePage({
 
   const [themeMode, setThemeMode] = useTheme();
 
-  const [pkgName, type] = useMemo(() => {
+  const [pkgName, type = DEFAULT_TYPE] = useMemo(() => {
     const { slug } = router.query;
     if (!slug) {
       return [];
@@ -111,7 +117,7 @@ export default function PackagePage({
   const version =
     (router.query.version as string) || resData?.['dist-tags']?.latest;
 
-  const Component = PageMap[type || 'home' ];
+  const Component = PageMap[type];
 
   return (
     <div>
