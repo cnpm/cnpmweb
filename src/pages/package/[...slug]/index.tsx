@@ -91,8 +91,8 @@ export default function PackagePage({
   const resData = data?.data;
   const needSync = data?.needSync;
 
-  if (error || !pkgName || !type) {
-    return <Result status='error' title='Error' subTitle={error?.message} />;
+  if (error) {
+    return <Result status='error' title='Error' subTitle={error?.message || '系统错误'} />;
   }
 
   if (isLoading || !resData?.name) {
@@ -111,7 +111,7 @@ export default function PackagePage({
   const version =
     (router.query.version as string) || resData?.['dist-tags']?.latest;
 
-  const Component = PageMap[type];
+  const Component = PageMap[type || 'home' ];
 
   return (
     <div>
@@ -122,7 +122,7 @@ export default function PackagePage({
           setThemeMode={setThemeMode}
         />
         <section style={{ paddingLeft: 16 }}>
-          <CustomTabs activateKey={type} pkg={resData}></CustomTabs>
+          <CustomTabs activateKey={type!} pkg={resData}></CustomTabs>
         </section>
         <main style={{ minHeight: 'calc( 100vh - 110px )' }}>
           <Component

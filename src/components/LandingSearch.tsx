@@ -20,20 +20,20 @@ export default function LandingSearch() {
       return [];
     }
 
-    return searchResult.hits.map(
-      (hit: { name: string; version: string; description: string }) => ({
+    return searchResult.objects.map(
+      (object) => ({
         label: (
           <>
             <Typography.Text>
-              {hit.name}
+              {object.package.name}@{object.package.version}
             </Typography.Text>
             <br />
             <Typography.Text type='secondary'>
-              {hit.description}
+              {object.package.description}
             </Typography.Text>
           </>
         ),
-        value: hit.name,
+        value: object.package.name,
       })
     );
   }, [searchResult]);
@@ -50,19 +50,10 @@ export default function LandingSearch() {
           router.push(targetUrl);
         }
       }}
-      onKeyDown={(e) => {
-        if (e.code === '13') {
-          setTimeout(() => {
-            if (!jumpRef.current) {
-              router.push('/packages');
-            }
-          }, 100);
-        }
-      }}
     >
       <Input.Search
         size='large'
-        placeholder='输入 NPM 包名、作者、关键字等信息即可搜索，服务由 Algolia 提供...'
+        placeholder='输入 NPM 包名、作者、关键字等信息即可搜索...'
         enterButton
         loading={!!(search && isLoading)}
       />

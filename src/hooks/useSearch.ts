@@ -2,9 +2,57 @@
 import { useEffect, useState } from 'react';
 import useSWR from 'swr';
 
+export interface SearchResult {
+  objects: SearchItem[]
+  total: number
+}
 
-const APP_ID = process.env.NEXT_PUBLIC_APP_ID;
-const APP_KEY = process.env.NEXT_PUBLIC_APP_KEY;
+export interface SearchItem {
+  package: SearchPackageResult
+  downloads: Downloads
+}
+
+export interface SearchPackageResult {
+  name: string
+  version: string
+  _rev: string
+  scope: string
+  keywords: string[]
+  versions: string[]
+  description: string
+  license: string
+  maintainers: Maintainer[]
+  author: Author
+  "dist-tags": Record<string, string>;
+  date: Date;
+  created: string
+  modified: string
+  _source_registry_name: string
+  _npmUser: NpmUser
+  publish_time?: number
+}
+
+export interface Maintainer {
+  username: string
+  name: string
+  email: string
+}
+
+export interface Author {
+  name: string
+  email?: string
+  url?: string
+}
+
+export interface NpmUser {
+  name: string
+  email: string
+}
+
+export interface Downloads {
+  all: number
+}
+
 
 function useDebounce(value: string, delay: number) {
   const [debouncedValue, setDebouncedValue] = useState(value);
@@ -23,16 +71,8 @@ function useDebounce(value: string, delay: number) {
 }
 
 async function fetcher([k, p]: [string, number]) {
-  const res = await fetch(`https://${APP_ID}-dsn.algolia.net/1/indexes/npm-search/query`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json; charset=UTF-8',
-      'X-Algolia-API-Key': APP_KEY || '',
-      'X-Algolia-Application-Id': APP_ID || '',
-    },
-    body: JSON.stringify(
-      { "params": `query=${k}&hitsPerPage=12&page=${p}` }
-    ),
+  const res = await fetch(`https://registry.npmmirror.com/-/v1/search?text=${k}&size=12&from=${p * 12}`, {
+    method: 'GET',
   });
   return await res.json();
 }
@@ -46,5 +86,5 @@ export function useCachedSearch({
 }) {
   const debouncedKeyword = useDebounce(keyword, 300);
 
-  return useSWR([debouncedKeyword, page], fetcher);
+  return useSWR<SearchResult>(debouncedKeyword ? [debouncedKeyword, page] : null, fetcher);
 }
