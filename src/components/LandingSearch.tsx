@@ -43,17 +43,14 @@ export default function LandingSearch() {
       style={{ width: '100%' }}
       options={options}
       onChange={setSearch}
-      defaultActiveFirstOption={false}
-      onKeyDown={(e) => {
-        if (e.code === "Enter") {
-          router.push(`/packages?q=${search}`);
-        }
-      }}
     >
       <Input.Search
         size='large'
         placeholder='输入 NPM 包名、作者、关键字等信息即可搜索...'
         enterButton
+        onSearch={() => {
+          router.push(`/packages?q=${search}`)
+        }}
         loading={!!(search && isLoading)}
       />
     </AutoComplete>
