@@ -27,7 +27,7 @@ export default async function middleware(req: NextRequest) {
   const pathGroups = pathname.split("/").filter(Boolean);
 
   // logo
-  if (['/cnpm.png', '/favicon.ico'].includes(pathname)) {
+  if (['/cnpm.png', '/favicon.ico', '/packages'].includes(pathname)) {
     return NextResponse.next();
   }
 

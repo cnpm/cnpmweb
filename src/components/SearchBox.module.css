@@ -1,0 +1,5 @@
+  .count {
+    display: inline-flex;
+    justify-content: center;
+    min-width: 20px;
+  }

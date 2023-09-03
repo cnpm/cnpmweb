@@ -12,6 +12,15 @@ export interface SearchItem {
   downloads: Downloads
 }
 
+export type SearchResultWithPage<T> = {
+  data: T[];
+  page: {
+    total: number;
+    current: number;
+    pageSize: number;
+  };
+};
+
 export interface SearchPackageResult {
   name: string
   version: string
@@ -71,7 +80,7 @@ function useDebounce(value: string, delay: number) {
 }
 
 async function fetcher([k, p]: [string, number]) {
-  const res = await fetch(`https://registry.npmmirror.com/-/v1/search?text=${k}&size=12&from=${p * 12}`, {
+  const res = await fetch(`https://registry.npmmirror.com/-/v1/search?text=${k}&size=12&from=${(p - 1) * 12}`, {
     method: 'GET',
   });
   return await res.json();
