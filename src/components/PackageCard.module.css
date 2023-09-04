@@ -1,0 +1,36 @@
+.packageCon {
+  position: relative;
+  display: flex;
+  flex-wrap: nowrap;
+  height: 100%;
+  border-radius: 8px;
+  padding: 28px 20px 16px;
+  padding-left: 60px;
+}
+
+.logo {
+  position: absolute;
+  top: 24px;
+  left: 20px;
+  flex: none;
+}
+
+.content {
+  display: flex;
+  flex: auto;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.title {
+  color: #314659;
+  font-size: 20px;
+  line-height: 24px;
+}
+
+.descriptionCon {
+  color: #333;
+  font-size: 14px;
+  line-height: 22px;
+  letter-spacing: 0;
+}
