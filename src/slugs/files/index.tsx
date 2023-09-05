@@ -10,7 +10,7 @@ import { useState } from "react";
 
 const Viewer = ({ manifest, version }: PageProps) => {
   const [_selectedFile, setSelectedFile] = useState<File | undefined>();
-  const [path, setPath] = usePathState(`/package/${manifest.name}/files/*`);
+  const [path, setPath] = usePathState(`/package/${manifest.name}/files/*?version=${version || 'latest'}`);
 
   const { data: rootDir, isLoading } = useDirs({
     fullname: manifest.name,
