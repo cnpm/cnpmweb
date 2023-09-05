@@ -73,6 +73,7 @@ export default function Home({ manifest, version, additionalInfo: needSync }: Pa
             <LinkContent
               git={manifest.repository?.url}
               dist={manifest.versions?.[version!]?.dist}
+              homepage={manifest.homepage}
             />
           </PresetCard>
           <PresetCard

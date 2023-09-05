@@ -35,6 +35,7 @@ export type PackageManifest = {
     type: string;
     url: string;
   };
+  homepage?: string;
 };
 
 

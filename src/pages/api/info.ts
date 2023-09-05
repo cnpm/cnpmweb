@@ -62,6 +62,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       'dist-tags': pkg['dist-tags'],
       versions: simpleVersions,
       keywords: pkg.keywords,
+      homepage: pkg.homepage,
     };
 
     res.status(200).json({ data, needSync: !alreadySync });
