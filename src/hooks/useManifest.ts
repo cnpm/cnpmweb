@@ -68,10 +68,10 @@ export function useVersionTags(manifest: PackageManifest) {
   }, [manifest]);
 }
 
-export function useInfo(pkgName: string | undefined) {
-  return useSwr(pkgName ? `info: ${pkgName}` : null, async () => {
-    const res = await fetch(`/api/info?pkgName=${pkgName}`);
-
+export function useInfo(pkgName: string | undefined, spec: string | undefined) {
+  return useSwr(pkgName ? `info: ${pkgName}_${spec}` : null, async () => {
+    const target = `/api/info?pkgName=${pkgName || ''}&spec=${spec || ''}`;
+    const res = await fetch(target.toString());
     if (res.status === 404) {
       throw new Error(`Not Found ${pkgName}`);
     }

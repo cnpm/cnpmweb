@@ -17,8 +17,18 @@ function getPkgName(pathGroups: string[]) {
     return undefined;
   }
 
+  name = name.includes('@') ? name.split('@')[0] : name;
 
   return scope ? `${scope}/${name}` : name;
+}
+
+// antd@^4 => ^4
+function getSpec(pathname: string, pkgName: string) {
+  const spec = pathname.replace(`/${pkgName}`, '');
+  if (spec.startsWith('@')) {
+    return decodeURIComponent(spec.substring(1));
+  }
+  return undefined;
 }
 
 export default async function middleware(req: NextRequest) {
@@ -33,9 +43,12 @@ export default async function middleware(req: NextRequest) {
 
   let pkgName = getPkgName(pathGroups);
   if (pkgName) {
-    return NextResponse.redirect(
-      new URL(`/package/${pkgName}`, req.nextUrl)
-    );
+    const spec = getSpec(pathname, pkgName);
+    const target = new URL(`/package/${pkgName}`, req.nextUrl);
+    if (spec) {
+      target.searchParams.set('version', spec);
+    }
+    return NextResponse.redirect(target);
   }
 
   // /sync/antd/versions => package/antd/versions

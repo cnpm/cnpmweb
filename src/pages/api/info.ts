@@ -6,9 +6,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   try {
 
-    const { pkgName } = req.query;
+    const { pkgName, spec } = req.query;
 
-    const [pkg, sourceRegistryInfo] = await Promise.all([
+    const [pkg, sourceRegistryInfo, specInfo] = await Promise.all([
       fetch(`https://registry.npmmirror.com/${pkgName}`, {
         cache: 'no-store',
       }).then((res) => res.json()),
@@ -20,6 +20,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       }).then(
         (res) => res.json()
       ),
+      spec ? fetch(`https://registry.npmmirror.com/${pkgName}/${spec}`, {
+        cache: 'no-store',
+      }).then(res => res.json()) : Promise.resolve({}),
     ]);
 
     // dist-tag 一致，版本也一致，就认为不需要同步
@@ -65,7 +68,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       homepage: pkg.homepage,
     };
 
-    res.status(200).json({ data, needSync: !alreadySync });
+    const version = specInfo.version || pkg?.['dist-tags']?.latest;
+
+    res.status(200).json({ data, needSync: !alreadySync, version });
   } catch (e) {
     console.error(e);
     res.status(500).json({ error: e });
