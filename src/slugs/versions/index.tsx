@@ -174,6 +174,7 @@ function VersionsList({
                           }
                         : {}
                     }
+                    shallow
                     href={`/package/${pkg!.name}?version=${item.version}`}
                   >
                     {item.version}

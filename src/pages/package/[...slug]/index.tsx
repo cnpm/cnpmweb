@@ -93,6 +93,7 @@ export default function PackagePage({
   }, [router.query]);
 
 
+  const routerVersion = router.query.version as string;
   const { data, isLoading, error } = useInfo(pkgName, router.query.version as string);
 
   const resData = data?.data;
@@ -118,7 +119,7 @@ export default function PackagePage({
   }
 
   // patchVersion
-  if (router.query.version !== version) {
+  if (routerVersion && router.query.version !== version) {
     router.replace({
       pathname: router.pathname,
       query: {
