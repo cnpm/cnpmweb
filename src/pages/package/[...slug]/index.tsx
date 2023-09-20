@@ -5,7 +5,7 @@ import PageVersions from '@/slugs/versions'
 import PageDeps from '@/slugs/deps'
 import 'antd/dist/reset.css';
 import CustomTabs from '@/components/CustomTabs';
-import { PackageManifest, useInfo } from '@/hooks/useManifest';
+import { PackageManifest, useInfo, useSpec } from '@/hooks/useManifest';
 import Footer from '@/components/Footer';
 import { useRouter } from 'next/router';
 import { useMemo } from 'react';
@@ -94,10 +94,11 @@ export default function PackagePage({
 
 
   const routerVersion = router.query.version as string;
-  const { data, isLoading, error } = useInfo(pkgName, router.query.version as string);
+  const { data, isLoading, error } = useInfo(pkgName);
+  const { data: specInfo } = useSpec(pkgName, routerVersion, data?.data);
 
   const resData = data?.data;
-  const version = data?.version;
+  const specVersion = specInfo?.version;
   const needSync = data?.needSync;
 
   if (error) {
@@ -119,17 +120,20 @@ export default function PackagePage({
   }
 
   // patchVersion
-  if (routerVersion && router.query.version !== version) {
+  if (routerVersion && specVersion && router.query.version !== specVersion) {
     router.replace({
       pathname: router.pathname,
       query: {
         slug: router.query.slug,
-        version,
+        version: specVersion,
       },
     }, undefined, { shallow: true });
+    return <></>;
   }
 
   const Component = PageMap[type];
+
+  const version = routerVersion || specInfo?.version || resData?.['dist-tags']?.latest;
 
   return (
     <div>
