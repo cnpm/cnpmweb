@@ -92,14 +92,17 @@ export default function PackagePage({
     return [getPkgName(pathGroups), getPageType(pathGroups)];
   }, [router.query]);
 
-  const { data, isLoading, error } = useInfo(pkgName);
+
+  const { data, isLoading, error } = useInfo(pkgName, router.query.version as string);
 
   const resData = data?.data;
+  const version = data?.version;
   const needSync = data?.needSync;
 
   if (error) {
     return <Result status='error' title='Error' subTitle={error?.message || '系统错误'} />;
   }
+
 
   if (isLoading || !resData?.name) {
     return (
@@ -114,8 +117,16 @@ export default function PackagePage({
     );
   }
 
-  const version =
-    (router.query.version as string) || resData?.['dist-tags']?.latest;
+  // patchVersion
+  if (router.query.version !== version) {
+    router.replace({
+      pathname: router.pathname,
+      query: {
+        slug: router.query.slug,
+        version,
+      },
+    }, undefined, { shallow: true });
+  }
 
   const Component = PageMap[type];
 
