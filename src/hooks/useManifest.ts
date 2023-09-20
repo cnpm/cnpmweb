@@ -1,5 +1,4 @@
-import React from "react";
-import { orderBy } from 'lodash';
+import React, { useMemo } from "react";
 import useSwr from 'swr';
 import dayjs from "dayjs";
 
@@ -68,9 +67,28 @@ export function useVersionTags(manifest: PackageManifest) {
   }, [manifest]);
 }
 
-export function useInfo(pkgName: string | undefined, spec: string | undefined) {
-  return useSwr(pkgName ? `info: ${pkgName}_${spec}` : null, async () => {
-    const target = `/api/info?pkgName=${pkgName || ''}&spec=${spec || ''}`;
+export function useInfo(pkgName: string | undefined) {
+  return useSwr(pkgName ? `info: ${pkgName}` : null, async () => {
+    const target = `/api/info?pkgName=${pkgName || ''}`;
+    const res = await fetch(target.toString());
+    if (res.status === 404) {
+      throw new Error(`Not Found ${pkgName}`);
+    }
+
+    if (!res.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return res.json();
+  });
+
+}
+
+export function useSpec(pkgName: string | undefined, spec: string | undefined, info: PackageManifest | undefined) {
+  const needFetch = useMemo(() => {
+    return pkgName && spec && !info?.versions?.[spec];
+  }, [pkgName, spec, info]);
+  return useSwr(needFetch ? `spec: ${pkgName}_${spec}` : null, async () => {
+    const target = `/api/spec?pkgName=${pkgName || ''}&spec=${spec || ''}`;
     const res = await fetch(target.toString());
     if (res.status === 404) {
       throw new Error(`Not Found ${pkgName}`);

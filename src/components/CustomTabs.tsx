@@ -32,8 +32,8 @@ export default function CustomTabs({
   pkg: PackageManifest;
 }) {
   const { push, query } = useRouter();
-
-  const targetVersion = (query.version as string) || pkg?.['dist-tags']?.latest;
+  const routerVersion = query.version as string;
+  const targetVersion = routerVersion || pkg?.['dist-tags']?.latest;
 
   return (
     <Tabs
@@ -59,7 +59,11 @@ export default function CustomTabs({
             <Link
               key={tab.key}
               shallow
-              href={`/package/${pkg.name}/${tab.key}?version=${targetVersion}`}
+              href={
+                routerVersion
+                  ? `/package/${pkg.name}/${tab.key}?version=${targetVersion}`
+                  : `/package/${pkg.name}/${tab.key}`
+              }
             >
               {tab.name}
             </Link>
