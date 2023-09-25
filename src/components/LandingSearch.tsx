@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import React, { useState } from "react";
-import { Input, Typography, AutoComplete } from "antd";
-import { useCachedSearch } from "@/hooks/useSearch";
-import { useRouter } from "next/router";
-import Link from "next/link";
+import React, { useState } from 'react';
+import { Input, Typography, AutoComplete } from 'antd';
+import { useCachedSearch } from '@/hooks/useSearch';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 export default function LandingSearch() {
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
   const router = useRouter();
 
   const { data: searchResult, isLoading } = useCachedSearch({
@@ -27,9 +27,7 @@ export default function LandingSearch() {
             {object.package.name}@{object.package.version}
           </Typography.Text>
           <br />
-          <Typography.Text type="secondary">
-            {object.package.description}
-          </Typography.Text>
+          <Typography.Text type="secondary">{object.package.description}</Typography.Text>
         </Link>
       ),
       value: object.package.name,
@@ -38,7 +36,7 @@ export default function LandingSearch() {
 
   return (
     <AutoComplete
-      style={{ width: "100%" }}
+      style={{ width: '100%' }}
       options={options}
       onChange={setSearch}
       onSelect={(search) => router.push(`/package/${search}`)}
