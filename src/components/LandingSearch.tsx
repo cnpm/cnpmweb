@@ -45,7 +45,8 @@ export default function LandingSearch() {
         size="large"
         placeholder="输入 NPM 包名、作者、关键字等信息即可搜索..."
         enterButton
-        onSearch={() => {
+        onSearch={(_, e) => {
+          e?.stopPropagation();
           router.push(`/packages?q=${search}`);
         }}
         loading={!!(search && isLoading)}
