@@ -24,13 +24,8 @@ export default function Header({ title, themeMode, setThemeMode }: any) {
     <header className={cx(styles.header)}>
       <nav className={styles.container}>
         <span style={{ flex: 1 }}>
-          <Link href='/'>
-            <img
-              src='/cnpm.png'
-              width={24}
-              alt='logo'
-              style={{ marginRight: 8 }}
-            />
+          <Link href="/">
+            <img src="/cnpm.png" width={24} alt="logo" style={{ marginRight: 16 }} />
           </Link>
           {title}
         </span>
@@ -53,10 +48,7 @@ export default function Header({ title, themeMode, setThemeMode }: any) {
                 {
                   key: 'cnpmweb',
                   label: (
-                    <Link
-                      target='_blank'
-                      href={'https://github.com/cnpm/cnpmweb'}
-                    >
+                    <Link target="_blank" href={'https://github.com/cnpm/cnpmweb'}>
                       🪞 cnpmweb
                     </Link>
                   ),
@@ -64,10 +56,7 @@ export default function Header({ title, themeMode, setThemeMode }: any) {
                 {
                   key: 'cnpmcore',
                   label: (
-                    <Link
-                      target='_blank'
-                      href={'https://github.com/cnpm/cnpmcore'}
-                    >
+                    <Link target="_blank" href={'https://github.com/cnpm/cnpmcore'}>
                       📦 cnpmcore
                     </Link>
                   ),

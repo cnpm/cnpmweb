@@ -20,22 +20,18 @@ export default function LandingSearch() {
       return [];
     }
 
-    return searchResult.objects.map(
-      (object) => ({
-        label: (
-          <Link href={`/package/${object.package.name}`}>
-            <Typography.Text>
-              {object.package.name}@{object.package.version}
-            </Typography.Text>
-            <br />
-            <Typography.Text type='secondary'>
-              {object.package.description}
-            </Typography.Text>
-          </Link>
-        ),
-        value: object.package.name,
-      })
-    );
+    return searchResult.objects.map((object) => ({
+      label: (
+        <Link href={`/package/${object.package.name}`}>
+          <Typography.Text>
+            {object.package.name}@{object.package.version}
+          </Typography.Text>
+          <br />
+          <Typography.Text type="secondary">{object.package.description}</Typography.Text>
+        </Link>
+      ),
+      value: object.package.name,
+    }));
   }, [searchResult]);
 
   return (
@@ -43,13 +39,15 @@ export default function LandingSearch() {
       style={{ width: '100%' }}
       options={options}
       onChange={setSearch}
+      onSelect={(search) => router.push(`/package/${search}`)}
     >
       <Input.Search
-        size='large'
-        placeholder='输入 NPM 包名、作者、关键字等信息即可搜索...'
+        size="large"
+        placeholder="输入 NPM 包名、作者、关键字等信息即可搜索..."
         enterButton
-        onSearch={() => {
-          router.push(`/packages?q=${search}`)
+        onSearch={(_, e) => {
+          e?.stopPropagation();
+          router.push(`/packages?q=${search}`);
         }}
         loading={!!(search && isLoading)}
       />
