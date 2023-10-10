@@ -12,6 +12,7 @@ import { useMemo } from 'react';
 import { Result, Spin } from 'antd';
 import Header from '@/components/Header';
 import { useTheme } from '@/hooks/useTheme';
+import AdHire from '@/components/AdHire';
 
 const DEFAULT_TYPE = 'home';
 const ThemeProvider = _ThemeProvider as any;
@@ -138,6 +139,7 @@ export default function PackagePage({
   return (
     <div>
       <ThemeProvider themeMode={themeMode}>
+        <AdHire />
         <Header
           title={`${resData.name}@${version}`}
           themeMode={themeMode}
@@ -147,11 +149,7 @@ export default function PackagePage({
           <CustomTabs activateKey={type!} pkg={resData}></CustomTabs>
         </section>
         <main style={{ minHeight: 'calc( 100vh - 110px )' }}>
-          <Component
-            manifest={resData}
-            version={version}
-            additionalInfo={needSync}
-          />
+          <Component manifest={resData} version={version} additionalInfo={needSync} />
         </main>
         <Footer />
       </ThemeProvider>

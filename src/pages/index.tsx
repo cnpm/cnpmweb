@@ -9,6 +9,7 @@ import Introduce from '@/components/Introduce';
 import { ThemeMode, ThemeProvider as _ThemeProvider } from 'antd-style';
 import Header from '@/components/Header';
 import { useTheme } from '@/hooks/useTheme';
+import AdHire from '@/components/AdHire';
 
 const ThemeProvider = _ThemeProvider as any;
 
@@ -18,6 +19,7 @@ export default function Home() {
 
   return (
     <ThemeProvider themeMode={themeMode as ThemeMode}>
+      <AdHire/>
       <Header
         themeMode={themeMode}
         setThemeMode={setThemeMode}
