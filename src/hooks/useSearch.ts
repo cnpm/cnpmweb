@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react';
-import useSWR from 'swr';
+import useSWR, { BareFetcher } from 'swr';
 
 export interface SearchResult {
   objects: SearchItem[]
@@ -79,7 +79,7 @@ function useDebounce(value: string, delay: number) {
   return debouncedValue;
 }
 
-async function fetcher([k, p]: [string, number]) {
+const fetcher: BareFetcher<SearchResult> = async ([k, p]: [string, number]) => {
   const res = await fetch(`https://registry.npmmirror.com/-/v1/search?text=${k}&size=12&from=${(p - 1) * 12}`, {
     method: 'GET',
   });

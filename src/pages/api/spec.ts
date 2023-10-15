@@ -11,6 +11,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const [pkg] = await Promise.all([
       fetch(`https://registry.npmmirror.com/${pkgName}/${spec}`, {
         cache: 'no-store',
+        keepalive: false,
       }).then((res) => res.json()),
     ]);
 
