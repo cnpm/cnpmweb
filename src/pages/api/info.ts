@@ -11,9 +11,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const [pkg, sourceRegistryInfo] = await Promise.all([
       fetch(`https://registry.npmmirror.com/${pkgName}`, {
         cache: 'no-store',
+        keepalive: false,
       }).then((res) => res.json()),
       fetch(`https://registry.npmjs.org/${pkgName}`, {
         cache: 'no-store',
+        keepalive: false,
         headers: {
           'Accept': 'application/vnd.npm.install-v1+json',
         },
