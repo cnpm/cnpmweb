@@ -40,8 +40,8 @@ export default function SyncAlert({pkg, needSync}: SyncAlertProps) {
   }
 
   if (needSync === undefined) {
-    type = 'warning';
-    message = '查询源站版本信息失败';
+    type = 'info';
+    message = '目前暂不支持自动版本比对，需访问源站进行确认';
   }
 
   return (
@@ -52,7 +52,7 @@ export default function SyncAlert({pkg, needSync}: SyncAlertProps) {
       showIcon
       action={
         <Space direction='vertical'>
-          {needSync && <Sync pkgName={pkg.name} />}
+          {<Sync pkgName={pkg.name} />}
           {registry !== 'self' && (
             <Button
               size='small'

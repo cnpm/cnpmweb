@@ -2,6 +2,8 @@ import React, { useMemo } from "react";
 import useSwr from 'swr';
 import dayjs from "dayjs";
 
+const REGISTRY = 'https://registry.npmmirror.com';
+
 export interface NpmPackageVersion {
   name: string;
   version: string;
@@ -69,7 +71,7 @@ export function useVersionTags(manifest: PackageManifest) {
 
 export function useInfo(pkgName: string | undefined) {
   return useSwr(pkgName ? `info: ${pkgName}` : null, async () => {
-    const target = `/api/info?pkgName=${pkgName || ''}`;
+    const target = `${REGISTRY}/${pkgName}`;
     const res = await fetch(target.toString());
     if (res.status === 404) {
       throw new Error(`Not Found ${pkgName}`);
@@ -88,7 +90,7 @@ export function useSpec(pkgName: string | undefined, spec: string | undefined, i
     return pkgName && spec && !info?.versions?.[spec];
   }, [pkgName, spec, info]);
   return useSwr(needFetch ? `spec: ${pkgName}_${spec}` : null, async () => {
-    const target = `/api/spec?pkgName=${pkgName || ''}&spec=${spec || ''}`;
+    const target = `${REGISTRY}/${pkgName || ''}/${spec}`;
     const res = await fetch(target.toString());
     if (res.status === 404) {
       throw new Error(`Not Found ${pkgName}`);

@@ -10,7 +10,6 @@ import SizeContainer from '@/components/SizeContainer';
 import { SearchItem, useCachedSearch } from '@/hooks/useSearch';
 import { Col, Empty, Pagination, Row, Space } from 'antd';
 import { PackageCard } from '@/components/PackageCard';
-import { NextPageContext } from 'next';
 
 const ThemeProvider = _ThemeProvider as any;
 
@@ -109,9 +108,4 @@ export default function Packages({page: initPage, q: initQ}: PageType) {
       <Footer />
     </ThemeProvider>
   );
-}
-
-export async function getServerSideProps(context: NextPageContext) {
-  const { page = 1, q = ''} = context.query;
-  return { props: { page, q } };
 }
