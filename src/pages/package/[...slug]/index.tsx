@@ -98,7 +98,7 @@ export default function PackagePage({
   const { data, isLoading, error } = useInfo(pkgName);
   const { data: specInfo } = useSpec(pkgName, routerVersion, data?.data);
 
-  const resData = data?.data;
+  const resData = data;
   const specVersion = specInfo?.version;
   const needSync = data?.needSync;
 
