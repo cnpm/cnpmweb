@@ -96,7 +96,7 @@ function TagsList({
           return (
             <li className={styles.versionsItem} key={item}>
               <span>
-                <Link href={`/package/${pkg!.name}/home?version=${item}`}>
+                <Link prefetch={false} href={`/package/${pkg!.name}/home?version=${item}`}>
                   {item}
                 </Link>
               </span>
@@ -166,6 +166,7 @@ function VersionsList({
               <li className={styles.versionsItem} key={item.version}>
                 <span>
                   <Link
+                    prefetch={false}
                     style={
                       item.deprecated
                         ? {
