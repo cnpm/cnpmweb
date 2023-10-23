@@ -13,7 +13,7 @@ const columns: TableColumnsType<object> = [
     dataIndex: 'package',
     render: (pkg: string) => {
       return (
-        <Link href={`/${pkg}`} target="_blank">
+        <Link href={`/package/${pkg}`} target="_blank">
           {pkg}
         </Link>
       );
