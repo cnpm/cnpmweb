@@ -1,4 +1,5 @@
 import { Result, Spin } from "antd";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import npa from 'npm-package-arg';
 import { useMemo } from "react";
@@ -34,7 +35,15 @@ export default function Redirect() {
       <Result
         title={'解析失败'}
         status={'error'}
-        subTitle={`${originNpa} 似乎不是一个有效的 semver 表达式`}
+        subTitle={
+          <>
+            {originNpa} 似乎不是一个有效的
+            <Link href={`/package/npm-package-arg`} prefetch={false}>
+              npa
+            </Link>
+            参数
+          </>
+        }
       />
     );
   }
