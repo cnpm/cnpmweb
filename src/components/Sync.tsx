@@ -1,4 +1,5 @@
 'use client';
+import { REGISTRY, SYNC_REGISTRY } from '@/config'
 import { Button,message,Modal } from 'antd';
 import Link from 'next/link';
 import React from 'react';
@@ -19,7 +20,7 @@ export default function Sync({ pkgName }: SyncProps) {
           创建同步任务成功，正在等待调度，如遇日志 404 请稍后刷新重试，通常需要几十秒钟的时间
           <Link
             target='_blank'
-            href={`https://registry.npmmirror.com/-/package/${pkgName}/syncs/${id}/log`}
+            href={`${REGISTRY}/-/package/${pkgName}/syncs/${id}/log`}
           >
             查看日志
           </Link>
@@ -30,7 +31,7 @@ export default function Sync({ pkgName }: SyncProps) {
 
   async function doSync() {
     try {
-      const res = await fetch(`https://registry-direct.npmmirror.com/-/package/${pkgName}/syncs`, {
+      const res = await fetch(`${SYNC_REGISTRY}/-/package/${pkgName}/syncs`, {
         method: 'PUT',
       }).then((res) => res.json());
       if (res.ok) {

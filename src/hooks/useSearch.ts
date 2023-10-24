@@ -1,4 +1,5 @@
 'use client'
+import { REGISTRY } from '@/config'
 import { useEffect, useState } from 'react';
 import useSWR, { BareFetcher } from 'swr';
 
@@ -80,7 +81,7 @@ function useDebounce(value: string, delay: number) {
 }
 
 const fetcher: BareFetcher<SearchResult> = async ([k, p]: [string, number]) => {
-  const res = await fetch(`https://registry.npmmirror.com/-/v1/search?text=${k}&size=12&from=${(p - 1) * 12}`, {
+  const res = await fetch(`${REGISTRY}/-/v1/search?text=${k}&size=12&from=${(p - 1) * 12}`, {
     method: 'GET',
   });
   return await res.json();

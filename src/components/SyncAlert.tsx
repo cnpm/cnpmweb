@@ -3,11 +3,12 @@
 import { PackageManifest } from "@/hooks/useManifest";
 import { Alert, AlertProps, Button, Space } from "antd";
 import Sync from "./Sync";
+import { REGISTRY } from "@/config";
 
 const NPM_REGISTRY = 'https://npmjs.com';
 
 export const REGISTRY_MAP = {
-  self: 'https://registry.npmmirror.com',
+  self: REGISTRY,
   default: 'https://registry.npmjs.org',
 };
 

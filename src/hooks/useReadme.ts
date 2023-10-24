@@ -1,4 +1,5 @@
 'use client';
+import { REGISTRY } from '@/config'
 import useSwr from 'swr';
 export function useReadme(pkgName: string, version = 'latest') {
   const { data: content } = useSwr(pkgName ? pkgName + version : null, {
@@ -12,7 +13,7 @@ export function useReadme(pkgName: string, version = 'latest') {
       return Promise.all(
         keys.map(async (key) => {
           const r = await fetch(
-            `https://registry.npmmirror.com/${pkgName}/${version}/files/${key}`,
+            `${REGISTRY}/${pkgName}/${version}/files/${key}`,
             {
               credentials: 'include',
               mode: 'cors',

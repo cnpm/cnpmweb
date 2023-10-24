@@ -1,6 +1,5 @@
+import { REGISTRY } from '@/config'
 import useSwr from 'swr';
-
-const REGISTRY = 'https://registry.npmmirror.com';
 
 export interface Directory {
   path: string;

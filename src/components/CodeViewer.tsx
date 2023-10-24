@@ -4,11 +4,12 @@ import loader from '@monaco-editor/loader';
 import { File, useFileContent } from '@/hooks/useFile';
 import useHighlightHash, { parseHash } from '@/hooks/useHighlightHash';
 import { useThemeMode } from 'antd-style';
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
+import { REGISTRY } from '@/config';
 
 loader.config({
   paths: {
-    vs: 'https://registry.npmmirror.com/monaco-editor/0.41.0/files/min/vs',
+    vs: `${REGISTRY}/monaco-editor/0.41.0/files/min/vs`,
   },
 });
 

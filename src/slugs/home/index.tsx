@@ -1,5 +1,5 @@
 'use client';
-import { Button, Col, Row, Space, Tooltip, Typography } from 'antd';
+import { Col, Row, Space, Tooltip, Typography } from 'antd';
 import SizeContainer from '@/components/SizeContainer';
 import PresetCard from '@/components/PresetCard';
 import ReadmeContent from '@/components/ReadmeContent';
@@ -11,7 +11,6 @@ import { PageProps } from '@/pages/package/[...slug]';
 import { createStyles } from 'antd-style';
 import RecentVersion from '@/components/RecentVersion';
 import Sync from '@/components/Sync';
-import { QuestionCircleFilled } from '@ant-design/icons';
 
 const useStyles = createStyles(({ token, css }) => {
   return {
@@ -47,7 +46,7 @@ export default function Home({ manifest, version, additionalInfo: needSync }: Pa
 
   const contentNode = (
     <Row gutter={[16, 16]} style={{ marginBottom: 96 }}>
-      <Col flex='1 1 0'>
+      <Col flex="1 1 0">
         <div
           style={{
             marginBottom: 16,
@@ -57,19 +56,19 @@ export default function Home({ manifest, version, additionalInfo: needSync }: Pa
         >
           <AdBanner />
         </div>
-        <PresetCard title='项目文档' style={{ minHeight: '100%' }}>
+        <PresetCard title="项目文档" style={{ minHeight: '100%' }}>
           <ReadmeContent name={manifest.name} version={version} />
         </PresetCard>
       </Col>
-      <Col flex='0 0 378px'>
-        <Space direction={'vertical'} size='middle' style={{ minWidth: 378 }}>
+      <Col flex="0 0 378px">
+        <Space direction={'vertical'} size="middle" style={{ minWidth: 378 }}>
           <AdVPS />
           {manifest.maintainers?.length > 0 && (
-            <PresetCard title='项目成员'>
+            <PresetCard title="项目成员">
               <ContributorContent members={manifest.maintainers} />
             </PresetCard>
           )}
-          <PresetCard title='相关链接'>
+          <PresetCard title="相关链接">
             <LinkContent
               git={manifest.repository?.url}
               dist={manifest.versions?.[version!]?.dist}
@@ -77,14 +76,9 @@ export default function Home({ manifest, version, additionalInfo: needSync }: Pa
             />
           </PresetCard>
           <PresetCard
-            title='最近更新'
-            subTitle={
-              needSync ? (
-                <Sync pkgName={pkg.name} />
-              ) : (
-                <Tooltip title={'和源站数据比对一致'}>无需同步</Tooltip>
-              )
-            }
+            title="最近更新"
+            // 目前暂不支持自动版本比对，需访问源站进行确认
+            subTitle={<Sync pkgName={pkg.name} />}
           >
             <RecentVersion pkg={pkg} />
           </PresetCard>

@@ -1,8 +1,7 @@
 import React, { useMemo } from "react";
 import useSwr from 'swr';
 import dayjs from "dayjs";
-
-const REGISTRY = 'https://registry.npmmirror.com';
+import { REGISTRY } from "@/config";
 
 export interface NpmPackageVersion {
   name: string;
