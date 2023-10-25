@@ -11,12 +11,7 @@ export interface SearchBoxProps {
   searchResult?: SearchResult;
 }
 
-export default function SearchBox({
-  defaultSearch,
-  onSearch,
-  searchResult,
-}: SearchBoxProps) {
-
+export default function SearchBox({ defaultSearch, onSearch, searchResult }: SearchBoxProps) {
   return (
     <div style={{ overflow: 'hidden' }}>
       <div style={{ padding: '32px 0' }}>
@@ -40,20 +35,14 @@ export default function SearchBox({
         </Row>
       </div>
       <div>
-        <Tabs
-          size="large"
-          className={styles.tab}
-          activeKey={'npm'}
-        >
+        <Tabs size="large" className={styles.tab} activeKey={'npm'}>
           <Tabs.TabPane
             key="npm"
             tab={
               <Space size="small">
                 搜索结果
                 <span className={styles.count}>
-                  {(searchResult?.total as number > 9999
-                    ? '9999+'
-                    : searchResult?.total) ?? '-'}
+                  {((searchResult?.total as number) > 9999 ? '9999+' : searchResult?.total) ?? '-'}
                 </span>
               </Space>
             }

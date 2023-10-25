@@ -5,4 +5,4 @@ module.exports = {
     keepAlive: false,
   },
   output: 'export',
-}
+};

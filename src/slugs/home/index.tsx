@@ -89,17 +89,10 @@ export default function Home({ manifest, version, additionalInfo: needSync }: Pa
 
   return (
     <div className={style.homeCon}>
-      <SizeContainer
-        maxWidth={1280}
-        style={{ position: 'relative', marginTop: 0 }}
-      >
+      <SizeContainer maxWidth={1280} style={{ position: 'relative', marginTop: 0 }}>
         <div>
-          <Typography.Title>
-            {pkg!.name}
-          </Typography.Title>
-          <Typography.Paragraph ellipsis>
-            {pkg!.description}
-          </Typography.Paragraph>
+          <Typography.Title>{pkg!.name}</Typography.Title>
+          <Typography.Paragraph ellipsis>{pkg!.description}</Typography.Paragraph>
           <div>
             <ul className={style.tagCon}>
               {tags?.map((tag) => {

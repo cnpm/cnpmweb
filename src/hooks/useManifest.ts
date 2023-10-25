@@ -1,7 +1,7 @@
-import React, { useMemo } from "react";
+import React, { useMemo } from 'react';
 import useSwr from 'swr';
-import dayjs from "dayjs";
-import { REGISTRY } from "@/config";
+import dayjs from 'dayjs';
+import { REGISTRY } from '@/config';
 
 export interface NpmPackageVersion {
   name: string;
@@ -25,10 +25,7 @@ export type PackageManifest = {
   keywords?: string[];
   description: string;
   _source_registry_name: string;
-  versions: Record<
-    string,
-    NpmPackageVersion
-  >;
+  versions: Record<string, NpmPackageVersion>;
   'dist-tags': Record<string, string>;
   license?: string;
   repository?: {
@@ -37,7 +34,6 @@ export type PackageManifest = {
   };
   homepage?: string;
 };
-
 
 export function useVersions(manifest: PackageManifest): NpmPackageVersion[] {
   return React.useMemo(() => {
@@ -51,7 +47,7 @@ export function useVersions(manifest: PackageManifest): NpmPackageVersion[] {
         publish_time: new Date(item._cnpmcore_publish_time || item.publish_time).valueOf(),
       };
     });
-    return patchedVersions.sort((a, b) => dayjs(a.publish_time).isAfter(b.publish_time) ? -1 : 1);
+    return patchedVersions.sort((a, b) => (dayjs(a.publish_time).isAfter(b.publish_time) ? -1 : 1));
   }, [manifest]);
 }
 
@@ -81,10 +77,13 @@ export function useInfo(pkgName: string | undefined) {
     }
     return res.json();
   });
-
 }
 
-export function useSpec(pkgName: string | undefined, spec: string | undefined, info: PackageManifest | undefined) {
+export function useSpec(
+  pkgName: string | undefined,
+  spec: string | undefined,
+  info: PackageManifest | undefined,
+) {
   const needFetch = useMemo(() => {
     return pkgName && spec && !info?.versions?.[spec];
   }, [pkgName, spec, info]);
@@ -100,5 +99,4 @@ export function useSpec(pkgName: string | undefined, spec: string | undefined, i
     }
     return res.json();
   });
-
 }

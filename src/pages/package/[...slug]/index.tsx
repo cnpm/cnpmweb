@@ -1,8 +1,8 @@
 import { ThemeProvider as _ThemeProvider } from 'antd-style';
-import PageHome from '@/slugs/home'
-import PageFiles from '@/slugs/files'
-import PageVersions from '@/slugs/versions'
-import PageDeps from '@/slugs/deps'
+import PageHome from '@/slugs/home';
+import PageFiles from '@/slugs/files';
+import PageVersions from '@/slugs/versions';
+import PageDeps from '@/slugs/deps';
 import 'antd/dist/reset.css';
 import CustomTabs from '@/components/CustomTabs';
 import { PackageManifest, useInfo, useSpec } from '@/hooks/useManifest';
@@ -24,13 +24,11 @@ export type PageProps = {
 };
 
 function getPkgName(pathGroups: string[]) {
-
   let [scope, name] = pathGroups;
   if (!name) {
     name = scope;
     scope = '';
   }
-
 
   if (!name || name.startsWith('@')) {
     return undefined;
@@ -60,7 +58,6 @@ function getPageType(pathGroups: string[]) {
   }
 
   return type;
-
 }
 
 const PageMap: Record<string, (params: PageProps) => JSX.Element> = {
@@ -72,9 +69,7 @@ const PageMap: Record<string, (params: PageProps) => JSX.Element> = {
 
 // 由于路由不支持 @scope 可选参数
 // 需要在页面中自行解析
-export default function PackagePage({
-}: {
-}) {
+export default function PackagePage({}: {}) {
   const router = useRouter();
 
   const [themeMode, setThemeMode] = useTheme();
@@ -93,7 +88,6 @@ export default function PackagePage({
     return [getPkgName(pathGroups), getPageType(pathGroups)];
   }, [router.query]);
 
-
   const routerVersion = router.query.version as string;
   const { data, isLoading, error } = useInfo(pkgName);
   const { data: specInfo } = useSpec(pkgName, routerVersion, data?.data);
@@ -103,9 +97,8 @@ export default function PackagePage({
   const needSync = data?.needSync;
 
   if (error) {
-    return <Result status='error' title='Error' subTitle={error?.message || '系统错误'} />;
+    return <Result status="error" title="Error" subTitle={error?.message || '系统错误'} />;
   }
-
 
   if (isLoading || !resData?.name) {
     return (
@@ -122,13 +115,17 @@ export default function PackagePage({
 
   // patchVersion
   if (routerVersion && specVersion && router.query.version !== specVersion) {
-    router.replace({
-      pathname: router.pathname,
-      query: {
-        slug: router.query.slug,
-        version: specVersion,
+    router.replace(
+      {
+        pathname: router.pathname,
+        query: {
+          slug: router.query.slug,
+          version: specVersion,
+        },
       },
-    }, undefined, { shallow: true });
+      undefined,
+      { shallow: true },
+    );
     return <></>;
   }
 

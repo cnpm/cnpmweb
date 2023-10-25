@@ -14,16 +14,12 @@ import AdHire from '@/components/AdHire';
 const ThemeProvider = _ThemeProvider as any;
 
 export default function Home() {
-
   const [themeMode, setThemeMode] = useTheme();
 
   return (
     <ThemeProvider themeMode={themeMode as ThemeMode}>
-      <AdHire/>
-      <Header
-        themeMode={themeMode}
-        setThemeMode={setThemeMode}
-      />
+      <AdHire />
+      <Header themeMode={themeMode} setThemeMode={setThemeMode} />
       <main className={styles.main}>
         <AdBanner />
         <div className={styles.search}>

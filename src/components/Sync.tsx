@@ -1,6 +1,6 @@
 'use client';
-import { REGISTRY, SYNC_REGISTRY } from '@/config'
-import { Button,message,Modal } from 'antd';
+import { REGISTRY, SYNC_REGISTRY } from '@/config';
+import { Button, message, Modal } from 'antd';
 import Link from 'next/link';
 import React from 'react';
 
@@ -18,10 +18,7 @@ export default function Sync({ pkgName }: SyncProps) {
       content: (
         <>
           创建同步任务成功，正在等待调度，如遇日志 404 请稍后刷新重试，通常需要几十秒钟的时间
-          <Link
-            target='_blank'
-            href={`${REGISTRY}/-/package/${pkgName}/syncs/${id}/log`}
-          >
+          <Link target="_blank" href={`${REGISTRY}/-/package/${pkgName}/syncs/${id}/log`}>
             查看日志
           </Link>
         </>
@@ -46,11 +43,7 @@ export default function Sync({ pkgName }: SyncProps) {
   return (
     <>
       {contextHolder}
-      <Button
-        size={'small'}
-        type='primary'
-        onClick={logId ? () => showLog(logId) : doSync}
-      >
+      <Button size={'small'} type="primary" onClick={logId ? () => showLog(logId) : doSync}>
         {logId ? '查看日志' : '进行同步'}
       </Button>
     </>

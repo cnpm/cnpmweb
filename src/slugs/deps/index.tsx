@@ -2,8 +2,8 @@
 import type { TableColumnsType } from 'antd';
 import { Card, Col, Row, Table } from 'antd';
 import React from 'react';
-import SizeContainer from "@/components/SizeContainer";
-import Link from "next/link";
+import SizeContainer from '@/components/SizeContainer';
+import Link from 'next/link';
 import { PageProps } from '@/pages/package/[...slug]';
 import { useFileContent } from '@/hooks/useFile';
 
@@ -26,9 +26,9 @@ const columns: TableColumnsType<object> = [
 ];
 
 export default function Deps({ manifest: pkg, version }: PageProps) {
-  const {data: versionManifest, isLoading } = useFileContent(
+  const { data: versionManifest, isLoading } = useFileContent(
     { fullname: pkg.name, spec: version },
-    '/package.json'
+    '/package.json',
   );
   const depsInfo = React.useMemo(() => {
     if (isLoading) return undefined;
@@ -54,13 +54,10 @@ export default function Deps({ manifest: pkg, version }: PageProps) {
   const { dependencies = [], devDependencies = [] } = depsInfo || {};
 
   return (
-    <SizeContainer maxWidth='90%'>
+    <SizeContainer maxWidth="90%">
       <Row gutter={[8, 8]}>
         <Col span={12}>
-          <Card
-            title={`Dependencies (${loading ? '-' : dependencies.length})`}
-            loading={loading}
-          >
+          <Card title={`Dependencies (${loading ? '-' : dependencies.length})`} loading={loading}>
             <Table
               dataSource={dependencies}
               rowKey={'package'}
@@ -71,9 +68,7 @@ export default function Deps({ manifest: pkg, version }: PageProps) {
         </Col>
         <Col span={12}>
           <Card
-            title={`DevDependencies (${
-              loading ? '-' : devDependencies.length
-            })`}
+            title={`DevDependencies (${loading ? '-' : devDependencies.length})`}
             loading={loading}
           >
             <Table

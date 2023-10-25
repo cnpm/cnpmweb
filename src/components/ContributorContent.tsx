@@ -1,18 +1,13 @@
 import { Gravatar } from './Gravatar';
-import {
-  Col,
-  Row,
-} from 'antd';
+import { Col, Row } from 'antd';
 
 import React from 'react';
 
 type ContributorContentProps = {
-  members: {name: string; email: string}[];
+  members: { name: string; email: string }[];
 };
 
-export function ContributorContent({
-  members
-}: ContributorContentProps) {
+export function ContributorContent({ members }: ContributorContentProps) {
   return (
     <Row gutter={[16, 16]}>
       <>

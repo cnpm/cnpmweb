@@ -14,10 +14,10 @@ loader.config({
 });
 
 function highlightEditor(editor: any) {
-    const [start, end] = parseHash(window.location.hash?.replace('#', ''));
-    if (start !== null && window) {
-      editor.setSelection(new (window as any).monaco.Range(start, 1, end, 1));
-    }
+  const [start, end] = parseHash(window.location.hash?.replace('#', ''));
+  if (start !== null && window) {
+    editor.setSelection(new (window as any).monaco.Range(start, 1, end, 1));
+  }
 }
 
 export const CodeViewer = ({
@@ -32,18 +32,10 @@ export const CodeViewer = ({
   const editorRef = useRef<any>(null);
   const { themeMode: theme } = useThemeMode();
 
-  const { data: code } = useFileContent(
-    { fullname: pkgName, spec },
-    selectedFile?.path || ''
-  );
+  const { data: code } = useFileContent({ fullname: pkgName, spec }, selectedFile?.path || '');
 
   let language = selectedFile?.path.split('.').pop();
-  if (
-    language === 'js' ||
-    language === 'jsx' ||
-    language === 'map'
-  )
-    language = 'javascript';
+  if (language === 'js' || language === 'jsx' || language === 'map') language = 'javascript';
   else if (language === 'ts' || language === 'tsx') language = 'typescript';
   else if (language === 'md') language = 'markdown';
 
@@ -59,7 +51,6 @@ export const CodeViewer = ({
 
   if (!selectedFile) return <></>;
 
-
   return (
     <div
       style={{
@@ -69,7 +60,7 @@ export const CodeViewer = ({
       }}
     >
       <Editor
-        height='100vh'
+        height="100vh"
         value={code ? code : 'Loading...'}
         language={language}
         theme={`vs-${theme}`}

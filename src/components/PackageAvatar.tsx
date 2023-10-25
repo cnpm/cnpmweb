@@ -46,7 +46,7 @@ export default function PackageAvatar({
         display: 'inline-block',
         verticalAlign: 'top',
       }}
-      className={ styles[`placeholder${defaultClassOrder}`]}
+      className={styles[`placeholder${defaultClassOrder}`]}
     >
       {placeholder}
     </div>

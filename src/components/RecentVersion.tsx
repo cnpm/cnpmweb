@@ -2,11 +2,7 @@
 import { Button, Space, Tag, Tooltip, Typography } from 'antd';
 import React from 'react';
 import { createStyles } from 'antd-style';
-import {
-  PackageManifest,
-  useVersionTags,
-  useVersions,
-} from '@/hooks/useManifest';
+import { PackageManifest, useVersionTags, useVersions } from '@/hooks/useManifest';
 import dayjs from 'dayjs';
 import Link from 'next/link';
 import VersionTags from './VersionTags';
@@ -91,7 +87,7 @@ export default function RecentVersion({ pkg }: PresetCardProps) {
                       : {}
                   }
                 >
-                  <Space size='small' style={{ flex: 1 }}>
+                  <Space size="small" style={{ flex: 1 }}>
                     {item.version}
                     <VersionTags
                       tags={tags[item.version]}
@@ -101,14 +97,10 @@ export default function RecentVersion({ pkg }: PresetCardProps) {
                       max={1}
                     />
                   </Space>
-                  {isNew && !deprecated ? (
-                    <span className={styles.newTag}>New</span>
-                  ) : null}
+                  {isNew && !deprecated ? <span className={styles.newTag}>New</span> : null}
                 </span>
                 <Tooltip title={publishDate.format('YYYY-MM-DD HH:mm:ss Z')}>
-                  <span className={styles.date}>
-                    {publishDate.format('YYYY-MM-DD')}
-                  </span>
+                  <span className={styles.date}>{publishDate.format('YYYY-MM-DD')}</span>
                 </Tooltip>
               </Typography.Title>
             </Link>
