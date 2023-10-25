@@ -36,7 +36,7 @@ const renderer = {
 };
 marked.use({ renderer });
 
-export function ReadmeContent({name, version = 'latest'}: {name: string; version?: string}) {
+export function ReadmeContent({ name, version = 'latest' }: { name: string; version?: string }) {
   const content = useReadme(name, version);
   const { themeMode } = useThemeMode();
 
@@ -60,25 +60,19 @@ export function ReadmeContent({name, version = 'latest'}: {name: string; version
         />
       </div>
     );
-}, [content, themeMode]);
+  }, [content, themeMode]);
 
-useEffect(() => {
-  if (location.hash) {
-    const el = document.querySelector(`a[href="${location.hash}"]`);
-    el?.scrollIntoView();
-  }
-}, [contentNode]);
+  useEffect(() => {
+    if (location.hash) {
+      const el = document.querySelector(`a[href="${location.hash}"]`);
+      el?.scrollIntoView();
+    }
+  }, [contentNode]);
 
-return <Typography> { contentNode } </Typography>;
-};
+  return <Typography> {contentNode} </Typography>;
+}
 
-export default function Readme({
-  name,
-  version,
-}: {
-  name: string;
-  version?: string;
-}) {
+export default function Readme({ name, version }: { name: string; version?: string }) {
   return (
     <SizeContainer maxWidth={800} style={{ colorScheme: 'dark' }}>
       <ReadmeContent name={name} version={version} />

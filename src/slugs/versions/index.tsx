@@ -41,17 +41,11 @@ const useStyles = createStyles(({ token, css }) => {
     `,
     border: css`
       border-bottom: 1px dotted ${token.colorBorder};
-    `
+    `,
   };
 });
 
-function TagsList({
-  tagsInfo,
-  pkg,
-}: {
-  tagsInfo: Record<string, string[]>;
-  pkg: PackageManifest;
-}) {
+function TagsList({ tagsInfo, pkg }: { tagsInfo: Record<string, string[]>; pkg: PackageManifest }) {
   const { styles } = useStyles();
   const [onlyProd, setOnlyProd] = React.useState(true);
   return (
@@ -64,7 +58,6 @@ function TagsList({
           paddingBottom: 16,
           position: 'relative',
         }}
-
       >
         当前 Tags
       </Typography.Title>
@@ -110,13 +103,7 @@ function TagsList({
   );
 }
 
-function VersionsList({
-  versions,
-  pkg,
-}: {
-  versions: NpmPackageVersion[];
-  pkg: PackageManifest;
-}) {
+function VersionsList({ versions, pkg }: { versions: NpmPackageVersion[]; pkg: PackageManifest }) {
   const { styles } = useStyles();
   const [onlyProd, setOnlyProd] = React.useState(true);
   return (
@@ -154,9 +141,7 @@ function VersionsList({
           <span>发布信息</span>
         </li>
         {versions
-          .sort((a, b) =>
-            dayjs(a.publish_time).isAfter(b.publish_time) ? -1 : 1
-          )
+          .sort((a, b) => (dayjs(a.publish_time).isAfter(b.publish_time) ? -1 : 1))
           ?.map((item) => {
             if (onlyProd && semver.parse(item.version)?.prerelease.length) {
               return null;
@@ -182,25 +167,18 @@ function VersionsList({
                   </Link>
                 </span>
                 <span className={styles.dot}></span>
-                <Typography.Text type='secondary'>
-                  <Space size='small'>
+                <Typography.Text type="secondary">
+                  <Space size="small">
                     {item._npmUser?.name ? (
                       <>
                         <span>由</span>
                         <Tooltip title={item._npmUser.name.replace('buc:', '')}>
-                          <Gravatar
-                            email={item._npmUser.email}
-                            name={item._npmUser.name}
-                          />
+                          <Gravatar email={item._npmUser.email} name={item._npmUser.name} />
                         </Tooltip>
                         <span>发布于</span>
                       </>
                     ) : null}
-                    <Tooltip
-                      title={dayjs(item.publish_time).format(
-                        'YYYY-MM-DD HH:mm:ss Z'
-                      )}
-                    >
+                    <Tooltip title={dayjs(item.publish_time).format('YYYY-MM-DD HH:mm:ss Z')}>
                       {dayjs(item.publish_time).format('YYYY-MM-DD')}
                     </Tooltip>
                   </Space>
@@ -213,10 +191,7 @@ function VersionsList({
   );
 }
 
-export default function ReadOnlyVersions({
-  manifest: pkg,
-  additionalInfo: needSync,
-}: PageProps) {
+export default function ReadOnlyVersions({ manifest: pkg, additionalInfo: needSync }: PageProps) {
   const versions = useVersions(pkg);
   const tagsInfo = useVersionTags(pkg);
   const publishedVersions = versions;
@@ -224,7 +199,7 @@ export default function ReadOnlyVersions({
   if (publishedVersions.length === 0) {
     return (
       <SizeContainer maxWidth={1072}>
-        <Result title='暂未发布版本' />
+        <Result title="暂未发布版本" />
       </SizeContainer>
     );
   }

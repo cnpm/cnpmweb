@@ -1,5 +1,5 @@
-import { ThemeMode } from "antd-style";
-import { useEffect, useState } from "react";
+import { ThemeMode } from 'antd-style';
+import { useEffect, useState } from 'react';
 
 const LOCAL_STORAGE_THEME = 'themeMode';
 
@@ -12,13 +12,14 @@ export function useTheme() {
     }
   }, []);
   useEffect(() => {
-    document
-      .querySelector('html')
-      ?.setAttribute('style', `color-scheme: ${themeMode};`);
+    document.querySelector('html')?.setAttribute('style', `color-scheme: ${themeMode};`);
   }, [themeMode]);
 
-  return [themeMode, (v: ThemeMode) => {
-    localStorage.setItem(LOCAL_STORAGE_THEME, v);
-    setThemeMode(v);
-  }];
+  return [
+    themeMode,
+    (v: ThemeMode) => {
+      localStorage.setItem(LOCAL_STORAGE_THEME, v);
+      setThemeMode(v);
+    },
+  ];
 }

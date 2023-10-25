@@ -5,8 +5,7 @@ export default function useNamePlaceholder(pkg: { name: string }) {
     if (!pkg) {
       return null;
     }
-    const cells = (pkg.name || '')
-      .split('/');
+    const cells = (pkg.name || '').split('/');
 
     const validateStr = cells[cells.length - 1] || '?';
     const first2 = validateStr.substr(0, 2);

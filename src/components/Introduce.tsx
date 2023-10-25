@@ -12,23 +12,28 @@ export default function Introduce() {
       <Paragraph>
         <blockquote>
           这是一个完整{' '}
-          <Link target={'_blank'} href='https://www.npmjs.com'>
+          <Link target={'_blank'} href="https://www.npmjs.com">
             npmjs.com
           </Link>{' '}
           镜像，你可以用此代替官方版本(只读)，我们将尽量与官方服务
           <Text strong>实时同步</Text>。
           <br />
           我们的前后端应用代码均已开源，前端应用为{' '}
-          <Link target='_blank' href='https://github.com/cnpm/cnpmweb'>
+          <Link target="_blank" href="https://github.com/cnpm/cnpmweb">
             cnpmweb
           </Link>
           ，服务端应用为{' '}
-          <Link target='_blank' href='https://github.com/cnpm/cnpmcore'>
+          <Link target="_blank" href="https://github.com/cnpm/cnpmcore">
             cnpmcore
           </Link>{' '}
           欢迎共建。
         </blockquote>
-        目前我们已累积同步了 <Text strong>{data?.doc_count ? data?.doc_count.toLocaleString('en-US') : '-'}</Text> 个包，近7日下载量为 <Text strong>{data?.download.thisweek ? data?.download.thisweek.toLocaleString('en-US') : '-'}</Text>
+        目前我们已累积同步了{' '}
+        <Text strong>{data?.doc_count ? data?.doc_count.toLocaleString('en-US') : '-'}</Text>{' '}
+        个包，近7日下载量为{' '}
+        <Text strong>
+          {data?.download.thisweek ? data?.download.thisweek.toLocaleString('en-US') : '-'}
+        </Text>
         。
         <Divider />
         <ul>
@@ -54,21 +59,18 @@ export default function Introduce() {
       <Title level={2}>使用说明</Title>
       <Paragraph>
         你可以使用我们定制的
-        <Link href='/package/cnpm' style={{ margin: '0 4px' }}>
+        <Link href="/package/cnpm" style={{ margin: '0 4px' }}>
           cnpm
         </Link>
         命令行工具代替默认的 npm。
         <br />
         cnpm 支持除了写相关操作外的所有命令，例如 install、info、view 等。
         <br />
-        <pre>
-          $ npm install -g cnpm --registry=https://registry.npmmirror.com
-        </pre>
+        <pre>$ npm install -g cnpm --registry=https://registry.npmmirror.com</pre>
         或者你直接通过添加 npm 参数 alias 一个新命令:
         <pre>
           alias cnpm=&quot;npm --registry=https://registry.npmmirror.com \
-          --cache=$HOME/.npm/.cache/cnpm \
-          --disturl=https://npmmirror.com/mirrors/node \
+          --cache=$HOME/.npm/.cache/cnpm \ --disturl=https://npmmirror.com/mirrors/node \
           --userconfig=$HOME/.cnpmrc&quot;
         </pre>
         当然，你也可以使用任意你心仪的命令行工具，只要配置 registry 即可
@@ -89,15 +91,15 @@ export default function Introduce() {
       <Paragraph>
         <ul>
           <li>
-            <Link href='https://registry.npmmirror.com' target='_blank'>
+            <Link href="https://registry.npmmirror.com" target="_blank">
               registry 站点
             </Link>
           </li>
           <li>
-            <Link href='/'>web 站点</Link>
+            <Link href="/">web 站点</Link>
           </li>
           <li>
-            <Link href='/mirrors' target='_blank'>
+            <Link href="/mirrors" target="_blank">
               二进制文件镜像
             </Link>
           </li>

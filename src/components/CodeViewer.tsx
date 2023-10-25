@@ -4,19 +4,20 @@ import loader from '@monaco-editor/loader';
 import { File, useFileContent } from '@/hooks/useFile';
 import useHighlightHash, { parseHash } from '@/hooks/useHighlightHash';
 import { useThemeMode } from 'antd-style';
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
+import { REGISTRY } from '@/config';
 
 loader.config({
   paths: {
-    vs: 'https://registry.npmmirror.com/monaco-editor/0.41.0/files/min/vs',
+    vs: `${REGISTRY}/monaco-editor/0.41.0/files/min/vs`,
   },
 });
 
 function highlightEditor(editor: any) {
-    const [start, end] = parseHash(window.location.hash?.replace('#', ''));
-    if (start !== null && window) {
-      editor.setSelection(new (window as any).monaco.Range(start, 1, end, 1));
-    }
+  const [start, end] = parseHash(window.location.hash?.replace('#', ''));
+  if (start !== null && window) {
+    editor.setSelection(new (window as any).monaco.Range(start, 1, end, 1));
+  }
 }
 
 export const CodeViewer = ({
@@ -31,18 +32,10 @@ export const CodeViewer = ({
   const editorRef = useRef<any>(null);
   const { themeMode: theme } = useThemeMode();
 
-  const { data: code } = useFileContent(
-    { fullname: pkgName, spec },
-    selectedFile?.path || ''
-  );
+  const { data: code } = useFileContent({ fullname: pkgName, spec }, selectedFile?.path || '');
 
   let language = selectedFile?.path.split('.').pop();
-  if (
-    language === 'js' ||
-    language === 'jsx' ||
-    language === 'map'
-  )
-    language = 'javascript';
+  if (language === 'js' || language === 'jsx' || language === 'map') language = 'javascript';
   else if (language === 'ts' || language === 'tsx') language = 'typescript';
   else if (language === 'md') language = 'markdown';
 
@@ -58,7 +51,6 @@ export const CodeViewer = ({
 
   if (!selectedFile) return <></>;
 
-
   return (
     <div
       style={{
@@ -68,7 +60,7 @@ export const CodeViewer = ({
       }}
     >
       <Editor
-        height='100vh'
+        height="100vh"
         value={code ? code : 'Loading...'}
         language={language}
         theme={`vs-${theme}`}

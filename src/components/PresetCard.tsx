@@ -34,13 +34,7 @@ export interface PresetCardProps {
   subTitle?: React.ReactNode;
 }
 
-export default function PresetCard({
-  title,
-  subTitle,
-  children,
-  style = {},
-}: PresetCardProps) {
-
+export default function PresetCard({ title, subTitle, children, style = {} }: PresetCardProps) {
   const { styles } = useStyles();
   return (
     <div className={styles.container} style={style}>

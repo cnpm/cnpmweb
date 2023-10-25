@@ -9,12 +9,12 @@ jobs:
   send_request:
     runs-on: ubuntu-latest
     steps:
-    - name: Trigger pipeline webhook
-      run: |
-       if [[ -z "${{ secrets.PIPELINE_WEBHOOK }}" ]]; then
-          echo "webhook is not set, skipping request"
-        else
-          curl -X POST "${{ secrets.PIPELINE_WEBHOOK }}" \
-          -H 'Content-Type: application/json' \
-          -d '{}'
-        fi
+      - name: Trigger pipeline webhook
+        run: |
+          if [[ -z "${{ secrets.PIPELINE_WEBHOOK }}" ]]; then
+             echo "webhook is not set, skipping request"
+           else
+             curl -X POST "${{ secrets.PIPELINE_WEBHOOK }}" \
+             -H 'Content-Type: application/json' \
+             -d '{}'
+           fi

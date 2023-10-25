@@ -83,7 +83,7 @@ interface VersionSelectProps {
   setVersionStr: (newValue: string) => void;
 }
 
-export default function NPMVersionSelect ({
+export default function NPMVersionSelect({
   versions,
   targetVersion,
   tags = {},
@@ -138,7 +138,7 @@ export default function NPMVersionSelect ({
   return !isEmpty(targetOptions) ? (
     <Space style={{ paddingRight: 32 }}>
       <Cascader
-        size='small'
+        size="small"
         options={targetOptions}
         value={targetValue}
         displayRender={() => selectVersionRender}
@@ -151,9 +151,9 @@ export default function NPMVersionSelect ({
         }}
       />
       <Select
-        size='small'
+        size="small"
         options={Object.keys(tags || {}).map((t) => ({ label: t, value: tags[t] }))}
-        placeholder='选择 Tag'
+        placeholder="选择 Tag"
         value={hasTag ? targetVersion : undefined}
         popupMatchSelectWidth={180}
         onChange={(val) => {
@@ -163,4 +163,4 @@ export default function NPMVersionSelect ({
       />
     </Space>
   ) : null;
-};
+}

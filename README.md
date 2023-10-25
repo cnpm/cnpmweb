@@ -6,16 +6,16 @@
 
 ![screenshot](https://github.com/cnpm/cnpmweb/blob/main/snap.png)
 
-* 🏗️ 支持一键部署
-* 🛠️ 支持二次集成开发，支持任意 npm registry
-* 🚀 基于 [Next.js](https://nextjs.org/docs/app/building-your-application/data-fetching) 服务端组件
-* 🔍 基于 [algolia](https://github.com/algolia/npm-search#using-the-public-index) 实现强大的在线搜索功能
+- 🏗️ 支持一键部署
+- 🛠️ 支持二次集成开发，支持任意 npm registry
+- 🚀 基于 [Next.js](https://nextjs.org/docs/app/building-your-application/data-fetching) 纯静态部署
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/cnpm/cnpmweb)
 
 ## 项目简介
 
-cnpmweb 是独立的前端应用，期望为 [npmmirror](https://npmmirror.com) 提供一个新的制品库界面，目前仍在 alpha 阶段。
+cnpmweb 是独立的前端应用，[npmmirror](https://npmmirror.com) 提供一个新的制品库界面，可在 `config.js` 中定义自定义 registry 地址。
+
 ## 开发指南
 
 ```shell

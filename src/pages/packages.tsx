@@ -22,10 +22,10 @@ const LOAD_PACKAGES: SearchItem[] = new Array(12).fill({
   package: {
     name: '',
     version: '',
-  }
+  },
 });
 
-export default function Packages({page: initPage, q: initQ}: PageType) {
+export default function Packages({ page: initPage, q: initQ }: PageType) {
   // 统一通过 router.query.q 获取搜索词
   // initQ 和 initPage 是分页关键词
   const router = useRouter();
@@ -49,21 +49,13 @@ export default function Packages({page: initPage, q: initQ}: PageType) {
           searchResult={searchResult}
           onSearch={(search) => {
             // 重置分页信息
-            router.replace(
-              `${router.pathname}?q=${search}`,
-              undefined,
-              {
-                shallow: true,
-              }
-            );
+            router.replace(`${router.pathname}?q=${search}`, undefined, {
+              shallow: true,
+            });
           }}
         ></SearchBox>
 
-        <Space
-          direction='vertical'
-          style={{ width: '100%', marginBottom: 24 }}
-          size='middle'
-        >
+        <Space direction="vertical" style={{ width: '100%', marginBottom: 24 }} size="middle">
           <Row gutter={[0, 16]}>
             {((searchResult?.total || isLoading) as number) > 0 ? (
               (searchResult?.objects || LOAD_PACKAGES)?.map((item, index) => {
@@ -93,13 +85,9 @@ export default function Packages({page: initPage, q: initQ}: PageType) {
               pageSize={12}
               showSizeChanger={false}
               onChange={(newPage) => {
-                router.replace(
-                  `${router.pathname}?q=${q}&page=${newPage}`,
-                  undefined,
-                  {
-                    shallow: true,
-                  }
-                );
+                router.replace(`${router.pathname}?q=${q}&page=${newPage}`, undefined, {
+                  shallow: true,
+                });
               }}
             />
           )}

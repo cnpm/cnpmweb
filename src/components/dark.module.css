@@ -5,7 +5,8 @@
   margin: 0;
   color: #c9d1d9;
   background-color: #141414;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial,
+    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
   font-size: 16px;
   line-height: 1.5;
   word-wrap: break-word;
@@ -67,9 +68,9 @@
 }
 
 .dark :global(.markdown-body h1) {
-  margin: .67em 0;
+  margin: 0.67em 0;
   font-weight: 600;
-  padding-bottom: .3em;
+  padding-bottom: 0.3em;
   font-size: 2em;
   border-bottom: 1px solid #21262d;
 }
@@ -123,7 +124,7 @@
   overflow: hidden;
   background: transparent;
   border-bottom: 1px solid #21262d;
-  height: .25em;
+  height: 0.25em;
   padding: 0;
   margin: 24px 0;
   background-color: #30363d;
@@ -139,31 +140,31 @@
   line-height: inherit;
 }
 
-.dark :global(.markdown-body [type=button]),
-.dark :global(.markdown-body [type=reset]),
-.dark :global(.markdown-body [type=submit]) {
+.dark :global(.markdown-body [type='button']),
+.dark :global(.markdown-body [type='reset']),
+.dark :global(.markdown-body [type='submit']) {
   -webkit-appearance: button;
 }
 
-.dark :global(.markdown-body [type=checkbox]),
-.dark :global(.markdown-body [type=radio]) {
+.dark :global(.markdown-body [type='checkbox']),
+.dark :global(.markdown-body [type='radio']) {
   box-sizing: border-box;
   padding: 0;
 }
 
-.dark :global(.markdown-body [type=number]::-webkit-inner-spin-button),
-.dark :global(.markdown-body [type=number]::-webkit-outer-spin-button) {
+.dark :global(.markdown-body [type='number']::-webkit-inner-spin-button),
+.dark :global(.markdown-body [type='number']::-webkit-outer-spin-button) {
   height: auto;
 }
 
-.dark :global(.markdown-body [type=search]::-webkit-search-cancel-button),
-.dark :global(.markdown-body [type=search]::-webkit-search-decoration) {
+.dark :global(.markdown-body [type='search']::-webkit-search-cancel-button),
+.dark :global(.markdown-body [type='search']::-webkit-search-decoration) {
   -webkit-appearance: none;
 }
 
 .dark :global(.markdown-body ::-webkit-input-placeholder) {
   color: inherit;
-  opacity: .54;
+  opacity: 0.54;
 }
 
 .dark :global(.markdown-body ::-webkit-file-upload-button) {
@@ -182,13 +183,13 @@
 
 .dark :global(.markdown-body hr::before) {
   display: table;
-  content: "";
+  content: '';
 }
 
 .dark :global(.markdown-body hr::after) {
   display: table;
   clear: both;
-  content: "";
+  content: '';
 }
 
 .dark :global(.markdown-body table) {
@@ -209,30 +210,30 @@
   cursor: pointer;
 }
 
-.dark :global(.markdown-body details:not([open])>*:not(summary)) {
+.dark :global(.markdown-body details:not([open]) > *:not(summary)) {
   display: none !important;
 }
 
 .dark :global(.markdown-body a:focus),
-.dark :global(.markdown-body [role=button]:focus),
-.dark :global(.markdown-body input[type=radio]:focus),
-.dark :global(.markdown-body input[type=checkbox]:focus) {
+.dark :global(.markdown-body [role='button']:focus),
+.dark :global(.markdown-body input[type='radio']:focus),
+.dark :global(.markdown-body input[type='checkbox']:focus) {
   outline: 2px solid #58a6ff;
   outline-offset: -2px;
   box-shadow: none;
 }
 
 .dark :global(.markdown-body a:focus:not(:focus-visible)),
-.dark :global(.markdown-body [role=button]:focus:not(:focus-visible)),
-.dark :global(.markdown-body input[type=radio]:focus:not(:focus-visible)),
-.dark :global(.markdown-body input[type=checkbox]:focus:not(:focus-visible)) {
+.dark :global(.markdown-body [role='button']:focus:not(:focus-visible)),
+.dark :global(.markdown-body input[type='radio']:focus:not(:focus-visible)),
+.dark :global(.markdown-body input[type='checkbox']:focus:not(:focus-visible)) {
   outline: solid 1px transparent;
 }
 
 .dark :global(.markdown-body a:focus-visible),
-.dark :global(.markdown-body [role=button]:focus-visible),
-.dark :global(.markdown-body input[type=radio]:focus-visible),
-.dark :global(.markdown-body input[type=checkbox]:focus-visible) {
+.dark :global(.markdown-body [role='button']:focus-visible),
+.dark :global(.markdown-body input[type='radio']:focus-visible),
+.dark :global(.markdown-body input[type='checkbox']:focus-visible) {
   outline: 2px solid #58a6ff;
   outline-offset: -2px;
   box-shadow: none;
@@ -240,17 +241,24 @@
 
 .dark :global(.markdown-body a:not([class]):focus),
 .dark :global(.markdown-body a:not([class]):focus-visible),
-.dark :global(.markdown-body input[type=radio]:focus),
-.dark :global(.markdown-body input[type=radio]:focus-visible),
-.dark :global(.markdown-body input[type=checkbox]:focus),
-.dark :global(.markdown-body input[type=checkbox]:focus-visible) {
+.dark :global(.markdown-body input[type='radio']:focus),
+.dark :global(.markdown-body input[type='radio']:focus-visible),
+.dark :global(.markdown-body input[type='checkbox']:focus),
+.dark :global(.markdown-body input[type='checkbox']:focus-visible) {
   outline-offset: 0;
 }
 
 .dark :global(.markdown-body kbd) {
   display: inline-block;
   padding: 3px 5px;
-  font: 11px ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
+  font:
+    11px ui-monospace,
+    SFMono-Regular,
+    SF Mono,
+    Menlo,
+    Consolas,
+    Liberation Mono,
+    monospace;
   line-height: 10px;
   color: #c9d1d9;
   vertical-align: middle;
@@ -275,7 +283,7 @@
 
 .dark :global(.markdown-body h2) {
   font-weight: 600;
-  padding-bottom: .3em;
+  padding-bottom: 0.3em;
   font-size: 1.5em;
   border-bottom: 1px solid #21262d;
 }
@@ -292,12 +300,12 @@
 
 .dark :global(.markdown-body h5) {
   font-weight: 600;
-  font-size: .875em;
+  font-size: 0.875em;
 }
 
 .dark :global(.markdown-body h6) {
   font-weight: 600;
-  font-size: .85em;
+  font-size: 0.85em;
   color: #8b949e;
 }
 
@@ -310,7 +318,7 @@
   margin: 0;
   padding: 0 1em;
   color: #8b949e;
-  border-left: .25em solid #30363d;
+  border-left: 0.25em solid #30363d;
 }
 
 .dark :global(.markdown-body ul),
@@ -339,14 +347,28 @@
 .dark :global(.markdown-body tt),
 .dark :global(.markdown-body code),
 .dark :global(.markdown-body samp) {
-  font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
+  font-family:
+    ui-monospace,
+    SFMono-Regular,
+    SF Mono,
+    Menlo,
+    Consolas,
+    Liberation Mono,
+    monospace;
   font-size: 12px;
 }
 
 .dark :global(.markdown-body pre) {
   margin-top: 0;
   margin-bottom: 0;
-  font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
+  font-family:
+    ui-monospace,
+    SFMono-Regular,
+    SF Mono,
+    Menlo,
+    Consolas,
+    Liberation Mono,
+    monospace;
   font-size: 12px;
   word-wrap: normal;
 }
@@ -367,20 +389,20 @@
 
 .dark :global(.markdown-body::before) {
   display: table;
-  content: "";
+  content: '';
 }
 
 .dark :global(.markdown-body::after) {
   display: table;
   clear: both;
-  content: "";
+  content: '';
 }
 
-.dark :global(.markdown-body>*:first-child) {
+.dark :global(.markdown-body > *:first-child) {
   margin-top: 0 !important;
 }
 
-.dark :global(.markdown-body>*:last-child) {
+.dark :global(.markdown-body > *:last-child) {
   margin-bottom: 0 !important;
 }
 
@@ -416,11 +438,11 @@
   margin-bottom: 16px;
 }
 
-.dark :global(.markdown-body blockquote>:first-child) {
+.dark :global(.markdown-body blockquote > :first-child) {
   margin-top: 0;
 }
 
-.dark :global(.markdown-body blockquote>:last-child) {
+.dark :global(.markdown-body blockquote > :last-child) {
   margin-bottom: 0;
 }
 
@@ -465,7 +487,7 @@
 .dark :global(.markdown-body h5 code),
 .dark :global(.markdown-body h6 tt),
 .dark :global(.markdown-body h6 code) {
-  padding: 0 .2em;
+  padding: 0 0.2em;
   font-size: inherit;
 }
 
@@ -499,27 +521,27 @@
   list-style-type: none;
 }
 
-.dark :global(.markdown-body ol[type=a]) {
+.dark :global(.markdown-body ol[type='a']) {
   list-style-type: lower-alpha;
 }
 
-.dark :global(.markdown-body ol[type=A]) {
+.dark :global(.markdown-body ol[type='A']) {
   list-style-type: upper-alpha;
 }
 
-.dark :global(.markdown-body ol[type=i]) {
+.dark :global(.markdown-body ol[type='i']) {
   list-style-type: lower-roman;
 }
 
-.dark :global(.markdown-body ol[type=I]) {
+.dark :global(.markdown-body ol[type='I']) {
   list-style-type: upper-roman;
 }
 
-.dark :global(.markdown-body ol[type="1"]) {
+.dark :global(.markdown-body ol[type='1']) {
   list-style-type: decimal;
 }
 
-.dark :global(.markdown-body div>ol:not([type])) {
+.dark :global(.markdown-body div > ol:not([type])) {
   list-style-type: decimal;
 }
 
@@ -531,12 +553,12 @@
   margin-bottom: 0;
 }
 
-.dark :global(.markdown-body li>p) {
+.dark :global(.markdown-body li > p) {
   margin-top: 16px;
 }
 
-.dark :global(.markdown-body li+li) {
-  margin-top: .25em;
+.dark :global(.markdown-body li + li) {
+  margin-top: 0.25em;
 }
 
 .dark :global(.markdown-body dl) {
@@ -579,11 +601,11 @@
   background-color: transparent;
 }
 
-.dark :global(.markdown-body img[align=right]) {
+.dark :global(.markdown-body img[align='right']) {
   padding-left: 20px;
 }
 
-.dark :global(.markdown-body img[align=left]) {
+.dark :global(.markdown-body img[align='left']) {
   padding-right: 20px;
 }
 
@@ -598,7 +620,7 @@
   overflow: hidden;
 }
 
-.dark :global(.markdown-body span.frame>span) {
+.dark :global(.markdown-body span.frame > span) {
   display: block;
   float: left;
   width: auto;
@@ -626,7 +648,7 @@
   clear: both;
 }
 
-.dark :global(.markdown-body span.align-center>span) {
+.dark :global(.markdown-body span.align-center > span) {
   display: block;
   margin: 13px auto 0;
   overflow: hidden;
@@ -644,7 +666,7 @@
   clear: both;
 }
 
-.dark :global(.markdown-body span.align-right>span) {
+.dark :global(.markdown-body span.align-right > span) {
   display: block;
   margin: 13px 0 0;
   overflow: hidden;
@@ -674,7 +696,7 @@
   overflow: hidden;
 }
 
-.dark :global(.markdown-body span.float-right>span) {
+.dark :global(.markdown-body span.float-right > span) {
   display: block;
   margin: 13px auto 0;
   overflow: hidden;
@@ -683,7 +705,7 @@
 
 .dark :global(.markdown-body code),
 .dark :global(.markdown-body tt) {
-  padding: .2em .4em;
+  padding: 0.2em 0.4em;
   margin: 0;
   font-size: 85%;
   white-space: break-spaces;
@@ -708,7 +730,7 @@
   font-size: 100%;
 }
 
-.dark :global(.markdown-body pre>code) {
+.dark :global(.markdown-body pre > code) {
   padding: 0;
   margin: 0;
   word-break: normal;
@@ -777,11 +799,11 @@
 }
 
 .dark :global(.markdown-body [data-footnote-ref]::before) {
-  content: "[";
+  content: '[';
 }
 
 .dark :global(.markdown-body [data-footnote-ref]::after) {
-  content: "]";
+  content: ']';
 }
 
 .dark :global(.markdown-body .footnotes) {
@@ -811,7 +833,7 @@
   bottom: -8px;
   left: -24px;
   pointer-events: none;
-  content: "";
+  content: '';
   border: 2px solid #1f6feb;
   border-radius: 6px;
 }
@@ -947,7 +969,7 @@
 .dark :global(.markdown-body g-emoji) {
   display: inline-block;
   min-width: 1ch;
-  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
   font-size: 1em;
   font-style: normal !important;
   font-weight: 400;
@@ -972,7 +994,7 @@
   cursor: pointer;
 }
 
-.dark :global(.markdown-body .task-list-item+.task-list-item) {
+.dark :global(.markdown-body .task-list-item + .task-list-item) {
   margin-top: 4px;
 }
 
@@ -981,12 +1003,12 @@
 }
 
 .dark :global(.markdown-body .task-list-item-checkbox) {
-  margin: 0 .2em .25em -1.4em;
+  margin: 0 0.2em 0.25em -1.4em;
   vertical-align: middle;
 }
 
 .dark :global(.markdown-body .contains-task-list:dir(rtl) .task-list-item-checkbox) {
-  margin: 0 -1.6em .25em .2em;
+  margin: 0 -1.6em 0.25em 0.2em;
 }
 
 .dark :global(.markdown-body .contains-task-list) {
@@ -1009,16 +1031,16 @@
 .dark :global(pre code.hljs) {
   display: block;
   overflow-x: auto;
-  padding: 1em
+  padding: 1em;
 }
 
 .dark :global(code.hljs) {
-  padding: 3px 5px
+  padding: 3px 5px;
 }
 
 .dark :global(.hljs) {
   color: #c9d1d9;
-  background: #0d1117
+  background: #0d1117;
 }
 
 .dark :global(.hljs-doctag),
@@ -1028,14 +1050,14 @@
 .dark :global(.hljs-template-variable),
 .dark :global(.hljs-type),
 .dark :global(.hljs-variable.language_) {
-  color: #ff7b72
+  color: #ff7b72;
 }
 
 .dark :global(.hljs-title),
 .dark :global(.hljs-title.class_),
 .dark :global(.hljs-title.class_.inherited__),
 .dark :global(.hljs-title.function_) {
-  color: #d2a8ff
+  color: #d2a8ff;
 }
 
 .dark :global(.hljs-attr),
@@ -1048,62 +1070,62 @@
 .dark :global(.hljs-selector-class),
 .dark :global(.hljs-selector-id),
 .dark :global(.hljs-variable) {
-  color: #79c0ff
+  color: #79c0ff;
 }
 
 .dark :global(.hljs-meta .hljs-string),
 .dark :global(.hljs-regexp),
 .dark :global(.hljs-string) {
-  color: #a5d6ff
+  color: #a5d6ff;
 }
 
 .dark :global(.hljs-built_in),
 .dark :global(.hljs-symbol) {
-  color: #ffa657
+  color: #ffa657;
 }
 
 .dark :global(.hljs-code),
 .dark :global(.hljs-comment),
 .dark :global(.hljs-formula) {
-  color: #8b949e
+  color: #8b949e;
 }
 
 .dark :global(.hljs-name),
 .dark :global(.hljs-quote),
 .dark :global(.hljs-selector-pseudo),
 .dark :global(.hljs-selector-tag) {
-  color: #7ee787
+  color: #7ee787;
 }
 
 .dark :global(.hljs-subst) {
-  color: #c9d1d9
+  color: #c9d1d9;
 }
 
 .dark :global(.hljs-section) {
   color: #1f6feb;
-  font-weight: 700
+  font-weight: 700;
 }
 
 .dark :global(.hljs-bullet) {
-  color: #f2cc60
+  color: #f2cc60;
 }
 
 .dark :global(.hljs-emphasis) {
   color: #c9d1d9;
-  font-style: italic
+  font-style: italic;
 }
 
 .dark :global(.hljs-strong) {
   color: #c9d1d9;
-  font-weight: 700
+  font-weight: 700;
 }
 
 .dark :global(.hljs-addition) {
   color: #aff5b4;
-  background-color: #033a16
+  background-color: #033a16;
 }
 
 .dark :global(.hljs-deletion) {
   color: #ffdcd7;
-  background-color: #67060c
+  background-color: #67060c;
 }

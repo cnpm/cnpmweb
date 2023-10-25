@@ -48,7 +48,9 @@ export default function CustomTabs({
             if (v === pkg?.['dist-tags']?.latest) {
               push(`/package/${pkg.name}/${activateKey}`, undefined, { shallow: true });
             } else {
-              push(`/package/${pkg.name}/${activateKey}?version=${v}`, undefined, { shallow: true });
+              push(`/package/${pkg.name}/${activateKey}?version=${v}`, undefined, {
+                shallow: true,
+              });
             }
           }}
         />

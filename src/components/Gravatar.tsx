@@ -4,7 +4,7 @@ import { Avatar, Tooltip } from 'antd';
 type GAvatarProps = {
   email: string;
   name: string;
-}
+};
 export function Gravatar({ email, name }: GAvatarProps) {
   const avatarLink = GravatarLink({
     email: email || '',

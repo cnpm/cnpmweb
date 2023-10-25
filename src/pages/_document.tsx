@@ -4,7 +4,7 @@ import Document, { Head, Html, Main, NextScript } from 'next/document';
 import type { DocumentContext } from 'next/document';
 
 const MyDocument = () => (
-  <Html lang='zh-cn'>
+  <Html lang="zh-cn">
     <Head>
       <script async src={'https://ur.alipay.com/tracert_a4084.js'} />
       <script

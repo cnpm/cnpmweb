@@ -4,7 +4,8 @@
   margin: 0;
   color: #24292f;
   background-color: #ffffff;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial,
+    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
   font-size: 16px;
   line-height: 1.5;
   word-wrap: break-word;
@@ -66,9 +67,9 @@
 }
 
 .light :global(.markdown-body h1) {
-  margin: .67em 0;
+  margin: 0.67em 0;
   font-weight: 600;
-  padding-bottom: .3em;
+  padding-bottom: 0.3em;
   font-size: 2em;
   border-bottom: 1px solid hsla(210, 18%, 87%, 1);
 }
@@ -122,7 +123,7 @@
   overflow: hidden;
   background: transparent;
   border-bottom: 1px solid hsla(210, 18%, 87%, 1);
-  height: .25em;
+  height: 0.25em;
   padding: 0;
   margin: 24px 0;
   background-color: #d0d7de;
@@ -138,31 +139,31 @@
   line-height: inherit;
 }
 
-.light :global(.markdown-body [type=button]),
-.light :global(.markdown-body [type=reset]),
-.light :global(.markdown-body [type=submit]) {
+.light :global(.markdown-body [type='button']),
+.light :global(.markdown-body [type='reset']),
+.light :global(.markdown-body [type='submit']) {
   -webkit-appearance: button;
 }
 
-.light :global(.markdown-body [type=checkbox]),
-.light :global(.markdown-body [type=radio]) {
+.light :global(.markdown-body [type='checkbox']),
+.light :global(.markdown-body [type='radio']) {
   box-sizing: border-box;
   padding: 0;
 }
 
-.light :global(.markdown-body [type=number]::-webkit-inner-spin-button),
-.light :global(.markdown-body [type=number]::-webkit-outer-spin-button) {
+.light :global(.markdown-body [type='number']::-webkit-inner-spin-button),
+.light :global(.markdown-body [type='number']::-webkit-outer-spin-button) {
   height: auto;
 }
 
-.light :global(.markdown-body [type=search]::-webkit-search-cancel-button),
-.light :global(.markdown-body [type=search]::-webkit-search-decoration) {
+.light :global(.markdown-body [type='search']::-webkit-search-cancel-button),
+.light :global(.markdown-body [type='search']::-webkit-search-decoration) {
   -webkit-appearance: none;
 }
 
 .light :global(.markdown-body ::-webkit-input-placeholder) {
   color: inherit;
-  opacity: .54;
+  opacity: 0.54;
 }
 
 .light :global(.markdown-body ::-webkit-file-upload-button) {
@@ -181,13 +182,13 @@
 
 .light :global(.markdown-body hr::before) {
   display: table;
-  content: "";
+  content: '';
 }
 
 .light :global(.markdown-body hr::after) {
   display: table;
   clear: both;
-  content: "";
+  content: '';
 }
 
 .light :global(.markdown-body table) {
@@ -208,30 +209,30 @@
   cursor: pointer;
 }
 
-.light :global(.markdown-body details:not([open])>*:not(summary)) {
+.light :global(.markdown-body details:not([open]) > *:not(summary)) {
   display: none !important;
 }
 
 .light :global(.markdown-body a:focus),
-.light :global(.markdown-body [role=button]:focus),
-.light :global(.markdown-body input[type=radio]:focus),
-.light :global(.markdown-body input[type=checkbox]:focus) {
+.light :global(.markdown-body [role='button']:focus),
+.light :global(.markdown-body input[type='radio']:focus),
+.light :global(.markdown-body input[type='checkbox']:focus) {
   outline: 2px solid #0969da;
   outline-offset: -2px;
   box-shadow: none;
 }
 
 .light :global(.markdown-body a:focus:not(:focus-visible)),
-.light :global(.markdown-body [role=button]:focus:not(:focus-visible)),
-.light :global(.markdown-body input[type=radio]:focus:not(:focus-visible)),
-.light :global(.markdown-body input[type=checkbox]:focus:not(:focus-visible)) {
+.light :global(.markdown-body [role='button']:focus:not(:focus-visible)),
+.light :global(.markdown-body input[type='radio']:focus:not(:focus-visible)),
+.light :global(.markdown-body input[type='checkbox']:focus:not(:focus-visible)) {
   outline: solid 1px transparent;
 }
 
 .light :global(.markdown-body a:focus-visible),
-.light :global(.markdown-body [role=button]:focus-visible),
-.light :global(.markdown-body input[type=radio]:focus-visible),
-.light :global(.markdown-body input[type=checkbox]:focus-visible) {
+.light :global(.markdown-body [role='button']:focus-visible),
+.light :global(.markdown-body input[type='radio']:focus-visible),
+.light :global(.markdown-body input[type='checkbox']:focus-visible) {
   outline: 2px solid #0969da;
   outline-offset: -2px;
   box-shadow: none;
@@ -239,17 +240,24 @@
 
 .light :global(.markdown-body a:not([class]):focus),
 .light :global(.markdown-body a:not([class]):focus-visible),
-.light :global(.markdown-body input[type=radio]:focus),
-.light :global(.markdown-body input[type=radio]:focus-visible),
-.light :global(.markdown-body input[type=checkbox]:focus),
-.light :global(.markdown-body input[type=checkbox]:focus-visible) {
+.light :global(.markdown-body input[type='radio']:focus),
+.light :global(.markdown-body input[type='radio']:focus-visible),
+.light :global(.markdown-body input[type='checkbox']:focus),
+.light :global(.markdown-body input[type='checkbox']:focus-visible) {
   outline-offset: 0;
 }
 
 .light :global(.markdown-body kbd) {
   display: inline-block;
   padding: 3px 5px;
-  font: 11px ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
+  font:
+    11px ui-monospace,
+    SFMono-Regular,
+    SF Mono,
+    Menlo,
+    Consolas,
+    Liberation Mono,
+    monospace;
   line-height: 10px;
   color: #24292f;
   vertical-align: middle;
@@ -274,7 +282,7 @@
 
 .light :global(.markdown-body h2) {
   font-weight: 600;
-  padding-bottom: .3em;
+  padding-bottom: 0.3em;
   font-size: 1.5em;
   border-bottom: 1px solid hsla(210, 18%, 87%, 1);
 }
@@ -291,12 +299,12 @@
 
 .light :global(.markdown-body h5) {
   font-weight: 600;
-  font-size: .875em;
+  font-size: 0.875em;
 }
 
 .light :global(.markdown-body h6) {
   font-weight: 600;
-  font-size: .85em;
+  font-size: 0.85em;
   color: #57606a;
 }
 
@@ -309,7 +317,7 @@
   margin: 0;
   padding: 0 1em;
   color: #57606a;
-  border-left: .25em solid #d0d7de;
+  border-left: 0.25em solid #d0d7de;
 }
 
 .light :global(.markdown-body ul),
@@ -338,14 +346,28 @@
 .light :global(.markdown-body tt),
 .light :global(.markdown-body code),
 .light :global(.markdown-body samp) {
-  font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
+  font-family:
+    ui-monospace,
+    SFMono-Regular,
+    SF Mono,
+    Menlo,
+    Consolas,
+    Liberation Mono,
+    monospace;
   font-size: 12px;
 }
 
 .light :global(.markdown-body pre) {
   margin-top: 0;
   margin-bottom: 0;
-  font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
+  font-family:
+    ui-monospace,
+    SFMono-Regular,
+    SF Mono,
+    Menlo,
+    Consolas,
+    Liberation Mono,
+    monospace;
   font-size: 12px;
   word-wrap: normal;
 }
@@ -366,20 +388,20 @@
 
 .light :global(.markdown-body::before) {
   display: table;
-  content: "";
+  content: '';
 }
 
 .light :global(.markdown-body::after) {
   display: table;
   clear: both;
-  content: "";
+  content: '';
 }
 
-.light :global(.markdown-body>*:first-child) {
+.light :global(.markdown-body > *:first-child) {
   margin-top: 0 !important;
 }
 
-.light :global(.markdown-body>*:last-child) {
+.light :global(.markdown-body > *:last-child) {
   margin-bottom: 0 !important;
 }
 
@@ -415,11 +437,11 @@
   margin-bottom: 16px;
 }
 
-.light :global(.markdown-body blockquote>:first-child) {
+.light :global(.markdown-body blockquote > :first-child) {
   margin-top: 0;
 }
 
-.light :global(.markdown-body blockquote>:last-child) {
+.light :global(.markdown-body blockquote > :last-child) {
   margin-bottom: 0;
 }
 
@@ -464,7 +486,7 @@
 .light :global(.markdown-body h5 code),
 .light :global(.markdown-body h6 tt),
 .light :global(.markdown-body h6 code) {
-  padding: 0 .2em;
+  padding: 0 0.2em;
   font-size: inherit;
 }
 
@@ -498,27 +520,27 @@
   list-style-type: none;
 }
 
-.light :global(.markdown-body ol[type=a]) {
+.light :global(.markdown-body ol[type='a']) {
   list-style-type: lower-alpha;
 }
 
-.light :global(.markdown-body ol[type=A]) {
+.light :global(.markdown-body ol[type='A']) {
   list-style-type: upper-alpha;
 }
 
-.light :global(.markdown-body ol[type=i]) {
+.light :global(.markdown-body ol[type='i']) {
   list-style-type: lower-roman;
 }
 
-.light :global(.markdown-body ol[type=I]) {
+.light :global(.markdown-body ol[type='I']) {
   list-style-type: upper-roman;
 }
 
-.light :global(.markdown-body ol[type="1"]) {
+.light :global(.markdown-body ol[type='1']) {
   list-style-type: decimal;
 }
 
-.light :global(.markdown-body div>ol:not([type])) {
+.light :global(.markdown-body div > ol:not([type])) {
   list-style-type: decimal;
 }
 
@@ -530,12 +552,12 @@
   margin-bottom: 0;
 }
 
-.light :global(.markdown-body li>p) {
+.light :global(.markdown-body li > p) {
   margin-top: 16px;
 }
 
-.light :global(.markdown-body li+li) {
-  margin-top: .25em;
+.light :global(.markdown-body li + li) {
+  margin-top: 0.25em;
 }
 
 .light :global(.markdown-body dl) {
@@ -578,11 +600,11 @@
   background-color: transparent;
 }
 
-.light :global(.markdown-body img[align=right]) {
+.light :global(.markdown-body img[align='right']) {
   padding-left: 20px;
 }
 
-.light :global(.markdown-body img[align=left]) {
+.light :global(.markdown-body img[align='left']) {
   padding-right: 20px;
 }
 
@@ -597,7 +619,7 @@
   overflow: hidden;
 }
 
-.light :global(.markdown-body span.frame>span) {
+.light :global(.markdown-body span.frame > span) {
   display: block;
   float: left;
   width: auto;
@@ -625,7 +647,7 @@
   clear: both;
 }
 
-.light :global(.markdown-body span.align-center>span) {
+.light :global(.markdown-body span.align-center > span) {
   display: block;
   margin: 13px auto 0;
   overflow: hidden;
@@ -643,7 +665,7 @@
   clear: both;
 }
 
-.light :global(.markdown-body span.align-right>span) {
+.light :global(.markdown-body span.align-right > span) {
   display: block;
   margin: 13px 0 0;
   overflow: hidden;
@@ -673,7 +695,7 @@
   overflow: hidden;
 }
 
-.light :global(.markdown-body span.float-right>span) {
+.light :global(.markdown-body span.float-right > span) {
   display: block;
   margin: 13px auto 0;
   overflow: hidden;
@@ -682,7 +704,7 @@
 
 .light :global(.markdown-body code),
 .light :global(.markdown-body tt) {
-  padding: .2em .4em;
+  padding: 0.2em 0.4em;
   margin: 0;
   font-size: 85%;
   white-space: break-spaces;
@@ -707,7 +729,7 @@
   font-size: 100%;
 }
 
-.light :global(.markdown-body pre>code) {
+.light :global(.markdown-body pre > code) {
   padding: 0;
   margin: 0;
   word-break: normal;
@@ -776,11 +798,11 @@
 }
 
 .light :global(.markdown-body [data-footnote-ref]::before) {
-  content: "[";
+  content: '[';
 }
 
 .light :global(.markdown-body [data-footnote-ref]::after) {
-  content: "]";
+  content: ']';
 }
 
 .light :global(.markdown-body .footnotes) {
@@ -810,7 +832,7 @@
   bottom: -8px;
   left: -24px;
   pointer-events: none;
-  content: "";
+  content: '';
   border: 2px solid #0969da;
   border-radius: 6px;
 }
@@ -946,7 +968,7 @@
 .light :global(.markdown-body g-emoji) {
   display: inline-block;
   min-width: 1ch;
-  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
   font-size: 1em;
   font-style: normal !important;
   font-weight: 400;
@@ -971,7 +993,7 @@
   cursor: pointer;
 }
 
-.light :global(.markdown-body .task-list-item+.task-list-item) {
+.light :global(.markdown-body .task-list-item + .task-list-item) {
   margin-top: 4px;
 }
 
@@ -980,12 +1002,12 @@
 }
 
 .light :global(.markdown-body .task-list-item-checkbox) {
-  margin: 0 .2em .25em -1.4em;
+  margin: 0 0.2em 0.25em -1.4em;
   vertical-align: middle;
 }
 
 .light :global(.markdown-body .contains-task-list:dir(rtl) .task-list-item-checkbox) {
-  margin: 0 -1.6em .25em .2em;
+  margin: 0 -1.6em 0.25em 0.2em;
 }
 
 .light :global(.markdown-body .contains-task-list) {
@@ -1008,18 +1030,18 @@
 .light :global(pre code.hljs) {
   display: block;
   overflow-x: auto;
-  padding: 1em
+  padding: 1em;
 }
 
 .light :global(code.hljs) {
   display: block;
-  padding: 3px 5px
+  padding: 3px 5px;
 }
 
 .light :global(.hljs) {
   display: block;
   color: #24292e;
-  background: #fff
+  background: #fff;
 }
 
 .light :global(.hljs-doctag),
@@ -1029,14 +1051,14 @@
 .light :global(.hljs-template-variable),
 .light :global(.hljs-type),
 .light :global(.hljs-variable.language_) {
-  color: #d73a49
+  color: #d73a49;
 }
 
 .light :global(.hljs-title),
 .light :global(.hljs-title.class_),
 .light :global(.hljs-title.class_.inherited__),
 .light :global(.hljs-title.function_) {
-  color: #6f42c1
+  color: #6f42c1;
 }
 
 .light :global(.hljs-attr),
@@ -1049,62 +1071,62 @@
 .light :global(.hljs-selector-class),
 .light :global(.hljs-selector-id),
 .light :global(.hljs-variable) {
-  color: #005cc5
+  color: #005cc5;
 }
 
 .light :global(.hljs-meta .hljs-string),
 .light :global(.hljs-regexp),
 .light :global(.hljs-string) {
-  color: #032f62
+  color: #032f62;
 }
 
 .light :global(.hljs-built_in),
 .light :global(.hljs-symbol) {
-  color: #e36209
+  color: #e36209;
 }
 
 .light :global(.hljs-code),
 .light :global(.hljs-comment),
 .light :global(.hljs-formula) {
-  color: #6a737d
+  color: #6a737d;
 }
 
 .light :global(.hljs-name),
 .light :global(.hljs-quote),
 .light :global(.hljs-selector-pseudo),
 .light :global(.hljs-selector-tag) {
-  color: #22863a
+  color: #22863a;
 }
 
 .light :global(.hljs-subst) {
-  color: #24292e
+  color: #24292e;
 }
 
 .light :global(.hljs-section) {
   color: #005cc5;
-  font-weight: 700
+  font-weight: 700;
 }
 
 .light :global(.hljs-bullet) {
-  color: #735c0f
+  color: #735c0f;
 }
 
 .light :global(.hljs-emphasis) {
   color: #24292e;
-  font-style: italic
+  font-style: italic;
 }
 
 .light :global(.hljs-strong) {
   color: #24292e;
-  font-weight: 700
+  font-weight: 700;
 }
 
 .light :global(.hljs-addition) {
   color: #22863a;
-  background-color: #f0fff4
+  background-color: #f0fff4;
 }
 
 .light :global(.hljs-deletion) {
   color: #b31d28;
-  background-color: #ffeef0
+  background-color: #ffeef0;
 }

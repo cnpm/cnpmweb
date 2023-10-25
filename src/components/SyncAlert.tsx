@@ -1,22 +1,23 @@
 'use client';
 
-import { PackageManifest } from "@/hooks/useManifest";
-import { Alert, AlertProps, Button, Space } from "antd";
-import Sync from "./Sync";
+import { PackageManifest } from '@/hooks/useManifest';
+import { Alert, AlertProps, Button, Space } from 'antd';
+import Sync from './Sync';
+import { REGISTRY } from '@/config';
 
 const NPM_REGISTRY = 'https://npmjs.com';
 
 export const REGISTRY_MAP = {
-  self: 'https://registry.npmmirror.com',
+  self: REGISTRY,
   default: 'https://registry.npmjs.org',
 };
 
 type SyncAlertProps = {
   pkg: PackageManifest;
   needSync?: boolean;
-}
+};
 
-export default function SyncAlert({pkg, needSync}: SyncAlertProps) {
+export default function SyncAlert({ pkg, needSync }: SyncAlertProps) {
   // const registry = useSourceRegistry(pkg!);
   const registry = pkg?._source_registry_name;
   // const { needSync, isLoading } = useNeedSync(pkg!, registry);
@@ -26,9 +27,7 @@ export default function SyncAlert({pkg, needSync}: SyncAlertProps) {
   let description;
 
   if (registry === 'self') {
-    description = `${
-      pkg!.name
-    } 为私有包，发布流程在 registry.npmmirror.com 上，无需进行同步`;
+    description = `${pkg!.name} 为私有包，发布流程在 registry.npmmirror.com 上，无需进行同步`;
   } else {
     description = `${pkg!.name} 为公网包，目前会从 registry.npmjs.org 进行同步`;
     sourceLink = `${NPM_REGISTRY}/package/${pkg!.name}?activeTab=versions`;
@@ -51,15 +50,10 @@ export default function SyncAlert({pkg, needSync}: SyncAlertProps) {
       type={type}
       showIcon
       action={
-        <Space direction='vertical'>
+        <Space direction="vertical">
           {<Sync pkgName={pkg.name} />}
           {registry !== 'self' && (
-            <Button
-              size='small'
-              href={sourceLink}
-              type='link'
-              target='_blank'
-            >
+            <Button size="small" href={sourceLink} type="link" target="_blank">
               查看源站
             </Button>
           )}
