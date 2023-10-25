@@ -29,6 +29,7 @@
     "lodash": "^4.17.21",
     "marked": "^1.1.0",
     "next": "13.4.7",
+    "npm-package-arg": "^11.0.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-icons": "^4.3.1",
@@ -38,6 +39,7 @@
   "repository": "https://github.com/cnpm/cnpmweb.git",
   "devDependencies": {
     "@types/lodash": "^4.14.197",
+    "@types/npm-package-arg": "^6.1.3",
     "@types/semver": "^7.5.0",
     "prettier": "^3.0.3"
   }
