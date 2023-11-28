@@ -59,7 +59,10 @@ export default function LandingSearch() {
       <div style={{ marginTop: 16 }}>
         {recent && (
           <PackageTag
-            tags={recent}
+            tags={recent.map(item => ({
+              label: item,
+              href: `/${item}`,
+            }))}
             closeIcon
             onClose={(v) => {
               setRecent(recent.filter((i) => i !== v));

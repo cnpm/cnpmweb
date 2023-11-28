@@ -28,8 +28,16 @@ export default function Header({ title, themeMode, setThemeMode }: any) {
     if (recent === undefined) {
       return;
     }
-    if (title && !recent.includes(title)) {
-      setRecent([title, ...(recent || [])]);
+    if (title) {
+      let newRecent = recent ? [...recent] : [];
+      // 检查 title 是否已在 recent 中
+      const index = newRecent.indexOf(title);
+      if (index !== -1) {
+          // 如果已存在，先移除
+          newRecent.splice(index, 1);
+      }
+      // 将 title 放到数组最前面
+      newRecent = [title, ...newRecent];
     }
   }, [title, recent]);
 

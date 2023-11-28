@@ -10,6 +10,8 @@ export function useRecent(): [string[] | undefined, (v: string[]) => void] {
     const recentInfo = localStorage?.getItem(LOCAL_STORAGE_RECENT);
     if (recentInfo) {
       setRecent(JSON.parse(recentInfo));
+    } else {
+      setRecent([]);
     }
   }, []);
 
