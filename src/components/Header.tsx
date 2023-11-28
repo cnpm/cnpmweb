@@ -25,19 +25,20 @@ export default function Header({ title, themeMode, setThemeMode }: any) {
   const [recent, setRecent] = useRecent();
 
   useEffect(() => {
-    if (recent === undefined) {
-      return;
-    }
-    if (title) {
-      let newRecent = recent ? [...recent] : [];
-      // 检查 title 是否已在 recent 中
-      const index = newRecent.indexOf(title);
-      if (index !== -1) {
-          // 如果已存在，先移除
-          newRecent.splice(index, 1);
+    if (title && recent) {
+      const index = recent.indexOf(title);
+      if (index !== 0) {
+        setRecent(prevRecent => {
+          let updatedRecent = [...(prevRecent || [])];
+          if (index > 0) {
+            // 如果 title 已存在于列表中，但不是第一个元素，先移除它
+            updatedRecent.splice(index, 1);
+          }
+          // 将 title 放到数组最前面
+          updatedRecent.unshift(title);
+          return updatedRecent;
+        });
       }
-      // 将 title 放到数组最前面
-      newRecent = [title, ...newRecent];
     }
   }, [title, recent]);
 
