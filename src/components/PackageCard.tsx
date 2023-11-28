@@ -14,7 +14,7 @@ dayjs.locale('zh-cn');
 
 dayjs.extend(relativeTime);
 
-export function PackageTag({ tags }: { tags: string[] }) {
+export function PackageTag({ tags, closeIcon, onClose }: { tags: string[], closeIcon?: boolean, onClose?: (tag: string) => void }) {
   if (!tags) {
     return null;
   }
@@ -25,11 +25,11 @@ export function PackageTag({ tags }: { tags: string[] }) {
       maxCount="responsive"
       data={tags}
       renderItem={(tag: string) => (
-        <Tag key={tag} color="cyan">
+        <Tag key={tag} color="cyan" closeIcon={closeIcon} onClose={() => onClose?.(tag)}>
           {tag}
         </Tag>
       )}
-      renderRest={() => <Tag key={'_others'}>...</Tag>}
+      renderRest={() => <Tag key={'_others'} color="cyan">...</Tag>}
     />
   );
 }

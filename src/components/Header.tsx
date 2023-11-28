@@ -1,7 +1,9 @@
+import { useRecent } from '@/hooks/useRecent';
 import { GithubOutlined } from '@ant-design/icons';
 import { Dropdown, Segmented } from 'antd';
 import { createStyles, cx } from 'antd-style';
 import Link from 'next/link';
+import { useEffect } from 'react';
 
 const useStyles = createStyles(({ token, css }) => {
   return {
@@ -20,6 +22,17 @@ const useStyles = createStyles(({ token, css }) => {
 
 export default function Header({ title, themeMode, setThemeMode }: any) {
   const { styles } = useStyles();
+  const [recent, setRecent] = useRecent();
+
+  useEffect(() => {
+    if (recent === undefined) {
+      return;
+    }
+    if (title && !recent.includes(title)) {
+      setRecent([title, ...(recent || [])]);
+    }
+  }, [title, recent]);
+
   return (
     <header className={cx(styles.header)}>
       <nav className={styles.container}>
@@ -46,6 +59,14 @@ export default function Header({ title, themeMode, setThemeMode }: any) {
             menu={{
               items: [
                 {
+                  key: 'cnpm',
+                  label: (
+                    <Link target="_blank" href={'https://github.com/cnpm/cnpm'}>
+                      🔧 cnpm
+                    </Link>
+                  ),
+                },
+                {
                   key: 'cnpmweb',
                   label: (
                     <Link target="_blank" href={'https://github.com/cnpm/cnpmweb'}>
@@ -58,6 +79,14 @@ export default function Header({ title, themeMode, setThemeMode }: any) {
                   label: (
                     <Link target="_blank" href={'https://github.com/cnpm/cnpmcore'}>
                       📦 cnpmcore
+                    </Link>
+                  ),
+                },
+                {
+                  key: 'rapid',
+                  label: (
+                    <Link target="_blank" href={'https://github.com/cnpm/rapid'}>
+                      🚀 rapid
                     </Link>
                   ),
                 },
