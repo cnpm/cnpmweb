@@ -25,7 +25,7 @@ export function PackageTag({ tags, closeIcon, onClose }: { tags: {label: string,
       className={styles.tagCon}
       maxCount="responsive"
       data={tags}
-      renderItem={(tag) => (
+      renderItem={tag => (
         <Tag key={tag.label} color="cyan" closeIcon={closeIcon} onClose={() => onClose?.(tag.label)}>
           <Link href={tag.href}>
             {tag}
