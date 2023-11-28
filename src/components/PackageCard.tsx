@@ -28,7 +28,7 @@ export function PackageTag({ tags, closeIcon, onClose }: { tags: {label: string,
       renderItem={tag => (
         <Tag key={tag.label} color="cyan" closeIcon={closeIcon} onClose={() => onClose?.(tag.label)}>
           <Link href={tag.href}>
-            {tag}
+            {tag.label}
           </Link>
         </Tag>
       )}
