@@ -14,19 +14,22 @@ dayjs.locale('zh-cn');
 
 dayjs.extend(relativeTime);
 
-export function PackageTag({ tags, closeIcon, onClose }: { tags: string[], closeIcon?: boolean, onClose?: (tag: string) => void }) {
+export function PackageTag({ tags, closeIcon, onClose }: { tags: {label: string, href: string}[], closeIcon?: boolean, onClose?: (tag: string) => void }) {
   if (!tags) {
     return null;
   }
+
   return (
     <Overflow
       style={{ display: 'flex', flexWrap: 'wrap' }}
       className={styles.tagCon}
       maxCount="responsive"
       data={tags}
-      renderItem={(tag: string) => (
-        <Tag key={tag} color="cyan" closeIcon={closeIcon} onClose={() => onClose?.(tag)}>
-          {tag}
+      renderItem={tag => (
+        <Tag key={tag.label} color="cyan" closeIcon={closeIcon} onClose={() => onClose?.(tag.label)}>
+          <Link href={tag.href}>
+            {tag.label}
+          </Link>
         </Tag>
       )}
       renderRest={() => <Tag key={'_others'} color="cyan">...</Tag>}
@@ -88,7 +91,10 @@ export const PackageCard = ({
             >
               <Row gutter={8} align="middle" wrap={false}>
                 <Col flex="auto">
-                  <PackageTag tags={pkg.keywords || []} />
+                  <PackageTag tags={pkg.keywords? pkg.keywords.map(item => ({
+                    label: item,
+                    href: `/packages?q=${item}`,
+                  })): []} />
                 </Col>
                 <Col flex="none">
                   <Space size="small" style={{ opacity: '.65' }}>

@@ -3,13 +3,15 @@ import { useEffect, useState } from 'react';
 
 const LOCAL_STORAGE_RECENT = 'recent';
 
-export function useRecent(): [string[] | undefined, (v: string[]) => void] {
+export function useRecent() {
   const [recent, setRecent] = useState<string[] | undefined>(undefined);
 
   useEffect(() => {
     const recentInfo = localStorage?.getItem(LOCAL_STORAGE_RECENT);
     if (recentInfo) {
       setRecent(JSON.parse(recentInfo));
+    } else {
+      setRecent([]);
     }
   }, []);
 
@@ -19,5 +21,5 @@ export function useRecent(): [string[] | undefined, (v: string[]) => void] {
     }
   }, [recent]);
 
-  return [recent, setRecent];
+  return [recent, setRecent] as [typeof recent, typeof setRecent];
 }
