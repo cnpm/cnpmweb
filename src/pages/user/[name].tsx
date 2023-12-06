@@ -73,10 +73,11 @@ export default function Home() {
         <SizeContainer maxWidth={1184}>
           <Row gutter={16} style={{ width: 1184 }}>
             <Col flex="none">
-              <Card style={{ width: 200, textAlign: 'center' }}>
+              <Card style={{ width: 280, textAlign: 'center' }}>
                 <Gravatar
                   email={resData?.user.email || ''}
                   name={resData?.user?.name || ''}
+                  link={false}
                   size={64}
                 />
                 <Typography.Title level={4} style={{ marginTop: 16 }} ellipsis={{ tooltip: true }}>
