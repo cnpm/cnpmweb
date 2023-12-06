@@ -25,6 +25,11 @@ export default function Redirect() {
     }
   }, [originNpa]);
 
+  if (originNpa?.[0]?.startsWith('~')) {
+    router.replace(`/user/${originNpa[0].slice(1)}`);
+    return <></>;
+  }
+
   if (redirectInfo) {
     router.replace(`/package/${redirectInfo.name}?version=${redirectInfo.fetchSpec}`);
     return <></>;
