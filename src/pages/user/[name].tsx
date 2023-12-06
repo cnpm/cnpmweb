@@ -79,12 +79,10 @@ export default function Home() {
                   name={resData?.user?.name || ''}
                   size={64}
                 />
-                <Typography.Title level={4} style={{ marginTop: 16 }}>
+                <Typography.Title level={4} style={{ marginTop: 16 }} ellipsis={{ tooltip: true }}>
                   {resData?.user.name}
                 </Typography.Title>
-                <Typography.Text>
-                  {resData?.user.email}
-                </Typography.Text>
+                <Typography.Text>{resData?.user.email}</Typography.Text>
               </Card>
             </Col>
             <Col flex="auto" style={{ width: 0 }}>
