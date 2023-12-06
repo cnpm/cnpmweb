@@ -4,8 +4,9 @@ import { Avatar, Tooltip } from 'antd';
 type GAvatarProps = {
   email: string;
   name: string;
+  size?: number;
 };
-export function Gravatar({ email, name }: GAvatarProps) {
+export function Gravatar({ email, name, size = 32 }: GAvatarProps) {
   const avatarLink = GravatarLink({
     email: email || '',
     size: 200,
@@ -19,7 +20,7 @@ export function Gravatar({ email, name }: GAvatarProps) {
 
   return (
     <Tooltip title={name}>
-      <Avatar src={newLink.toString()} />
+      <Avatar src={newLink.toString()} size={size} />
     </Tooltip>
   );
 }
