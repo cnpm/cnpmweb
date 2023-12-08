@@ -42,7 +42,7 @@ export default function Home({ manifest, version, additionalInfo: needSync }: Pa
   const { styles: style } = useStyles();
 
   const contentNode = (
-    <Row gutter={[16, 16]} style={{ marginBottom: 96 }}>
+    <Row gutter={[16, 16]} wrap={false} style={{ marginBottom: 96 }}>
       <Col flex="1 1 0">
         <div
           style={{
