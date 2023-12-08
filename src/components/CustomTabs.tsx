@@ -1,9 +1,10 @@
 'use client';
-import { Tabs } from 'antd';
+import { Segmented, Space, Tabs } from 'antd';
 import Link from 'next/link';
 import NPMVersionSelect from './NPMVersionSelect';
 import { PackageManifest } from '@/hooks/useManifest';
 import { useRouter } from 'next/router';
+import { IDEModeName } from '@/hooks/useCodeBlitz';
 
 const presetTabs = [
   {
@@ -27,9 +28,13 @@ const presetTabs = [
 export default function CustomTabs({
   activateKey,
   pkg,
+  IDEMode,
+  setIDEMode,
 }: {
   activateKey: string;
   pkg: PackageManifest;
+  IDEMode: IDEModeName;
+  setIDEMode: (v: IDEModeName) => void;
 }) {
   const { push, query } = useRouter();
   const routerVersion = query.version as string;
@@ -40,20 +45,38 @@ export default function CustomTabs({
       activeKey={activateKey}
       type={'line'}
       tabBarExtraContent={
-        <NPMVersionSelect
-          versions={Object.keys(pkg?.versions || {})}
-          tags={pkg?.['dist-tags']}
-          targetVersion={targetVersion}
-          setVersionStr={(v) => {
-            if (v === pkg?.['dist-tags']?.latest) {
-              push(`/package/${pkg.name}/${activateKey}`, undefined, { shallow: true });
-            } else {
-              push(`/package/${pkg.name}/${activateKey}?version=${v}`, undefined, {
-                shallow: true,
-              });
-            }
-          }}
-        />
+        <div>
+          {activateKey === 'files' && (
+            <Space style={{ padding: '0 32px' }}>
+              <Segmented
+                size="small"
+                value={IDEMode}
+                options={[
+                  { label: 'IDE', value: IDEModeName.IDE },
+                  { label: 'Native', value: IDEModeName.NATIVE },
+                ]}
+                onChange={(v) => {
+                  setIDEMode(v as IDEModeName);
+                }}
+              />
+            </Space>
+          )}
+
+          <NPMVersionSelect
+            versions={Object.keys(pkg?.versions || {})}
+            tags={pkg?.['dist-tags']}
+            targetVersion={targetVersion}
+            setVersionStr={(v) => {
+              if (v === pkg?.['dist-tags']?.latest) {
+                push(`/package/${pkg.name}/${activateKey}`, undefined, { shallow: true });
+              } else {
+                push(`/package/${pkg.name}/${activateKey}?version=${v}`, undefined, {
+                  shallow: true,
+                });
+              }
+            }}
+          />
+        </div>
       }
       items={presetTabs.map((tab) => {
         return {
