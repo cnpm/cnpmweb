@@ -1,5 +1,6 @@
 import { SearchPackageResult } from '@/hooks/useSearch';
 import { Card, Col, Row, Space, Tag, Tooltip } from 'antd';
+import { ThemeMode } from 'antd-style';
 import Link from 'next/link';
 import styles from './PackageCard.module.css';
 import SkeletonText from './SkeletonText';
@@ -40,9 +41,11 @@ export function PackageTag({ tags, closeIcon, onClose }: { tags: {label: string,
 export const PackageCard = ({
   package: pkg,
   loading = false,
+  themeMode,
 }: {
   package: SearchPackageResult;
   loading?: boolean;
+  themeMode: ThemeMode,
 }) => {
   return (
     <Link href={`/package/${pkg.name}`} target="_blank">
@@ -57,7 +60,7 @@ export const PackageCard = ({
           <div className={styles.content}>
             <Row style={{ flexWrap: 'nowrap' }}>
               <Col flex="auto" style={{ minWidth: 0 }}>
-                <SkeletonText className={styles.title} loading={loading} title={pkg.name} ellipsis>
+                <SkeletonText className={themeMode === 'dark' ? styles.darkTitle :styles.title} loading={loading} title={pkg.name} ellipsis>
                   {pkg.name}@{pkg.version}
                 </SkeletonText>
               </Col>

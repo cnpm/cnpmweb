@@ -22,10 +22,15 @@
   min-width: 0;
 }
 
-.title {
+.title,
+.darkTitle {
   color: #314659;
   font-size: 20px;
   line-height: 24px;
+}
+
+.darkTitle {
+  color: #fff;
 }
 
 .descriptionCon {
