@@ -62,6 +62,7 @@ export default function Packages({ page: initPage, q: initQ }: PageType) {
                 return (
                   <Col span={24} key={index}>
                     <PackageCard
+                      themeMode={themeMode as ThemeMode}
                       loading={isLoading}
                       package={item.package}
                       key={item.package?.name || index}
