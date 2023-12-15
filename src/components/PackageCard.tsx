@@ -1,5 +1,6 @@
 import { SearchPackageResult } from '@/hooks/useSearch';
 import { Card, Col, Row, Space, Tag, Tooltip } from 'antd';
+import { ThemeMode } from 'antd-style';
 import Link from 'next/link';
 import styles from './PackageCard.module.css';
 import SkeletonText from './SkeletonText';
@@ -14,22 +15,25 @@ dayjs.locale('zh-cn');
 
 dayjs.extend(relativeTime);
 
-export function PackageTag({ tags }: { tags: string[] }) {
+export function PackageTag({ tags, closeIcon, onClose }: { tags: {label: string, href: string}[], closeIcon?: boolean, onClose?: (tag: string) => void }) {
   if (!tags) {
     return null;
   }
+
   return (
     <Overflow
       style={{ display: 'flex', flexWrap: 'wrap' }}
       className={styles.tagCon}
       maxCount="responsive"
       data={tags}
-      renderItem={(tag: string) => (
-        <Tag key={tag} color="cyan">
-          {tag}
+      renderItem={tag => (
+        <Tag key={tag.label} color="cyan" closeIcon={closeIcon} onClose={() => onClose?.(tag.label)}>
+          <Link href={tag.href}>
+            {tag.label}
+          </Link>
         </Tag>
       )}
-      renderRest={() => <Tag key={'_others'}>...</Tag>}
+      renderRest={() => <Tag key={'_others'} color="cyan">...</Tag>}
     />
   );
 }
@@ -37,9 +41,11 @@ export function PackageTag({ tags }: { tags: string[] }) {
 export const PackageCard = ({
   package: pkg,
   loading = false,
+  themeMode,
 }: {
   package: SearchPackageResult;
   loading?: boolean;
+  themeMode: ThemeMode,
 }) => {
   return (
     <Link href={`/package/${pkg.name}`} target="_blank">
@@ -54,7 +60,7 @@ export const PackageCard = ({
           <div className={styles.content}>
             <Row style={{ flexWrap: 'nowrap' }}>
               <Col flex="auto" style={{ minWidth: 0 }}>
-                <SkeletonText className={styles.title} loading={loading} title={pkg.name} ellipsis>
+                <SkeletonText className={themeMode === 'dark' ? styles.darkTitle :styles.title} loading={loading} title={pkg.name} ellipsis>
                   {pkg.name}@{pkg.version}
                 </SkeletonText>
               </Col>
@@ -88,7 +94,10 @@ export const PackageCard = ({
             >
               <Row gutter={8} align="middle" wrap={false}>
                 <Col flex="auto">
-                  <PackageTag tags={pkg.keywords || []} />
+                  <PackageTag tags={pkg.keywords? pkg.keywords.map(item => ({
+                    label: item,
+                    href: `/packages?q=${item}`,
+                  })): []} />
                 </Col>
                 <Col flex="none">
                   <Space size="small" style={{ opacity: '.65' }}>

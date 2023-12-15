@@ -11,6 +11,7 @@ import { PageProps } from '@/pages/package/[...slug]';
 import { createStyles } from 'antd-style';
 import RecentVersion from '@/components/RecentVersion';
 import Sync from '@/components/Sync';
+import { PackageTag } from '@/components/PackageCard';
 
 const useStyles = createStyles(({ token, css }) => {
   return {
@@ -20,11 +21,7 @@ const useStyles = createStyles(({ token, css }) => {
       overflow: hidden;
     `,
     tagCon: css`
-      display: inline-flex;
-      flex-wrap: wrap;
-      padding: 0;
-      list-style: none;
-      row-gap: 8px;
+      margin-bottom: 16px;
     `,
     tagItem: css`
       margin-right: 8px;
@@ -45,7 +42,7 @@ export default function Home({ manifest, version, additionalInfo: needSync }: Pa
   const { styles: style } = useStyles();
 
   const contentNode = (
-    <Row gutter={[16, 16]} style={{ marginBottom: 96 }}>
+    <Row gutter={[16, 16]} wrap={false} style={{ marginBottom: 96 }}>
       <Col flex="1 1 0">
         <div
           style={{
@@ -93,16 +90,8 @@ export default function Home({ manifest, version, additionalInfo: needSync }: Pa
         <div>
           <Typography.Title>{pkg!.name}</Typography.Title>
           <Typography.Paragraph ellipsis>{pkg!.description}</Typography.Paragraph>
-          <div>
-            <ul className={style.tagCon}>
-              {tags?.map((tag) => {
-                return (
-                  <li key={tag} className={style.tagItem}>
-                    {tag}
-                  </li>
-                );
-              })}
-            </ul>
+          <div className={style.tagCon}>
+            <PackageTag tags={tags?.map((tag) => ({ label: tag, href: `/packages?q=${tag}` }))} />
           </div>
         </div>
         {contentNode}
