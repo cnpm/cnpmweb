@@ -6,12 +6,16 @@ import {
 } from '@codeblitzjs/ide-core/bundle';
 import '@codeblitzjs/ide-core/bundle/codeblitz.css';
 import '@codeblitzjs/ide-core/languages';
-import { useTheme } from '@/hooks/useTheme';
+import { useEffect } from 'react';
+import { useThemeMode } from 'antd-style';
+import * as IDEPlugin from './ide.plugin';
+import IDEStyle from './ide.module.css';
+import { RegisterMenuModule } from './module';
 
 const layoutConfig = () => ({
-  [SlotLocation.top]: {
-    modules: ['@opensumi/ide-menu-bar'],
-  },
+  // [SlotLocation.top]: {
+  //   modules: ['@opensumi/ide-menu-bar'],
+  // },
   [SlotLocation.action]: {
     modules: [''],
   },
@@ -21,12 +25,12 @@ const layoutConfig = () => ({
   [SlotLocation.main]: {
     modules: ['@opensumi/ide-editor'],
   },
-  [SlotLocation.bottom]: {
-    modules: ['@opensumi/ide-output', '@opensumi/ide-markers'],
-  },
-  [SlotLocation.statusBar]: {
-    modules: ['@opensumi/ide-status-bar'],
-  },
+  // [SlotLocation.bottom]: {
+  //   modules: ['@opensumi/ide-output', '@opensumi/ide-markers'],
+  // },
+  // [SlotLocation.statusBar]: {
+  //   modules: ['@opensumi/ide-status-bar'],
+  // },
   [SlotLocation.extra]: {
     modules: ['breadcrumb-menu'],
   },
@@ -65,19 +69,28 @@ export const IDE = ({
   pkgName: string;
   spec?: string;
 }) => {
+  const { themeMode: theme } = useThemeMode();
 
-  const [themeMode] = useTheme();
+  useEffect(() => {
+    IDEPlugin.api.commands?.executeCommand(
+      'alex.setDefaultPreference',
+      'general.theme',
+      theme === 'light' ? 'opensumi-light' : 'opensumi-dark',
+    );
+  }, [theme]);
 
   return (
-    <div style={{ width: '100%', height: 'calc(100vh - 120px)' }}>
+    <div className={IDEStyle.ideContainer} style={{ width: '100%', height: 'calc(100vh - 120px)' }}>
       <AppRenderer
         appConfig={{
           layoutConfig: layoutConfig(),
-          workspaceDir: `${pkgName}/${spec}`,
+          workspaceDir: `${pkgName}-${spec}`,
           defaultPreferences: {
-            'general.theme': themeMode === 'light' ? 'opensumi-light' : 'opensumi-dark',
+            'general.theme': theme === 'light' ? 'opensumi-light' : 'opensumi-dark',
             'editor.forceReadOnly': true,
           },
+          plugins: [IDEPlugin],
+          modules: [RegisterMenuModule],
         }}
         runtimeConfig={{
           disableModifyFileTree: true,
