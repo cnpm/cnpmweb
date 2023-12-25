@@ -71,7 +71,7 @@ function TagsList({ tagsInfo, pkg }: { tagsInfo: Record<string, string[]>; pkg: 
         }}
       >
         <Segmented
-          defaultValue={type}
+          value={type}
           options={[
             { label: '正式版本', value: 'prod' },
             { label: '所有版本', value: 'all' },
@@ -131,7 +131,7 @@ function VersionsList({ versions, pkg }: { versions: NpmPackageVersion[]; pkg: P
         }}
       >
         <Segmented
-          defaultValue={type}
+          value={type}
           options={[
             { label: '正式版本', value: 'prod' },
             { label: '所有版本', value: 'all' },
