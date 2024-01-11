@@ -14,7 +14,7 @@ type RecentDownloadsContentProps = {
 
 export function RecentDownloads({ pkgName, version }: RecentDownloadsContentProps) {
   const { data: res, isLoading } = useRecentDownloads(pkgName, version);
-  if (isLoading) {
+  if (isLoading || !res) {
     return <Empty description="暂无数据" />;
   }
 
