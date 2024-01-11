@@ -12,6 +12,7 @@ import { createStyles } from 'antd-style';
 import RecentVersion from '@/components/RecentVersion';
 import Sync from '@/components/Sync';
 import { PackageTag } from '@/components/PackageCard';
+import { RecentDownloads } from '@/components/RecentDownloads';
 
 const useStyles = createStyles(({ token, css }) => {
   return {
@@ -60,6 +61,9 @@ export default function Home({ manifest, version, additionalInfo: needSync }: Pa
       <Col flex="0 0 378px">
         <Space direction={'vertical'} size="middle" style={{ minWidth: 378 }}>
           <AdVPS />
+          <PresetCard title="下载趋势">
+            <RecentDownloads pkgName={manifest.name} version={version!} />
+          </PresetCard>
           {manifest.maintainers?.length > 0 && (
             <PresetCard title="项目成员">
               <ContributorContent members={manifest.maintainers} />
