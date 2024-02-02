@@ -1,0 +1,49 @@
+import { REGISTRY } from '@/config';
+import dayjs from 'dayjs';
+import useSwr from 'swr';
+
+const DEFAULT_RANGE = 7;
+
+type DownloadRes = {
+  downloads: { day: string; downloads: number; }[];
+  versions?: {
+    [version: string]: { day: string; downloads: number; }[];
+  };
+};
+
+// https://registry.npmmirror.com/downloads/range/2023-01:2023-01/antd
+// npmmirror 只支持按月维度返回
+function getUrl(pkgName: string, range: number) {
+  const today = dayjs();
+  const todayStr = today.format('YYYY-MM-DD');
+  const lastWeekStr = today.subtract(range, 'day').format('YYYY-MM-DD');
+  return `${REGISTRY}/downloads/range/${lastWeekStr}:${todayStr}/${pkgName}`;
+};
+
+function normalizeRes(res: DownloadRes, version: string, range: number): DownloadRes {
+  // 根据 range，获取最近 range 天的数据
+  const downloads = res.downloads.slice(-range);
+  // 单个版本可能没有数据，需要做 leftPad
+  const versions = (new Array(range)).fill(0).map((_, index) => {
+    const day = dayjs().subtract(range - index - 1, 'day').format('YYYY-MM-DD');
+    const download = res.versions?.[version]?.find((item) => item.day === day);
+    return download || {
+      day,
+      downloads: 0
+    };
+  });
+
+  return {
+    downloads,
+    versions: {
+      [version]: versions,
+    }
+  };
+}
+export const useRecentDownloads = (pkgName: string, version: string, range: number = DEFAULT_RANGE) => {
+  return useSwr<DownloadRes>(`recent_downloads: ${pkgName}_${version}`, async () => {
+    return fetch(`${getUrl(pkgName, range)}`)
+      .then((res) => res.json())
+      .then(res => normalizeRes(res, version, range));
+  });
+};

@@ -17,6 +17,7 @@ import SyncAlert from '@/components/SyncAlert';
 import { PageProps } from '@/pages/package/[...slug]';
 import { createStyles } from 'antd-style';
 import VersionTags from '@/components/VersionTags';
+import useQueryState from '@/hooks/useQueryState';
 
 const useStyles = createStyles(({ token, css }) => {
   return {
@@ -47,7 +48,8 @@ const useStyles = createStyles(({ token, css }) => {
 
 function TagsList({ tagsInfo, pkg }: { tagsInfo: Record<string, string[]>; pkg: PackageManifest }) {
   const { styles } = useStyles();
-  const [onlyProd, setOnlyProd] = React.useState(true);
+  const [type, setTags] = useQueryState<string>('tags', 'prod', ['prod']);
+  const onlyProd = type === 'prod';
   return (
     <div style={{ position: 'relative' }}>
       <Typography.Title
@@ -69,11 +71,12 @@ function TagsList({ tagsInfo, pkg }: { tagsInfo: Record<string, string[]>; pkg: 
         }}
       >
         <Segmented
+          value={type}
           options={[
             { label: '正式版本', value: 'prod' },
             { label: '所有版本', value: 'all' },
           ]}
-          onChange={(v) => setOnlyProd(v === 'prod')}
+          onChange={(v) => setTags(v as string)}
         />
       </Space>
       <ul className={styles.versionsCon}>
@@ -105,7 +108,8 @@ function TagsList({ tagsInfo, pkg }: { tagsInfo: Record<string, string[]>; pkg: 
 
 function VersionsList({ versions, pkg }: { versions: NpmPackageVersion[]; pkg: PackageManifest }) {
   const { styles } = useStyles();
-  const [onlyProd, setOnlyProd] = React.useState(true);
+  const [type, setVersions] = useQueryState<string>('versions', 'prod', ['prod']);
+  const onlyProd = type === 'prod';
   return (
     <div style={{ position: 'relative' }}>
       <Typography.Title
@@ -127,11 +131,12 @@ function VersionsList({ versions, pkg }: { versions: NpmPackageVersion[]; pkg: P
         }}
       >
         <Segmented
+          value={type}
           options={[
             { label: '正式版本', value: 'prod' },
             { label: '所有版本', value: 'all' },
           ]}
-          onChange={(v) => setOnlyProd(v === 'prod')}
+          onChange={(v) => setVersions(v as string)}
         />
       </Space>
       <ul className={styles.versionsCon}>
