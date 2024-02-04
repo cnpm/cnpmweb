@@ -6,7 +6,7 @@ import {
 } from '@codeblitzjs/ide-core/bundle';
 import '@codeblitzjs/ide-core/bundle/codeblitz.css';
 import '@codeblitzjs/ide-core/languages';
-import { useEffect } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useThemeMode } from 'antd-style';
 import * as IDEPlugin from './ide.plugin';
 import IDEStyle from './ide.module.css';
@@ -60,6 +60,22 @@ function recursiveFind(path: string, treeNode: Directory): Directory {
   }
 }
 
+function recursivePush(rootDir: Directory): string[] {
+  const allFiles: string[] = [];
+  rootDir.files?.forEach((file) => {
+    if (file.type === 'file') {
+      let path = file.path;
+      if (file.path.startsWith('/')) {
+        path = path.slice(1);
+      }
+      allFiles.push(path);
+    } else if (file.type === 'directory') {
+      allFiles.push(...recursivePush(file as Directory));
+    }
+  });
+  return allFiles;
+}
+
 export const IDE = ({
   pkgName,
   spec,
@@ -70,7 +86,6 @@ export const IDE = ({
   spec?: string;
 }) => {
   const { themeMode: theme } = useThemeMode();
-
   useEffect(() => {
     IDEPlugin.api.commands?.executeCommand(
       'alex.setDefaultPreference',
@@ -78,6 +93,11 @@ export const IDE = ({
       theme === 'light' ? 'opensumi-light' : 'opensumi-dark',
     );
   }, [theme]);
+
+  const files = useMemo(() => {
+    const res = recursivePush(rootDir);
+    return res;
+  }, [rootDir]);
 
   return (
     <div className={IDEStyle.ideContainer} style={{ width: '100%', height: 'calc(100vh - 120px)' }}>
@@ -91,12 +111,13 @@ export const IDE = ({
           },
           plugins: [IDEPlugin],
           modules: [RegisterMenuModule],
+          extWorkerHost:'https://gw.alipayobjects.com/os/ide-server/worker-host.d008d7af.js'
         }}
         runtimeConfig={{
           disableModifyFileTree: true,
           defaultOpenFile: 'package.json',
+          startupEditor: 'welcomePage',
           workspace: {
-            // 文件系统
             filesystem: {
               fs: 'DynamicRequest',
               options: {
@@ -114,6 +135,27 @@ export const IDE = ({
                   return new TextEncoder().encode(res);
                 },
               },
+            },
+          },
+          textSearch: {
+            config: {
+              replace: false,
+              wordMatch: 'local',
+              include: 'local',
+              exclude: 'local',
+            },
+            provideResults(query, opt, progress) {
+              // TODO 全局搜索 只能搜索到已经打开过的文件 依赖服务端能力
+              return Promise.resolve();
+            },
+          },
+          fileSearch: {
+            config: {
+              include: 'local',
+              exclude: 'local',
+            },
+            provideResults() {
+              return files;
             },
           },
         }}
