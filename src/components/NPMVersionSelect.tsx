@@ -18,7 +18,7 @@ function sortNodes(nodes: VersionNode[]): void {
     if (!aVersion || !bVersion) {
       return 0;
     }
-    return semver.rcompare(aVersion, bVersion);
+    return semver.rcompare(a.value, b.value);
   });
   for (const node of nodes) {
     sortNodes(node.children);
