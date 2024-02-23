@@ -13,12 +13,15 @@ interface VersionNode {
 
 function sortNodes(nodes: VersionNode[]): void {
   nodes.sort((a, b) => {
+    if ([a.value, b.value].every(v => semver.clean(v) === v)) {
+      return semver.rcompare(a.value, b.value);
+    }
     const aVersion = semver.coerce(a.value);
     const bVersion = semver.coerce(b.value);
     if (!aVersion || !bVersion) {
       return 0;
     }
-    return semver.rcompare(a.value, b.value);
+    return semver.rcompare(aVersion, bVersion);
   });
   for (const node of nodes) {
     sortNodes(node.children);
