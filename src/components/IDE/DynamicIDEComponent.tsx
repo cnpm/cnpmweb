@@ -4,9 +4,9 @@ export const DynamicIDEComponent = dynamic(
   {
     loader: async () => {
       console.log('loading start IDE');
-      const IDEModule = await import('./IDE2');
+      const IDEModule = await import('./IDE');
       console.log('loading end IDE');
-      return IDEModule.IDE2;
+      return IDEModule.IDE;
     },
     ssr: false,
   },

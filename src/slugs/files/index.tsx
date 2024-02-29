@@ -1,7 +1,8 @@
 'use client';
 import { CodeViewer } from '@/components/CodeViewer';
 import { FileTree } from '@/components/FileTree';
-import { DynamicIDEComponent } from '@/components/IDE/DynamicIDEComponent';
+import { DynamicIDEComponent ,} from '@/components/IDE/DynamicIDEComponent';
+// import { IDE } from '@/components/IDE/IDE';
 import { Sidebar } from '@/components/Sidebar';
 import { IDEModeName } from '@/hooks/useCodeBlitz';
 import { useDirs, File } from '@/hooks/useFile';
