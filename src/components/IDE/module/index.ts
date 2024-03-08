@@ -1,4 +1,4 @@
-import { requireModule } from "@codeblitzjs/ide-core/bundle";
+import { requireModule } from "@codeblitzjs/ide-core/bundle/index.min";
 const CommpnDI = requireModule("@opensumi/di");
 const CoreBrowser = requireModule("@opensumi/ide-core-browser");
 

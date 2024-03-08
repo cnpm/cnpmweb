@@ -3,7 +3,7 @@ import {
   AppRenderer,
   BrowserFSFileType as FileType,
   SlotLocation,
-} from '@codeblitzjs/ide-core/bundle';
+} from '@codeblitzjs/ide-core/bundle/index.min';
 import '@codeblitzjs/ide-core/bundle/codeblitz.css';
 import '@codeblitzjs/ide-core/languages';
 import { useEffect, useMemo, useState } from 'react';
