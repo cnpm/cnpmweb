@@ -1,9 +1,8 @@
 import { SearchOutlined } from '@ant-design/icons';
 import { Col, Input, Row, Space, Tabs } from 'antd';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './SearchBox.module.css';
 import { SearchResult } from '@/hooks/useSearch';
-import { useRouter } from 'next/router';
 
 export interface SearchBoxProps {
   defaultSearch: string;
@@ -12,6 +11,11 @@ export interface SearchBoxProps {
 }
 
 export default function SearchBox({ defaultSearch, onSearch, searchResult }: SearchBoxProps) {
+  const [value, setValue] = useState(defaultSearch);
+  useEffect(() => {
+    setValue(defaultSearch);
+  }, [defaultSearch]);
+
   return (
     <div style={{ overflow: 'hidden' }}>
       <div style={{ padding: '32px 0' }}>
@@ -28,26 +32,33 @@ export default function SearchBox({ defaultSearch, onSearch, searchResult }: Sea
                 </Space>
               }
               size="large"
-              defaultValue={defaultSearch}
+              value={value}
+              onChange={(e) => setValue(e.target.value)}
               onSearch={onSearch}
             />
           </Col>
         </Row>
       </div>
       <div>
-        <Tabs size="large" className={styles.tab} activeKey={'npm'}>
-          <Tabs.TabPane
-            key="npm"
-            tab={
-              <Space size="small">
-                搜索结果
-                <span className={styles.count}>
-                  {((searchResult?.total as number) > 9999 ? '9999+' : searchResult?.total) ?? '-'}
-                </span>
-              </Space>
-            }
-          />
-        </Tabs>
+        <Tabs
+          size="large"
+          className={styles.tab}
+          activeKey={'npm'}
+          items={[
+            {
+              key: 'npm',
+              label: (
+                <Space size="small">
+                  搜索结果
+                  <span className={styles.count}>
+                    {((searchResult?.total as number) > 9999 ? '9999+' : searchResult?.total) ??
+                      '-'}
+                  </span>
+                </Space>
+              ),
+            },
+          ]}
+        />
       </div>
     </div>
   );
