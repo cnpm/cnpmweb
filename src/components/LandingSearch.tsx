@@ -1,12 +1,11 @@
 'use client';
 
-import React, { useLayoutEffect, useRef, useState } from 'react';
-import { Typography, Space, Select, Button, ConfigProvider, Spin } from 'antd';
+import React, { useLayoutEffect, useState } from 'react';
+import { Input, Typography, AutoComplete } from 'antd';
 import { useCachedSearch } from '@/hooks/useSearch';
 import { useRouter } from 'next/router';
 import { PackageTag } from './PackageCard';
 import { useRecent } from '@/hooks/useRecent';
-import { SearchOutlined } from '@ant-design/icons';
 
 export default function LandingSearch() {
   const [search, setSearch] = useState('');
@@ -40,37 +39,32 @@ export default function LandingSearch() {
       value: object.package.name,
     }));
   }, [searchResult]);
-  const searchRef = useRef('');
 
   return (
     <>
-      <ConfigProvider componentSize="large">
-        {load && (
-          <Space.Compact style={{ width: '100%' }}>
-            <Select
-              showSearch
-              value={null}
-              suffixIcon={null}
-              onSearch={setSearch}
-              autoFocus
-              onChange={(search) => router.push(`/package/${search}`)}
-              onBlur={() => {
-                searchRef.current = search;
-              }}
-              notFoundContent={isLoading ? <Spin /> : null}
-              style={{ width: '100%', textAlign: 'left' }}
-              options={options}
-              placeholder="输入 NPM 包名、作者、关键字等信息即可搜索..."
-            />
-            <Button
-              type="primary"
-              onClick={() => searchRef.current && router.push(`/packages?q=${searchRef.current}`)}
-            >
-              <SearchOutlined />
-            </Button>
-          </Space.Compact>
-        )}
-      </ConfigProvider>
+      {load && (
+        <AutoComplete
+          style={{ width: '100%' }}
+          options={options}
+          autoFocus
+          onChange={setSearch}
+          onSelect={(search) => router.push(`/package/${search}`)}
+        >
+          <Input.Search
+            size="large"
+            placeholder="输入 NPM 包名、作者、关键字等信息即可搜索..."
+            enterButton
+            onSearch={(_, e) => {
+              // 点击搜索按钮才进搜索页面
+              if (e?.type === 'type') {
+                e?.stopPropagation();
+                router.push(`/packages?q=${search}`);
+              }
+            }}
+            loading={!!(search && isLoading)}
+          />
+        </AutoComplete>
+      )}
       <div style={{ marginTop: 16 }}>
         {recent && (
           <PackageTag
