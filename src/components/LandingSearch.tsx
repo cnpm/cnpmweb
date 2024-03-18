@@ -56,7 +56,7 @@ export default function LandingSearch() {
             enterButton
             onSearch={(_, e) => {
               // 点击搜索按钮才进搜索页面
-              if (e?.type === 'type') {
+              if (e?.type === 'click') {
                 e?.stopPropagation();
                 router.push(`/packages?q=${search}`);
               }
