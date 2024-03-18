@@ -48,7 +48,7 @@ export default function LandingSearch() {
           options={options}
           autoFocus
           onChange={setSearch}
-          onSelect={(search) => router.push(`/package/${search}`)}
+          onSelect={(search) => router.push(`/package/${search}`, undefined, { shallow: true })}
         >
           <Input.Search
             size="large"
