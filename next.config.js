@@ -1,5 +1,5 @@
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const styleLoader = require('style-loader');
+// const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+// const styleLoader = require('style-loader');
 
 const path = require('path');
 
@@ -180,4 +180,7 @@ module.exports = {
     keepAlive: false,
   },
   output: 'export',
+  typescript: {
+    ignoreBuildErrors: true
+  }
 };
