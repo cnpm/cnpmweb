@@ -62,7 +62,10 @@ export default function LandingSearch() {
               options={options}
               placeholder="输入 NPM 包名、作者、关键字等信息即可搜索..."
             />
-            <Button type="primary" onClick={() => router.push(`/packages?q=${searchRef.current}`)}>
+            <Button
+              type="primary"
+              onClick={() => searchRef.current && router.push(`/packages?q=${searchRef.current}`)}
+            >
               <SearchOutlined />
             </Button>
           </Space.Compact>
