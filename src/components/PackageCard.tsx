@@ -15,7 +15,15 @@ dayjs.locale('zh-cn');
 
 dayjs.extend(relativeTime);
 
-export function PackageTag({ tags, closeIcon, onClose }: { tags: {label: string, href: string}[], closeIcon?: boolean, onClose?: (tag: string) => void }) {
+export function PackageTag({
+  tags,
+  closeIcon,
+  onClose,
+}: {
+  tags: { label: string; href: string }[];
+  closeIcon?: boolean;
+  onClose?: (tag: string) => void;
+}) {
   if (!tags) {
     return null;
   }
@@ -26,14 +34,21 @@ export function PackageTag({ tags, closeIcon, onClose }: { tags: {label: string,
       className={styles.tagCon}
       maxCount="responsive"
       data={tags}
-      renderItem={tag => (
-        <Tag key={tag.label} color="cyan" closeIcon={closeIcon} onClose={() => onClose?.(tag.label)}>
-          <Link href={tag.href}>
-            {tag.label}
-          </Link>
+      renderItem={(tag) => (
+        <Tag
+          key={tag.label}
+          color="cyan"
+          closeIcon={closeIcon}
+          onClose={() => onClose?.(tag.label)}
+        >
+          <Link href={tag.href}>{tag.label}</Link>
         </Tag>
       )}
-      renderRest={() => <Tag key={'_others'} color="cyan">...</Tag>}
+      renderRest={() => (
+        <Tag key={'_others'} color="cyan">
+          ...
+        </Tag>
+      )}
     />
   );
 }
@@ -45,11 +60,15 @@ export const PackageCard = ({
 }: {
   package: SearchPackageResult;
   loading?: boolean;
-  themeMode: ThemeMode,
+  themeMode: ThemeMode;
 }) => {
   return (
     <Link href={`/package/${pkg.name}`} target="_blank">
-      <Card hoverable className={styles.packageCard} bodyStyle={{ padding: 0, height: '100%' }}>
+      <Card
+        hoverable
+        className={styles.packageCard}
+        styles={{ body: { padding: 0, height: '100%' } }}
+      >
         <div className={styles.packageCon} style={{ paddingLeft: 80, paddingBottom: 16 }}>
           {/* Logo */}
           <div className={styles.logo} style={{ top: 20 }}>
@@ -60,7 +79,12 @@ export const PackageCard = ({
           <div className={styles.content}>
             <Row style={{ flexWrap: 'nowrap' }}>
               <Col flex="auto" style={{ minWidth: 0 }}>
-                <SkeletonText className={themeMode === 'dark' ? styles.darkTitle :styles.title} loading={loading} title={pkg.name} ellipsis>
+                <SkeletonText
+                  className={themeMode === 'dark' ? styles.darkTitle : styles.title}
+                  loading={loading}
+                  title={pkg.name}
+                  ellipsis
+                >
                   {pkg.name}@{pkg.version}
                 </SkeletonText>
               </Col>
@@ -94,10 +118,16 @@ export const PackageCard = ({
             >
               <Row gutter={8} align="middle" wrap={false}>
                 <Col flex="auto">
-                  <PackageTag tags={pkg.keywords? pkg.keywords.map(item => ({
-                    label: item,
-                    href: `/packages?q=${item}`,
-                  })): []} />
+                  <PackageTag
+                    tags={
+                      pkg.keywords
+                        ? pkg.keywords.map((item) => ({
+                            label: item,
+                            href: `/packages?q=${item}`,
+                          }))
+                        : []
+                    }
+                  />
                 </Col>
                 <Col flex="none">
                   <Space size="small" style={{ opacity: '.65' }}>
