@@ -22,6 +22,10 @@ const presetTabs = [
     name: '版本列表',
     key: 'versions',
   },
+  {
+    name: '下载趋势',
+    key: 'trends',
+  },
 ];
 
 export default function CustomTabs({

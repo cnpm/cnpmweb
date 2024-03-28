@@ -2,6 +2,7 @@ import { ThemeProvider as _ThemeProvider } from 'antd-style';
 import PageHome from '@/slugs/home';
 import PageFiles from '@/slugs/files';
 import PageVersions from '@/slugs/versions';
+import PageTrends from '@/slugs/trends';
 import PageDeps from '@/slugs/deps';
 import 'antd/dist/reset.css';
 import CustomTabs from '@/components/CustomTabs';
@@ -65,6 +66,7 @@ const PageMap: Record<string, (params: PageProps) => JSX.Element> = {
   deps: PageDeps,
   files: PageFiles,
   versions: PageVersions,
+  trends: PageTrends,
 } as const;
 
 // 由于路由不支持 @scope 可选参数
