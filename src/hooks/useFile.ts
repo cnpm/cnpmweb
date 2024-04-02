@@ -20,6 +20,7 @@ export interface File {
 type PkgInfo = {
   fullname: string;
   spec?: string;
+  path?: string;
 };
 
 function sortFiles(files: (File | Directory)[]) {
@@ -57,4 +58,16 @@ export const useFileContent = (info: PkgInfo, path: string) => {
       res.text(),
     );
   });
+};
+
+export const getDir = (info: PkgInfo): Promise<File | Directory>  => {
+  return fetch(`${REGISTRY}/${info.fullname}/${info.spec}/files`)
+    .then((res) => res.json())
+    .then((res) => {
+      return Promise.resolve(res);
+    });
+};
+
+export const getFileContent = (info: PkgInfo, path: string) => {
+  return fetch(`${REGISTRY}/${info.fullname}/${info.spec}/files${path}`).then((res) => res.text());
 };

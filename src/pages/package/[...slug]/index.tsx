@@ -14,6 +14,7 @@ import { Result, Spin } from 'antd';
 import Header from '@/components/Header';
 import { useTheme } from '@/hooks/useTheme';
 import AdHire from '@/components/AdHire';
+import { useIDE, IDEModeName } from '@/hooks/useCodeBlitz';
 
 const DEFAULT_TYPE = 'home';
 const ThemeProvider = _ThemeProvider as any;
@@ -22,6 +23,7 @@ export type PageProps = {
   manifest: PackageManifest;
   version?: string;
   additionalInfo?: any;
+  IDEMode?: IDEModeName;
 };
 
 function getPkgName(pathGroups: string[]) {
@@ -73,6 +75,7 @@ const PageMap: Record<string, (params: PageProps) => JSX.Element> = {
 // 需要在页面中自行解析
 export default function PackagePage({}: {}) {
   const router = useRouter();
+  const [IDEMode, setIDEMode] = useIDE();
 
   const [themeMode, setThemeMode] = useTheme();
 
@@ -145,10 +148,15 @@ export default function PackagePage({}: {}) {
           setThemeMode={setThemeMode}
         />
         <section style={{ paddingLeft: 16 }}>
-          <CustomTabs activateKey={type!} pkg={resData}></CustomTabs>
+          <CustomTabs
+            activateKey={type!}
+            pkg={resData}
+            IDEMode={IDEMode}
+            setIDEMode={setIDEMode}
+          ></CustomTabs>
         </section>
         <main style={{ minHeight: 'calc( 100vh - 110px )' }}>
-          <Component manifest={resData} version={version} additionalInfo={needSync} />
+          <Component manifest={resData} version={version} additionalInfo={needSync} IDEMode={IDEMode} />
         </main>
         <Footer />
       </ThemeProvider>
