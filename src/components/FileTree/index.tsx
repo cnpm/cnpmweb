@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { getIcon } from './icon';
-import type { Directory, File } from '@/hooks/useFile';
+import { useDirs, type Directory, type File } from '@/hooks/useFile';
 import { createStyles } from 'antd-style';
 
 const useStyles = createStyles(({ token, css }) => {
@@ -15,6 +15,8 @@ interface FileTreeProps {
   rootDir: Directory; // 根目录
   selectedFile: File | undefined; // 当前选中文件
   onSelect: (file: File) => void; // 更改选中时触发事件
+  pkgName: string;
+  spec: string;
 }
 
 export const FileTree = (props: FileTreeProps) => {
@@ -25,6 +27,8 @@ interface SubTreeProps {
   directory: Directory; // 根目录
   selectedFile: File | undefined; // 当前选中文件
   onSelect: (file: File) => void; // 更改选中时触发事件
+  pkgName: string;
+  spec: string;
 }
 
 const SubTree = (props: SubTreeProps) => {
@@ -39,6 +43,8 @@ const SubTree = (props: SubTreeProps) => {
                 directory={item as Directory}
                 selectedFile={props.selectedFile}
                 onSelect={props.onSelect}
+                pkgName={props.pkgName}
+                spec={props.spec}
               />
             ) : (
               <FileDiv
@@ -91,13 +97,18 @@ const DirDiv = ({
   directory,
   selectedFile,
   onSelect,
+  pkgName,
+  spec,
 }: {
   directory: Directory; // 当前目录
   selectedFile: File | undefined; // 选中的文件
   onSelect: (file: File) => void; // 点击事件
+  pkgName: string;
+  spec: string;
 }) => {
   let defaultOpen = selectedFile?.path.includes(directory.path);
   const [open, setOpen] = useState(defaultOpen);
+  const { data: res } = useDirs({ fullname: pkgName, spec }, directory.path, !open);
   return (
     <>
       <FileDiv
@@ -107,7 +118,13 @@ const DirDiv = ({
         onClick={() => setOpen(!open)}
       />
       {open ? (
-        <SubTree directory={directory} selectedFile={selectedFile} onSelect={onSelect} />
+        <SubTree
+          directory={res || directory}
+          selectedFile={selectedFile}
+          onSelect={onSelect}
+          pkgName={pkgName}
+          spec={spec}
+        />
       ) : null}
     </>
   );

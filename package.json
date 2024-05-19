@@ -14,36 +14,41 @@
     "@gravatar/js": "^1.1.1",
     "@monaco-editor/loader": "^1.3.3",
     "@monaco-editor/react": "^4.4.2",
-    "@types/react-dom": "18.2.5",
-    "@vercel/node": "^2.15.5",
+    "@types/react-dom": "^18.2.5",
     "antd": "^5.15.3",
     "antd-style": "^3.4.4",
     "chart.js": "^4.4.1",
     "dayjs": "^1.11.9",
-    "eslint": "8.44.0",
-    "eslint-config-next": "13.4.4",
     "github-slugger": "^2.0.0",
     "giturl": "^2.0.0",
     "highlight.js": "^11.8.0",
     "lodash": "^4.17.21",
     "marked": "^1.1.0",
-    "next": "13.4.7",
+    "next": "^13.4.7",
     "npm-package-arg": "^11.0.1",
-    "react": "18.2.0",
+    "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
-    "react-dom": "18.2.0",
+    "react-dom": "^18.2.0",
     "react-icons": "^4.3.1",
     "semver": "^7.5.4",
     "swr": "^2.2.0"
   },
   "repository": "https://github.com/cnpm/cnpmweb.git",
   "devDependencies": {
+    "@vercel/node": "^2.15.5",
     "@types/lodash": "^4.14.197",
-    "@types/node": "20.4.1",
+    "eslint-config-next": "^13.4.4",
+    "@types/node": "^20.4.1",
     "@types/npm-package-arg": "^6.1.3",
-    "@types/react": "18.2.14",
+    "@types/react": "^18.2.14",
     "@types/semver": "^7.5.0",
     "prettier": "^3.0.3",
-    "typescript": "5.3.3"
+    "eslint": "^8.44.0",
+    "typescript": "^5.3.3"
+  },
+  "overrides": {
+    "npm-package-arg": {
+      "validate-npm-package-name": "5.0.0"
+    }
   }
 }
