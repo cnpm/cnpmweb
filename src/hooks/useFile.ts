@@ -40,14 +40,22 @@ function sortFiles(files: (File | Directory)[]) {
   });
 }
 
-export const useDirs = (info: PkgInfo) => {
-  return useSwr(`dirs: ${info.fullname}_${info.spec}`, async () => {
-    return fetch(`${REGISTRY}/${info.fullname}/${info.spec}/files?meta`)
-      .then((res) => res.json())
-      .then((res) => {
-        sortFiles(res.files);
-        return Promise.resolve(res);
-      });
+export const useDirs = (info: PkgInfo, path = '', ignore = false) => {
+  // https://github.com/cnpm/cnpmcore/issues/680
+  // 请求文件路径存在性能问题，手动关闭 revalidate ，拆分多次请求
+  return useSwr(ignore ? null : `dirs: ${info.fullname}_${info.spec}_${path}`, {
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false,
+    // 本地缓存优先
+    refreshInterval: 0,
+    fetcher: async () => {
+      return fetch(`${REGISTRY}/${info.fullname}/${info.spec}/files${path}/?meta`)
+        .then((res) => res.json())
+        .then((res) => {
+          sortFiles(res.files);
+          return Promise.resolve(res);
+        });
+    }
   });
 };
 

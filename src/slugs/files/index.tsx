@@ -14,9 +14,11 @@ const Viewer = ({ manifest, version }: PageProps) => {
     `/package/${manifest.name}/files/*?version=${version || 'latest'}`,
   );
 
+  const spec = version || 'latest';
+
   const { data: rootDir, isLoading } = useDirs({
     fullname: manifest.name,
-    spec: version || 'latest',
+    spec,
   });
 
   let selectedFile = _selectedFile || { path: `/${path || 'package.json'}`, type: 'file' };
@@ -42,9 +44,15 @@ const Viewer = ({ manifest, version }: PageProps) => {
   return (
     <div style={{ display: 'flex', marginTop: -16, minHeight: '100%' }}>
       <Sidebar>
-        <FileTree rootDir={rootDir} selectedFile={selectedFile} onSelect={onSelect} />
+        <FileTree
+          rootDir={rootDir}
+          selectedFile={selectedFile}
+          onSelect={onSelect}
+          pkgName={manifest.name}
+          spec={spec}
+        />
       </Sidebar>
-      <CodeViewer selectedFile={selectedFile} pkgName={manifest.name} spec={version} />
+      <CodeViewer selectedFile={selectedFile} pkgName={manifest.name} spec={spec} />
     </div>
   );
 };

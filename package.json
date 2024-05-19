@@ -45,5 +45,10 @@
     "prettier": "^3.0.3",
     "eslint": "^8.44.0",
     "typescript": "^5.3.3"
+  },
+  "overrides": {
+    "npm-package-arg": {
+      "validate-npm-package-name": "5.0.0"
+    }
   }
 }
