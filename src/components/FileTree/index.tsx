@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { getIcon } from './icon';
 import { useDirs, type Directory, type File } from '@/hooks/useFile';
 import { createStyles } from 'antd-style';
+import { LoadingOutlined } from '@ant-design/icons';
 
 const useStyles = createStyles(({ token, css }) => {
   return {
@@ -64,11 +65,13 @@ const FileDiv = ({
   icon,
   selectedFile,
   onClick,
+  isLoading,
 }: {
   file: File | Directory; // 当前文件
   icon?: string; // 图标名称
   selectedFile: File | undefined; // 选中的文件
   onClick: () => void; // 点击事件
+  isLoading?: boolean;
 }) => {
   const isSelected = (selectedFile && selectedFile.path === file.path) as boolean;
   const pathArray = file.path.split('/');
@@ -87,7 +90,7 @@ const FileDiv = ({
       }}
       onClick={onClick}
     >
-      <FileIcon name={icon} extension={file.path.split('.').pop() || ''} />
+      <FileIcon isLoading={!!isLoading} name={icon} extension={file.path.split('.').pop() || ''} />
       <span style={{ marginLeft: 1 }}>{name}</span>
     </div>
   );
@@ -108,13 +111,14 @@ const DirDiv = ({
 }) => {
   let defaultOpen = selectedFile?.path.includes(directory.path);
   const [open, setOpen] = useState(defaultOpen);
-  const { data: res } = useDirs({ fullname: pkgName, spec }, directory.path, !open);
+  const { data: res, isLoading } = useDirs({ fullname: pkgName, spec }, directory.path, !open);
   return (
     <>
       <FileDiv
         file={directory}
         icon={open ? 'openDirectory' : 'closedDirectory'}
         selectedFile={selectedFile}
+        isLoading={isLoading}
         onClick={() => setOpen(!open)}
       />
       {open ? (
@@ -130,8 +134,7 @@ const DirDiv = ({
   );
 };
 
-const FileIcon = ({ extension, name }: { name?: string; extension?: string }) => {
-  let icon = getIcon(extension || '', name || '');
+const FileIcon = ({ extension, name, isLoading }: { name?: string; extension?: string, isLoading: boolean }) => {
   return (
     <span
       style={{
@@ -142,7 +145,7 @@ const FileIcon = ({ extension, name }: { name?: string; extension?: string }) =>
         alignItems: 'center',
       }}
     >
-      {icon}
+      {isLoading ? <LoadingOutlined /> : getIcon(extension, name)}
     </span>
   );
 };
