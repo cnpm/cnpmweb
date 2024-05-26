@@ -34,6 +34,11 @@ $ cnpm run dev
 - [x] 版本列表
 - [x] 版本选择
 - [x] 搜索结果
+
+## License
+
+[MIT](LICENSE)
+
 <!-- GITCONTRIBUTOR_START -->
 
 ## 贡献者
