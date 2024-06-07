@@ -1,8 +1,8 @@
 'use client';
 import { REGISTRY } from '@/config';
 import useSwr from 'swr';
-export function useReadme(pkgName: string, version = 'latest') {
-  const { data: content } = useSwr(pkgName ? pkgName + version : null, {
+export function useReadme(pkgName: string, version = 'latest', content?: string) {
+  const { data: readme } = useSwr((pkgName && !content) ? pkgName + version : null, {
     fetcher: async () => {
       const keys = ['README.md', 'README', 'readme.md', 'readme'];
       return Promise.all(
@@ -21,5 +21,5 @@ export function useReadme(pkgName: string, version = 'latest') {
       });
     },
   });
-  return content;
+  return readme || content;
 }

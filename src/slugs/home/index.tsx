@@ -55,7 +55,7 @@ export default function Home({ manifest, version, additionalInfo: needSync }: Pa
           <AdBanner />
         </div>
         <PresetCard title="项目文档" style={{ minHeight: '100%' }}>
-          <ReadmeContent name={manifest.name} version={version} />
+          <ReadmeContent name={manifest.name} version={version} content={pkg.readme}/>
         </PresetCard>
       </Col>
       <Col flex="0 0 378px">
