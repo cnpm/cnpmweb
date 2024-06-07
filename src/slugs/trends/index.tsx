@@ -12,7 +12,7 @@ const MAX_COUNT = 5;
 
 export default function Trends({ manifest: pkg }: PageProps) {
   const [search, setSearch] = useState('');
-  const [vs, setVS] = useQueryState<string>('vs', '');
+  const [vs, setVS] = useQueryState('vs', '');
   const [pkgs, setPkgs] = useState<string[]>(vs ? vs.split(',').slice(0, MAX_COUNT) : [pkg.name]);
 
   const { data: searchResult, isLoading } = useCachedSearch({

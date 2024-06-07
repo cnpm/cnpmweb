@@ -1,64 +1,34 @@
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
+import { useState, useEffect, useCallback } from 'react';
 
-type QueryValue = string | boolean | number;
-
-function useQueryState<T extends QueryValue>(
-  key: string,
-  defaultValue: T,
-  ignoreValues: QueryValue[] = []
-): [T, (newValue: T) => void] {
-  const router = useRouter();
-  const [state, setState] = useState<T>(() => {
-    const valueFromQuery = router.isReady ? router.query[key] : undefined;
-    return parseValue(valueFromQuery, defaultValue);
+function useQueryState(key: string, defaultValue: string): [string, (value: string) => void] {
+  const [value, setValue] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    return params.get(key) || defaultValue;
   });
 
-  useEffect(() => {
-    if (!router.isReady) return;
-    const valueFromQuery = router.query[key];
-    setState(parseValue(valueFromQuery, defaultValue));
-  }, [router.isReady, router.query, key, defaultValue]);
+  const updateUrl = useCallback((newValue: string | null) => {
+    const url = new URL(window.location.href);
+    const params = new URLSearchParams(url.search);
 
-  useEffect(() => {
-    const handleRouteChange = () => {
-      const valueFromQuery = router.query[key];
-      setState(parseValue(valueFromQuery, defaultValue));
-    };
-
-    router.events.on('routeChangeComplete', handleRouteChange);
-    return () => {
-      router.events.off('routeChangeComplete', handleRouteChange);
-    };
-  }, [router.events, key, defaultValue]);
-
-  const setQueryState = (newValue: T) => {
-    const newQuery = { ...router.query };
-
-    if (ignoreValues.includes(newValue) || newValue === defaultValue) {
-      delete newQuery[key];
+    if (newValue === defaultValue || newValue == null) {
+      params.delete(key);
     } else {
-      newQuery[key] = stringifyValue(newValue) as string;
+      params.set(key, newValue);
     }
 
-    router.push({ pathname: router.pathname, query: newQuery }, undefined, { shallow: true });
-    setState(newValue);
-  };
+    // 历史状态管理，避免生成新的历史记录条目
+    window.history.replaceState({}, '', `${url.pathname}?${params}`);
+  }, [key, defaultValue]);
 
-  return [state, setQueryState];
-}
+  useEffect(() => {
+    if (value !== defaultValue) {
+      updateUrl(value);
+    } else {
+      updateUrl(null);  // 传 null 以移除查询参数
+    }
+  }, [value, updateUrl, defaultValue]);
 
-function parseValue<T extends QueryValue>(value: string | string[] | undefined, defaultValue: T): T {
-  if (value === undefined || Array.isArray(value)) return defaultValue;
-  if (value === 'true') return true as T;
-  if (value === 'false') return false as T;
-  if (!isNaN(Number(value))) return Number(value) as T;
-  return value as unknown as T;
-}
-
-function stringifyValue(value: QueryValue): string {
-  if (typeof value === 'boolean' || typeof value === 'number') return String(value);
-  return value as string;
+  return [value as string, setValue];
 }
 
 export default useQueryState;
