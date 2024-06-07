@@ -52,6 +52,9 @@ export const useDirs = (info: PkgInfo, path = '', ignore = false) => {
       return fetch(`${REGISTRY}/${info.fullname}/${info.spec}/files${path}/?meta`)
         .then((res) => res.json())
         .then((res) => {
+          if (res.error) {
+            return Promise.reject(res.error);
+          }
           sortFiles(res.files);
           return Promise.resolve(res);
         });

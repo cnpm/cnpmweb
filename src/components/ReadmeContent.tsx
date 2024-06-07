@@ -36,16 +36,16 @@ const renderer = {
 };
 marked.use({ renderer });
 
-export function ReadmeContent({ name, version = 'latest' }: { name: string; version?: string }) {
-  const content = useReadme(name, version);
+export function ReadmeContent({ name, version = 'latest', content }: { name: string; version?: string; content?: string }) {
+  const readme = useReadme(name, version, content);
   const { themeMode } = useThemeMode();
 
   const contentNode = React.useMemo(() => {
-    const loading = content === undefined;
+    const loading = readme === undefined;
     if (loading) {
       return <Skeleton active />;
     }
-    if (typeof content !== 'string') {
+    if (typeof readme !== 'string') {
       return <Result title="未查询到相关文档信息" />;
     }
     return (
@@ -53,14 +53,14 @@ export function ReadmeContent({ name, version = 'latest' }: { name: string; vers
         <div
           className={'markdown-body'}
           dangerouslySetInnerHTML={{
-            __html: marked(content, {
+            __html: marked(readme, {
               headerIds: true,
             }),
           }}
         />
       </div>
     );
-  }, [content, themeMode]);
+  }, [readme, themeMode]);
 
   useEffect(() => {
     if (location.hash) {
@@ -72,10 +72,18 @@ export function ReadmeContent({ name, version = 'latest' }: { name: string; vers
   return <Typography> {contentNode} </Typography>;
 }
 
-export default function Readme({ name, version }: { name: string; version?: string }) {
+export default function Readme({
+  name,
+  version,
+  content,
+}: {
+  name: string;
+  version?: string;
+  content?: string;
+}) {
   return (
     <SizeContainer maxWidth={800} style={{ colorScheme: 'dark' }}>
-      <ReadmeContent name={name} version={version} />
+      <ReadmeContent name={name} version={version} content={content}/>
     </SizeContainer>
   );
 }

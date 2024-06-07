@@ -33,6 +33,7 @@ export type PackageManifest = {
     url: string;
   };
   homepage?: string;
+  readme?: string;
 };
 
 export function useVersions(manifest: PackageManifest): NpmPackageVersion[] {

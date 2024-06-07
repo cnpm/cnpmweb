@@ -5,7 +5,7 @@ import { Sidebar } from '@/components/Sidebar';
 import { useDirs, File } from '@/hooks/useFile';
 import { usePathState } from '@/hooks/usePathState';
 import { PageProps } from '@/pages/package/[...slug]';
-import { Spin } from 'antd';
+import { Result, Spin } from 'antd';
 import { useState } from 'react';
 
 const Viewer = ({ manifest, version }: PageProps) => {
@@ -16,7 +16,11 @@ const Viewer = ({ manifest, version }: PageProps) => {
 
   const spec = version || 'latest';
 
-  const { data: rootDir, isLoading } = useDirs({
+  const {
+    data: rootDir,
+    isLoading,
+    error,
+  } = useDirs({
     fullname: manifest.name,
     spec,
   });
@@ -41,7 +45,9 @@ const Viewer = ({ manifest, version }: PageProps) => {
     );
   }
 
-  return (
+  return error ? (
+    <Result status="warning" title="产物预览失败" subTitle={error} />
+  ) : (
     <div style={{ display: 'flex', marginTop: -16, minHeight: '100%' }}>
       <Sidebar>
         <FileTree
