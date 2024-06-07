@@ -48,7 +48,7 @@ const useStyles = createStyles(({ token, css }) => {
 
 function TagsList({ tagsInfo, pkg }: { tagsInfo: Record<string, string[]>; pkg: PackageManifest }) {
   const { styles } = useStyles();
-  const [type, setTags] = useQueryState<string>('tags', 'prod', ['prod']);
+  const [type, setTags] = useQueryState('tags', 'prod');
   const onlyProd = type === 'prod';
   return (
     <div style={{ position: 'relative' }}>
@@ -71,7 +71,7 @@ function TagsList({ tagsInfo, pkg }: { tagsInfo: Record<string, string[]>; pkg: 
         }}
       >
         <Segmented
-          defaultValue={type || 'prod'}
+          value={type}
           options={[
             { label: '正式版本', value: 'prod' },
             { label: '所有版本', value: 'all' },
@@ -108,7 +108,7 @@ function TagsList({ tagsInfo, pkg }: { tagsInfo: Record<string, string[]>; pkg: 
 
 function VersionsList({ versions, pkg }: { versions: NpmPackageVersion[]; pkg: PackageManifest }) {
   const { styles } = useStyles();
-  const [type, setVersions] = useQueryState<string>('versions', 'prod', ['prod']);
+  const [type, setVersions] = useQueryState('versions', 'prod');
   const onlyProd = type === 'prod';
   return (
     <div style={{ position: 'relative' }}>
@@ -131,7 +131,7 @@ function VersionsList({ versions, pkg }: { versions: NpmPackageVersion[]; pkg: P
         }}
       >
         <Segmented
-          defaultValue={type || 'prod'}
+          value={type}
           options={[
             { label: '正式版本', value: 'prod' },
             { label: '所有版本', value: 'all' },
