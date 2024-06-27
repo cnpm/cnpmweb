@@ -30,7 +30,7 @@ export default function Introduce() {
         </blockquote>
         目前我们已累积同步了{' '}
         <Text strong>{data?.doc_count ? data?.doc_count.toLocaleString('en-US') : '-'}</Text>{' '}
-        个包，{' '}
+        个包，
         <Text strong>{data?.doc_version_count ? data?.doc_version_count.toLocaleString('en-US') : '-'}</Text>{' '}
         个版本，近7日下载量为{' '}
         <Text strong>
