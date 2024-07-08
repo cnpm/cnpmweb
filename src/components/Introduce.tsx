@@ -68,15 +68,27 @@ export default function Introduce() {
         <br />
         cnpm 支持除了写相关操作外的所有命令，例如 install、info、view 等。
         <br />
-        <pre>$ npm install -g cnpm --registry=https://registry.npmmirror.com</pre>
+
+        <pre>
+          <Text copyable={{ text: 'npm install -g cnpm --registry=https://registry.npmmirror.com' }}>
+            $ npm install -g cnpm --registry=https://registry.npmmirror.com
+          </Text>
+        </pre>
+
         或者你直接通过添加 npm 参数 alias 一个新命令:
         <pre>
+          <Text copyable={{ text: 'alias cnpm="npm --registry=https://registry.npmmirror.com \ --cache=$HOME/.npm/.cache/cnpm \ --disturl=https://npmmirror.com/mirrors/node \ --userconfig=$HOME/.cnpmrc"' }}>
           alias cnpm=&quot;npm --registry=https://registry.npmmirror.com \
           --cache=$HOME/.npm/.cache/cnpm \ --disturl=https://npmmirror.com/mirrors/node \
           --userconfig=$HOME/.cnpmrc&quot;
+          </Text>
         </pre>
         当然，你也可以使用任意你心仪的命令行工具，只要配置 registry 即可
-        <pre>$ npm config set registry https://registry.npmmirror.com</pre>
+        <pre>
+          <Text copyable={{ text: 'npm config set registry https://registry.npmmirror.com' }}>
+          $ npm config set registry https://registry.npmmirror.com
+          </Text>
+        </pre>
       </Paragraph>
 
       <Title level={3}>安装模块</Title>
