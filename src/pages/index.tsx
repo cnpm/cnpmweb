@@ -3,13 +3,14 @@ import styles from './page.module.css';
 import 'antd/dist/reset.css';
 import LandingSearch from '@/components/LandingSearch';
 import AdBanner from '@/components/AdBanner';
-import AdVPS from '@/components/AdVPS';
 import Footer from '@/components/Footer';
 import Introduce from '@/components/Introduce';
 import { ThemeMode, ThemeProvider as _ThemeProvider } from 'antd-style';
 import Header from '@/components/Header';
 import { useTheme } from '@/hooks/useTheme';
-import AdHire from '@/components/AdHire';
+import RecentTrending from '@/components/RecentTrending';
+import { Flex } from 'antd';
+import SizeContainer from '@/components/SizeContainer';
 
 const ThemeProvider = _ThemeProvider as any;
 
@@ -18,18 +19,19 @@ export default function Home() {
 
   return (
     <ThemeProvider themeMode={themeMode as ThemeMode}>
-      <AdHire />
       <Header themeMode={themeMode} setThemeMode={setThemeMode} />
       <main className={styles.main}>
         <AdBanner />
-        <div className={styles.search}>
+        <section className={styles.search}>
           <h1 style={{ fontSize: 48, marginTop: 48 }}>npmmirror 镜像站</h1>
           <LandingSearch />
-          <Introduce />
-        </div>
-        <div style={{ marginTop: '5rem' }}>
-          <AdVPS />
-        </div>
+        </section>
+        <SizeContainer maxWidth={1280}>
+          <Flex style={{ marginTop: '5rem' }} justify="space-between" align="start" gap={32}>
+            <Introduce />
+            <RecentTrending />
+          </Flex>
+        </SizeContainer>
       </main>
       <Footer />
     </ThemeProvider>

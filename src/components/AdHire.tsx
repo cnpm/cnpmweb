@@ -1,6 +1,5 @@
 'use client';
 import { Alert, Button } from 'antd';
-import Link from 'next/link';
 
 export default function AdHire() {
   return (
