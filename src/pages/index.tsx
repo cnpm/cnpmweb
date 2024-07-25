@@ -5,20 +5,19 @@ import LandingSearch from '@/components/LandingSearch';
 import AdBanner from '@/components/AdBanner';
 import Footer from '@/components/Footer';
 import Introduce from '@/components/Introduce';
-import { ThemeMode, ThemeProvider as _ThemeProvider } from 'antd-style';
 import Header from '@/components/Header';
 import { useTheme } from '@/hooks/useTheme';
 import RecentTrending from '@/components/RecentTrending';
-import { Flex } from 'antd';
+import { ConfigProvider, Flex, theme } from 'antd';
 import SizeContainer from '@/components/SizeContainer';
-
-const ThemeProvider = _ThemeProvider as any;
 
 export default function Home() {
   const [themeMode, setThemeMode] = useTheme();
 
   return (
-    <ThemeProvider themeMode={themeMode as ThemeMode}>
+    <ConfigProvider
+      theme={{ algorithm: themeMode === 'dark' ? theme.darkAlgorithm : theme.defaultAlgorithm }}
+    >
       <Header themeMode={themeMode} setThemeMode={setThemeMode} />
       <main className={styles.main}>
         <AdBanner />
@@ -34,6 +33,6 @@ export default function Home() {
         </SizeContainer>
       </main>
       <Footer />
-    </ThemeProvider>
+    </ConfigProvider>
   );
 }

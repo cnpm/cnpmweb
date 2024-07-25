@@ -26,7 +26,7 @@ export default function RecentTrending() {
             </li>
             <li>
               最近同步的包：
-              <Link href={`/${data?.lastPackage}`} target="_blank">
+              <Link href={`/${data?.lastPackage}`} target="_blank" style={{ maxWidth: '220px'}} ellipsis>
                 {data?.lastPackage}
               </Link>
             </li>
