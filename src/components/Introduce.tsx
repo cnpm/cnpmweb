@@ -1,13 +1,11 @@
 'use client';
 import React from 'react';
 import { Card, Divider, Typography, theme } from 'antd';
-import useRegistry from '@/hooks/useRegistry';
 const { Title, Paragraph, Text, Link } = Typography;
 
 const { useToken } = theme;
 
 export default function Introduce() {
-  const { data } = useRegistry();
   const { token } = useToken();
   return (
     <div>

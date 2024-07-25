@@ -6,7 +6,7 @@ import useRegistry from '@/hooks/useRegistry';
 const {Text, Paragraph, Link} = Typography;
 
 export default function RecentTrending() {
-  const { data, isLoading } = useRegistry();
+  const { data } = useRegistry();
   return (
     <Flex gap={24} style={{ flexDirection: 'column' }}>
       <Card title="同步状态">
