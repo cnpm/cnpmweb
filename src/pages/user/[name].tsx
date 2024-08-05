@@ -4,7 +4,6 @@ import Footer from '@/components/Footer';
 import { ThemeMode, ThemeProvider as _ThemeProvider } from 'antd-style';
 import Header from '@/components/Header';
 import { useTheme } from '@/hooks/useTheme';
-import AdHire from '@/components/AdHire';
 import { useRouter } from 'next/router';
 import useUser from '@/hooks/useUser';
 import { Card, Col, Row, Space, Spin, Table, TableColumnsType, Typography } from 'antd';
@@ -67,7 +66,6 @@ export default function Home() {
 
   return (
     <ThemeProvider themeMode={themeMode as ThemeMode}>
-      <AdHire />
       <Header themeMode={themeMode} setThemeMode={setThemeMode} />
       <main style={{ minHeight: 'calc( 100vh - 110px )' }}>
         <SizeContainer maxWidth={1184}>
