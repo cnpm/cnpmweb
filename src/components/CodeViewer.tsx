@@ -7,9 +7,11 @@ import { useThemeMode } from 'antd-style';
 import { useRef } from 'react';
 import { REGISTRY } from '@/config';
 
+const LinkField = ['devDependencies', 'dependencies', 'peerDependencies', 'optionalDependencies', 'bundleDependencies'];
+
 loader.config({
   paths: {
-    vs: `${REGISTRY}/monaco-editor/0.41.0/files/min/vs`,
+    vs: `${REGISTRY}/monaco-editor/0.52.0/files/min/vs`,
   },
 });
 
@@ -18,6 +20,41 @@ function highlightEditor(editor: any) {
   if (start !== null && window) {
     editor.setSelection(new (window as any).monaco.Range(start, 1, end, 1));
   }
+}
+
+function registerLinkProvider(monaco: any) {
+  monaco.languages.registerLinkProvider('json', {
+    provideLinks: (model: any) => {
+      const links:any= [];
+      const lines = model.getLinesContent();
+      let startCatch = false;
+      lines.forEach((line: string, lineIndex: number) => {
+        if (LinkField.some( _ => line === `  "${_}": {`)) {
+          startCatch = true;
+          return;
+        }
+        if (line === '  },' && startCatch) {
+          startCatch = false;
+          return;
+        }
+        if (startCatch) {
+          const match = line.match(/"(.+?)": "(.+?)"/);
+          if (match?.[1] && match?.[2]) {
+            links.push({
+              range: new monaco.Range(
+                lineIndex + 1,
+                line.split('').findIndex((_) => _.trim()) + 1,
+                lineIndex + 1,
+                line.length,
+              ),
+              url: `https://npmmirror.com/${match[1]}@${match[2]}`,
+            });
+          }
+        }
+      });
+      return { links };
+    }
+  });
 }
 
 export const CodeViewer = ({
@@ -65,6 +102,7 @@ export const CodeViewer = ({
         language={language}
         theme={`vs-${theme}`}
         options={{ readOnly: true, fontSize: 16 }}
+        beforeMount={registerLinkProvider}
         onMount={(editor) => {
           editorRef.current = editor;
           editor.onMouseUp(handleEditorMouseDown);

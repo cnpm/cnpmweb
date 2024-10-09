@@ -27,5 +27,5 @@ export function usePathState(pattern: string): [string, (newValue: string) => vo
     router.replace(newPath, newPath, { shallow: true });
   };
 
-  return [state?.split('#')[0], setPathState];
+  return [state?.split('#')[0].replace(/\?$/, ''), setPathState];
 }
