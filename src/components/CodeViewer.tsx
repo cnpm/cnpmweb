@@ -47,7 +47,7 @@ function registerLinkProvider(monaco: any) {
                 lineIndex + 1,
                 line.length,
               ),
-              url: `https://npmmirror.com/${match[1]}@${match[2]}`,
+              url: `https://npmmirror.com/package/${match[1]}/files?version=${match[2]}`,
             });
           }
         }
