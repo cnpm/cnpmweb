@@ -2,7 +2,7 @@
 import { REGISTRY, SYNC_REGISTRY } from '@/config';
 import { Button, message, Modal } from 'antd';
 import Link from 'next/link';
-import React, { useMemo } from 'react';
+import React from 'react';
 
 interface SyncProps {
   pkgName: string;
@@ -13,7 +13,7 @@ export default function Sync({ pkgName }: SyncProps) {
   const [logState, setLogState] = React.useState<number>(0);
   const [modal, contextHolder] = Modal.useModal();
 
-  const logFileUrl = useMemo(() => {
+  const logFileUrl = React.useMemo(() => {
     return `${REGISTRY}/-/package/${pkgName}/syncs/${logId}/log`;
   }, [logId])
 
