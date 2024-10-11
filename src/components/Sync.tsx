@@ -1,6 +1,7 @@
 'use client';
 import { REGISTRY, SYNC_REGISTRY } from '@/config';
 import { Button, message, Modal } from 'antd';
+import type { ButtonProps } from 'antd';
 import Link from 'next/link';
 import React from 'react';
 
@@ -10,7 +11,8 @@ interface SyncProps {
 
 export default function Sync({ pkgName }: SyncProps) {
   const [logId, setLogId] = React.useState<string>();
-  const [logState, setLogState] = React.useState<number>(0);
+  const [logState, setLogState] = React.useState<number>(1);
+  const retryCountRef = React.useRef(0);
   const [modal, contextHolder] = Modal.useModal();
 
   const logFileUrl = React.useMemo(() => {
@@ -32,14 +34,19 @@ export default function Sync({ pkgName }: SyncProps) {
   }
 
   async function logPolling() {
+    retryCountRef.current += 1;
     try {
       const response = await fetch(logFileUrl);
       if (response.status === 200) {
-        setLogState(2);
+        setLogState(3);
         return;
       }
       throw new Error('Not ready');
     } catch {
+      if (retryCountRef.current > 30) {
+        setLogState(2);
+        return;
+      }
       setTimeout(logPolling, 1000);
     }
   }
@@ -52,7 +59,6 @@ export default function Sync({ pkgName }: SyncProps) {
       const res = await response.json();
       if (res.ok) {
         setLogId(res.id);
-        setLogState(1);
         logPolling();
       }
       throw new Error('Not ok');
@@ -73,7 +79,19 @@ export default function Sync({ pkgName }: SyncProps) {
           showLog();
         }
       }}>
-        {logState === 0 ? '进行同步' : logState === 2 ? '查看日志' : '等待调度'}
+        {(() => {
+            if (logId) {
+              switch (logState) {
+                case 3:
+                  return <>查看日志</>;
+                case 2:
+                  return <>调度失败</>;
+                default:
+                  return <>等待调度</>;
+              }
+            }
+            return <>进行同步</>;
+        })()}
       </Button>
     </>
   );
