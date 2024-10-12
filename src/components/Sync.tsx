@@ -55,7 +55,9 @@ export default function Sync({ pkgName }: SyncProps) {
         setLogState(LogStatus.ERROR);
         return;
       }
-      setTimeout(logPolling, 1000);
+      setTimeout(() => {
+        logPolling(id);
+      }, 1000);
     }
   }
 
