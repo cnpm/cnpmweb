@@ -39,6 +39,9 @@ export default function Sync({ pkgName }: SyncProps) {
   }
 
   async function logPolling(id:string) {
+    if (!id) {
+      return;
+    }
     retryCountRef.current += 1;
     try {
       const response = await fetch(genLogFileUrl(id));
