@@ -60,6 +60,7 @@ export default function Sync({ pkgName }: SyncProps) {
       if (res.ok) {
         setLogId(res.id);
         logPolling();
+        return;
       }
       throw new Error('Not ok');
     } catch (e) {
@@ -70,7 +71,7 @@ export default function Sync({ pkgName }: SyncProps) {
   return (
     <>
       {contextHolder}
-      <Button size={'small'} type="primary" onClick={() => {
+      <Button size={'small'} type="primary" loading={ !!logId && logState === 1 } onClick={() => {
         if (!logId) {
           doSync();
           return;
