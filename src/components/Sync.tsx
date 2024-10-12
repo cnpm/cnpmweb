@@ -15,9 +15,7 @@ export default function Sync({ pkgName }: SyncProps) {
   const retryCountRef = React.useRef(0);
   const [modal, contextHolder] = Modal.useModal();
 
-  const logFileUrl = React.useMemo(() => {
-    return `${REGISTRY}/-/package/${pkgName}/syncs/${logId}/log`;
-  }, [logId])
+  const logFileUrl = logId ? `${REGISTRY}/-/package/${pkgName}/syncs/${logId}/log`: null;
 
   async function showLog() {
     modal.success({
@@ -25,7 +23,7 @@ export default function Sync({ pkgName }: SyncProps) {
       content: (
         <>
           创建同步任务成功，正在等待调度，如遇日志 404 请稍后刷新重试，通常需要几十秒钟的时间
-          <Link target="_blank" href={logFileUrl}>
+          <Link target="_blank" href={logFileUrl as string}>
             查看日志
           </Link>
         </>
@@ -34,6 +32,9 @@ export default function Sync({ pkgName }: SyncProps) {
   }
 
   async function logPolling() {
+    if (!logFileUrl) {
+      return;
+    }
     retryCountRef.current += 1;
     try {
       const response = await fetch(logFileUrl);
