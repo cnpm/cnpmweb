@@ -8,21 +8,29 @@ interface SyncProps {
   pkgName: string;
 }
 
+const LogStatus = {
+  WAIT: 1,
+  ERROR: 2,
+  SUCCESS: 3,
+}
+
 export default function Sync({ pkgName }: SyncProps) {
   const [logId, setLogId] = React.useState<string>();
-  const [logState, setLogState] = React.useState<number>(1);
+  const [logState, setLogState] = React.useState<number>(LogStatus.WAIT);
   const retryCountRef = React.useRef(0);
   const [modal, contextHolder] = Modal.useModal();
 
-  const logFileUrl = logId ? `${REGISTRY}/-/package/${pkgName}/syncs/${logId}/log`: null;
+  function genLogFileUrl(id: string) {
+    return `${REGISTRY}/-/package/${pkgName}/syncs/${id}/log`;
+  }
 
-  async function showLog() {
+  async function showLog(id: string) {
     modal.success({
       title: '等待调度',
       content: (
         <>
           创建同步任务成功，正在等待调度，如遇日志 404 请稍后刷新重试，通常需要几十秒钟的时间
-          <Link target="_blank" href={logFileUrl as string}>
+          <Link target="_blank" href={genLogFileUrl(id)}>
             查看日志
           </Link>
         </>
@@ -30,21 +38,18 @@ export default function Sync({ pkgName }: SyncProps) {
     });
   }
 
-  async function logPolling() {
-    if (!logFileUrl) {
-      return;
-    }
+  async function logPolling(id:string) {
     retryCountRef.current += 1;
     try {
-      const response = await fetch(logFileUrl);
+      const response = await fetch(genLogFileUrl(id));
       if (response.status === 200) {
-        setLogState(3);
+        setLogState(LogStatus.SUCCESS);
         return;
       }
       throw new Error('Not ready');
     } catch {
       if (retryCountRef.current > 30) {
-        setLogState(2);
+        setLogState(LogStatus.ERROR);
         return;
       }
       setTimeout(logPolling, 1000);
@@ -59,7 +64,7 @@ export default function Sync({ pkgName }: SyncProps) {
       const res = await response.json();
       if (res.ok) {
         setLogId(res.id);
-        logPolling();
+        logPolling(res.id);
         return;
       }
       throw new Error('Not ok');
@@ -77,15 +82,15 @@ export default function Sync({ pkgName }: SyncProps) {
           return;
         }
         if (logState === 2) {
-          showLog();
+          showLog(logId);
         }
       }}>
         {(() => {
             if (logId) {
               switch (logState) {
-                case 3:
+                case LogStatus.SUCCESS:
                   return <>查看日志</>;
-                case 2:
+                case LogStatus.ERROR:
                   return <>调度失败</>;
                 default:
                   return <>等待调度</>;
