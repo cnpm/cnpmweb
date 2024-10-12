@@ -86,7 +86,7 @@ export default function Sync({ pkgName }: SyncProps) {
           doSync();
           return;
         }
-        if (logState === 2) {
+        if (logState === LogStatus.SUCCESS) {
           showLog(logId);
         }
       }}>
