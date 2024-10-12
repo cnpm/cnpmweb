@@ -1,7 +1,6 @@
 'use client';
 import { REGISTRY, SYNC_REGISTRY } from '@/config';
 import { Button, message, Modal } from 'antd';
-import type { ButtonProps } from 'antd';
 import Link from 'next/link';
 import React from 'react';
 
