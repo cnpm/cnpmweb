@@ -4,19 +4,29 @@ import { Button, message, Modal } from 'antd';
 import Link from 'next/link';
 import React from 'react';
 
+const MAX_RETRY = 30;
+
 interface SyncProps {
   pkgName: string;
 }
 
-const LogStatus = {
-  WAIT: 1,
-  ERROR: 2,
-  SUCCESS: 3,
+enum LogStatus {
+  INIT,
+  WAIT,
+  ERROR,
+  SUCCESS,
 }
+
+const LogStatusTextMap= {
+  [LogStatus.INIT]: '进行同步',
+  [LogStatus.WAIT]: '等待调度',
+  [LogStatus.ERROR]: '调度失败',
+  [LogStatus.SUCCESS]: '查看日志',
+};
 
 export default function Sync({ pkgName }: SyncProps) {
   const [logId, setLogId] = React.useState<string>();
-  const [logState, setLogState] = React.useState<number>(LogStatus.WAIT);
+  const [logState, setLogState] = React.useState<LogStatus>(LogStatus.INIT);
   const retryCountRef = React.useRef(0);
   const [modal, contextHolder] = Modal.useModal();
 
@@ -51,13 +61,17 @@ export default function Sync({ pkgName }: SyncProps) {
       }
       throw new Error('Not ready');
     } catch {
-      if (retryCountRef.current > 30) {
+      if (retryCountRef.current > MAX_RETRY) {
         setLogState(LogStatus.ERROR);
         return;
+      } else {
+        if (LogStatus.WAIT !== logState) {
+          setLogState(LogStatus.WAIT);
+        }
+        setTimeout(() => {
+          logPolling(id);
+        }, 1000);
       }
-      setTimeout(() => {
-        logPolling(id);
-      }, 1000);
     }
   }
 
@@ -69,6 +83,7 @@ export default function Sync({ pkgName }: SyncProps) {
       const res = await response.json();
       if (res.ok) {
         setLogId(res.id);
+        setLogState(LogStatus.WAIT);
         logPolling(res.id);
         return;
       }
@@ -81,28 +96,20 @@ export default function Sync({ pkgName }: SyncProps) {
   return (
     <>
       {contextHolder}
-      <Button size={'small'} type="primary" loading={ !!logId && logState === 1 } onClick={() => {
-        if (!logId) {
-          doSync();
-          return;
-        }
-        if (logState === LogStatus.SUCCESS) {
-          showLog(logId);
-        }
-      }}>
-        {(() => {
-            if (logId) {
-              switch (logState) {
-                case LogStatus.SUCCESS:
-                  return <>查看日志</>;
-                case LogStatus.ERROR:
-                  return <>调度失败</>;
-                default:
-                  return <>等待调度</>;
-              }
-            }
-            return <>进行同步</>;
-        })()}
+      <Button
+        size={'small'}
+        type="primary"
+        loading={logState === LogStatus.WAIT}
+        href={logState === LogStatus.SUCCESS ? genLogFileUrl(logId!) : undefined}
+        target='_blank'
+        onClick={() => {
+          if (!logId) {
+            doSync();
+            return;
+          }
+        }}
+      >
+        {LogStatusTextMap[logState]}
       </Button>
     </>
   );
