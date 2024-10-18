@@ -1,7 +1,6 @@
 'use client';
 import { REGISTRY, SYNC_REGISTRY } from '@/config';
 import { Button, message, Modal } from 'antd';
-import Link from 'next/link';
 import React from 'react';
 
 const MAX_RETRY = 30;
@@ -32,20 +31,6 @@ export default function Sync({ pkgName }: SyncProps) {
 
   function genLogFileUrl(id: string) {
     return `${REGISTRY}/-/package/${pkgName}/syncs/${id}/log`;
-  }
-
-  async function showLog(id: string) {
-    modal.success({
-      title: '等待调度',
-      content: (
-        <>
-          创建同步任务成功，正在等待调度，如遇日志 404 请稍后刷新重试，通常需要几十秒钟的时间
-          <Link target="_blank" href={genLogFileUrl(id)}>
-            查看日志
-          </Link>
-        </>
-      ),
-    });
   }
 
   async function logPolling(id:string) {
