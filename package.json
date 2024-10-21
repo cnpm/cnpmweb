@@ -51,6 +51,9 @@
   "overrides": {
     "npm-package-arg": {
       "validate-npm-package-name": "5.0.0"
+    },
+    "react-ansi": {
+      "react": "^18.2.0"
     }
   }
 }
