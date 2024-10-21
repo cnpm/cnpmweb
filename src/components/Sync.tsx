@@ -1,6 +1,8 @@
 'use client';
 import { REGISTRY, SYNC_REGISTRY } from '@/config';
+import useSyncLog from '@/hooks/useSyncLog';
 import { Button, message, Modal } from 'antd';
+import ReactAnsi from 'react-ansi';
 import React from 'react';
 
 const MAX_RETRY = 30;
@@ -27,7 +29,8 @@ export default function Sync({ pkgName }: SyncProps) {
   const [logId, setLogId] = React.useState<string>();
   const [logState, setLogState] = React.useState<LogStatus>(LogStatus.INIT);
   const retryCountRef = React.useRef(0);
-  const [modal, contextHolder] = Modal.useModal();
+  const [showLog, setShowLog] = React.useState(false);
+  const { data: logContent } = useSyncLog(pkgName, logId);
 
   function genLogFileUrl(id: string) {
     return `${REGISTRY}/-/package/${pkgName}/syncs/${id}/log`;
@@ -80,14 +83,15 @@ export default function Sync({ pkgName }: SyncProps) {
 
   return (
     <>
-      {contextHolder}
       <Button
         size={'small'}
         type="primary"
         loading={logState === LogStatus.WAIT}
-        href={logState === LogStatus.SUCCESS ? genLogFileUrl(logId!) : undefined}
-        target='_blank'
         onClick={() => {
+          if (logState === LogStatus.SUCCESS) {
+            setShowLog(true);
+            return;
+          }
           if (!logId) {
             doSync();
             return;
@@ -96,6 +100,23 @@ export default function Sync({ pkgName }: SyncProps) {
       >
         {LogStatusTextMap[logState]}
       </Button>
+
+      <Modal
+        centered
+        open={showLog}
+        width={'70%'}
+        title="同步日志"
+        footer={null}
+        onCancel={() => setShowLog(false)}
+      >
+        <ReactAnsi
+          key={logId}
+          log={logContent || ['loading....']}
+          bodyStyle={{ overflowY: 'auto', background: '#222', height: '600px' }}
+          showHeader={false}
+          autoScroll
+        ></ReactAnsi>
+      </Modal>
     </>
   );
 }
