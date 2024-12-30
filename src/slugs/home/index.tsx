@@ -58,7 +58,7 @@ export default function Home({ manifest, version, additionalInfo: needSync }: Pa
           <ReadmeContent name={manifest.name} version={version} content={pkg.readme}/>
         </PresetCard>
       </Col>
-      <Col flex="0 0 378px">
+      <Col flex="0 0 378px" style={{ minWidth: "auto" }}>
         <Space direction={'vertical'} size="middle" style={{ minWidth: 378 }}>
           <AdVPS />
           <PresetCard title="下载趋势">
