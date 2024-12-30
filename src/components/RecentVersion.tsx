@@ -74,21 +74,19 @@ export default function RecentVersion({ pkg }: PresetCardProps) {
 
         return (
           <div className={styles.version} key={index}>
-            <Link href={`/package/${pkg?.name}?version=${item.version}`}>
+            <Link href={`/package/${pkg?.name}?version=${item.version}`} title={deprecated}>
               <Typography.Title level={3} className={styles.title}>
-                <span
-                  className={styles.content}
-                  style={
-                    deprecated
-                      ? {
-                          color: 'rgba(0,0,0,.25)',
-                          textDecoration: 'line-through',
-                        }
-                      : {}
-                  }
-                >
+                <span className={styles.content}>
                   <Space size="small" style={{ flex: 1 }}>
-                    {item.version}
+                    <span style={
+                      deprecated
+                        ? {
+                            color: 'rgba(0,0,0,.25)',
+                            textDecoration: 'line-through',
+                          }
+                        : {}
+                      }>{item.version}
+                    </span>
                     <VersionTags
                       tags={tags[item.version]}
                       style={{

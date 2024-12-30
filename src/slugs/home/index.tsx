@@ -1,5 +1,5 @@
 'use client';
-import { Col, Row, Space, Tooltip, Typography } from 'antd';
+import { Alert, Col, Row, Space, Tooltip, Typography } from 'antd';
 import SizeContainer from '@/components/SizeContainer';
 import PresetCard from '@/components/PresetCard';
 import ReadmeContent from '@/components/ReadmeContent';
@@ -40,6 +40,7 @@ const useStyles = createStyles(({ token, css }) => {
 export default function Home({ manifest, version, additionalInfo: needSync }: PageProps) {
   const pkg = manifest;
   const tags: string[] = pkg?.keywords || [];
+  const deprecated = pkg?.versions?.[version!]?.deprecated;
   const { styles: style } = useStyles();
 
   const contentNode = (
@@ -97,6 +98,9 @@ export default function Home({ manifest, version, additionalInfo: needSync }: Pa
           <div className={style.tagCon}>
             <PackageTag tags={tags?.map((tag) => ({ label: tag, href: `/packages?q=${tag}` }))} />
           </div>
+          {deprecated && <div style={{ marginBottom: 16 }}>
+            <Alert message={`Deprecated: ${deprecated}`} type="warning" />
+          </div>}
         </div>
         {contentNode}
       </SizeContainer>
