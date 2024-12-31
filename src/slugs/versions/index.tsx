@@ -157,6 +157,7 @@ function VersionsList({ versions, pkg }: { versions: NpmPackageVersion[]; pkg: P
                 <span>
                   <Link
                     prefetch={false}
+                    title={item.deprecated}
                     style={
                       item.deprecated
                         ? {
