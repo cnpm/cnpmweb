@@ -45,8 +45,9 @@ $ cnpm run dev
 
 |[<img src="https://avatars.githubusercontent.com/u/5574625?v=4" width="100px;"/><br/><sub><b>elrrrrrrr</b></sub>](https://github.com/elrrrrrrr)<br/>|[<img src="https://avatars.githubusercontent.com/u/53334669?v=4" width="100px;"/><br/><sub><b>zhoushengdao</b></sub>](https://github.com/zhoushengdao)<br/>|[<img src="https://avatars.githubusercontent.com/u/156269?v=4" width="100px;"/><br/><sub><b>fengmk2</b></sub>](https://github.com/fengmk2)<br/>|[<img src="https://avatars.githubusercontent.com/u/32004925?v=4" width="100px;"/><br/><sub><b>Wxh16144</b></sub>](https://github.com/Wxh16144)<br/>|[<img src="https://avatars.githubusercontent.com/u/2087827?v=4" width="100px;"/><br/><sub><b>lucaszhu2zgf</b></sub>](https://github.com/lucaszhu2zgf)<br/>|[<img src="https://avatars.githubusercontent.com/u/6897780?v=4" width="100px;"/><br/><sub><b>killagu</b></sub>](https://github.com/killagu)<br/>|
 | :---: | :---: | :---: | :---: | :---: | :---: |
-[<img src="https://avatars.githubusercontent.com/u/6134547?v=4" width="100px;"/><br/><sub><b>yoyo837</b></sub>](https://github.com/yoyo837)<br/>
+[<img src="https://avatars.githubusercontent.com/u/6134547?v=4" width="100px;"/><br/><sub><b>yoyo837</b></sub>](https://github.com/modten)<br/>|[<img src="https://avatars.githubusercontent.com/u/3699666?v=4" width="100px;"/><br/><sub><b>modten</b></sub>](https://github.com/modten)<br/>|
 
-[git-contributor 说明](https://github.com/xudafeng/git-contributor)，自动生成时间：`Wed May 22 2024 17:16:57 GMT+0800`。
+
+[git-contributor 说明](https://github.com/xudafeng/git-contributor)，自动生成时间：`2025 年 01 月 02 日 15:12:28`。
 
 <!-- GITCONTRIBUTOR_END -->
