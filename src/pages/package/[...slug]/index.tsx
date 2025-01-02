@@ -6,13 +6,14 @@ import PageTrends from '@/slugs/trends';
 import PageDeps from '@/slugs/deps';
 import 'antd/dist/reset.css';
 import CustomTabs from '@/components/CustomTabs';
-import { PackageManifest, useInfo, useSpec } from '@/hooks/useManifest';
+import { NotFoundError, PackageManifest, useInfo, useSpec } from '@/hooks/useManifest';
 import Footer from '@/components/Footer';
 import { useRouter } from 'next/router';
 import { useMemo } from 'react';
 import { Result, Spin } from 'antd';
 import Header from '@/components/Header';
 import { useTheme } from '@/hooks/useTheme';
+import Sync from '@/components/Sync';
 
 const DEFAULT_TYPE = 'home';
 const ThemeProvider = _ThemeProvider as any;
@@ -98,6 +99,16 @@ export default function PackagePage({}: {}) {
   const needSync = data?.needSync;
 
   if (error) {
+    if (error instanceof NotFoundError && pkgName) {
+      return (
+        <Result
+          status="404"
+          title={`未查询到 ${pkgName}`}
+          subTitle="这可能是由于包尚未同步到本地镜像站导致"
+          extra={<Sync pkgName={pkgName} />}
+        />
+      );
+    }
     return <Result status="error" title="Error" subTitle={error?.message || '系统错误'} />;
   }
 

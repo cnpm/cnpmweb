@@ -3,6 +3,13 @@ import useSwr from 'swr';
 import dayjs from 'dayjs';
 import { REGISTRY } from '@/config';
 
+export class NotFoundError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = 'NotFoundError';
+  }
+}
+
 export interface NpmPackageVersion {
   name: string;
   version: string;
@@ -70,7 +77,7 @@ export function useInfo(pkgName: string | undefined) {
     const target = `${REGISTRY}/${pkgName}`;
     const res = await fetch(target.toString());
     if (res.status === 404) {
-      throw new Error(`Not Found ${pkgName}`);
+      throw new NotFoundError(`Not Found ${pkgName}`);
     }
 
     if (!res.ok) {
