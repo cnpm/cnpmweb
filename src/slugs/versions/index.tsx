@@ -154,24 +154,16 @@ function VersionsList({ versions, pkg }: { versions: NpmPackageVersion[]; pkg: P
 
             return (
               <li className={styles.versionsItem} key={item.version}>
-                <span>
+                <Typography.Text delete={item.deprecated}>
                   <Link
                     prefetch={false}
                     title={item.deprecated}
-                    style={
-                      item.deprecated
-                        ? {
-                            color: 'rgba(0,0,0,.25)',
-                            textDecoration: 'line-through',
-                          }
-                        : {}
-                    }
                     shallow
                     href={`/package/${pkg!.name}?version=${item.version}`}
                   >
                     {item.version}
                   </Link>
-                </span>
+                </Typography.Text>
                 <span className={styles.dot}></span>
                 <Typography.Text type="secondary">
                   <Space size="small">
