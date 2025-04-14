@@ -154,7 +154,7 @@ function VersionsList({ versions, pkg }: { versions: NpmPackageVersion[]; pkg: P
 
             return (
               <li className={styles.versionsItem} key={item.version}>
-                <Typography.Text delete={item.deprecated}>
+                <Typography.Text delete={!!item.deprecated}>
                   <Link
                     prefetch={false}
                     title={item.deprecated}
