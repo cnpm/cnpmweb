@@ -2,7 +2,7 @@
 import { useReadme } from '@/hooks/useReadme';
 import Slugger from 'github-slugger';
 import hljs from 'highlight.js';
-import marked from 'marked';
+import { marked, RendererObject } from 'marked';
 import React, { useEffect } from 'react';
 import darkTheme from './dark.module.css';
 import lightTheme from './light.module.css';
@@ -12,8 +12,9 @@ import { useThemeMode } from 'antd-style';
 
 const slugger = new Slugger();
 
-const renderer = {
-  heading(text: string, level: number) {
+const renderer: RendererObject = {
+  heading({ tokens, depth: level }) {
+    const text = this.parser.parseInline(tokens);
     const slug = slugger.slug(text);
     return `
             <h${level} class="header-link" id="h-${slug}">
@@ -22,15 +23,16 @@ const renderer = {
               </a>
             </h${level}>`;
   },
-  link(href: string, title: string, text: string) {
+  link({ href, title, tokens }) {
+    const text = this.parser.parseInline(tokens);
     if (href.startsWith('#')) {
       return `<a href="${href.replace('#', '#h-')}" alt="${title}">${text}</a>`;
     }
     return `<a href="${href}" alt="${title}">${text}</a>`;
   },
-  code(code: string, language: string) {
+  code({ text, lang: language = 'plaintext' }) {
     const validLanguage = hljs.getLanguage(language) ? language : 'plaintext';
-    const highlightedCode = hljs.highlight(validLanguage, code).value;
+    const highlightedCode = hljs.highlight(text, { language: validLanguage }).value;
     return `<pre><code class="hljs ${validLanguage}" style="padding: 0;">${highlightedCode}</code></pre>`;
   },
 };
@@ -54,7 +56,7 @@ export function ReadmeContent({ name, version = 'latest', content }: { name: str
           className={'markdown-body'}
           dangerouslySetInnerHTML={{
             __html: marked(readme, {
-              headerIds: true,
+              gfm: true,
             }),
           }}
         />
