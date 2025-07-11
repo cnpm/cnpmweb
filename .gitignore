@@ -37,3 +37,4 @@ package-lock.json
 
 dist/
 .node
+*.lock

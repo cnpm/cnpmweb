@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "ci": "npm run lint && npm run build"
   },
   "dependencies": {
     "@ant-design/cssinjs": "^1.11.1",
@@ -44,7 +45,6 @@
     "@vercel/node": "^2.15.5",
     "eslint": "^8.44.0",
     "eslint-config-next": "^13.4.4",
-    "git-contributor": "^2.1.5",
     "prettier": "^3.0.3",
     "typescript": "^5.3.3"
   },

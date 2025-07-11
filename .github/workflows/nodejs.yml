@@ -1,0 +1,19 @@
+name: CI
+
+permissions:
+  contents: read
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  merge_group:
+
+jobs:
+  Job:
+    name: Node.js
+    uses: node-modules/github-actions/.github/workflows/node-test.yml@master
+    with:
+      os: 'ubuntu-latest'
+      version: '22, 24'
