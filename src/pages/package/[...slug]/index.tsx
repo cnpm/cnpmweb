@@ -92,7 +92,7 @@ export default function PackagePage({}: {}) {
 
   const routerVersion = router.query.version as string;
   const { data, isLoading, error } = useInfo(pkgName);
-  const { data: specInfo } = useSpec(pkgName, routerVersion, data?.data);
+  const { data: specInfo, error: specError } = useSpec(pkgName, routerVersion, data?.data);
 
   const resData = data;
   const specVersion = specInfo?.version;
@@ -110,6 +110,19 @@ export default function PackagePage({}: {}) {
       );
     }
     return <Result status="error" title="Error" subTitle={error?.message || '系统错误'} />;
+  }
+
+  if (specError) {
+    if (specError instanceof NotFoundError && pkgName && routerVersion) {
+      return (
+        <Result
+          status="404"
+          title={`未查询到 ${pkgName}@${routerVersion}`}
+          subTitle="请检查版本号是否正确"
+        />
+      );
+    }
+    return <Result status="error" title="Error" subTitle={specError?.message || '系统错误'} />;
   }
 
   if (isLoading || !resData?.name) {

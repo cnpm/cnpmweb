@@ -99,7 +99,7 @@ export function useSpec(
     const target = `${REGISTRY}/${pkgName || ''}/${spec}`;
     const res = await fetch(target.toString());
     if (res.status === 404) {
-      throw new Error(`Not Found ${pkgName}`);
+      throw new NotFoundError(`Not Found ${pkgName}@${spec}`);
     }
 
     if (!res.ok) {
