@@ -3,7 +3,7 @@ import { useReadme } from '@/hooks/useReadme';
 import Slugger from 'github-slugger';
 import hljs from 'highlight.js';
 import { marked, RendererObject } from 'marked';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import darkTheme from './dark.module.css';
 import lightTheme from './light.module.css';
 import { Result, Skeleton, Typography } from 'antd';
@@ -41,6 +41,32 @@ marked.use({ renderer });
 export function ReadmeContent({ name, version = 'latest', content }: { name: string; version?: string; content?: string }) {
   const readme = useReadme(name, version, content);
   const { themeMode } = useThemeMode();
+  const [processedHtml, setProcessedHtml] = useState<string | null>(null);
+  const [hasError, setHasError] = useState(false);
+
+  // Use useMemo for the markdown processing logic
+  const markdownProcessor = useMemo(() => {
+    if (typeof readme !== 'string') {
+      setProcessedHtml(null);
+      setHasError(false);
+      return;
+    }
+
+    const processMarkdown = async () => {
+      try {
+        const result = marked(readme, { gfm: true });
+        const html = result instanceof Promise ? await result : result;
+        setProcessedHtml(html);
+        setHasError(false);
+      } catch (error) {
+        console.error('Error processing markdown:', error);
+        setProcessedHtml(null);
+        setHasError(true);
+      }
+    };
+
+    processMarkdown();
+  }, [readme]);
 
   const contentNode = React.useMemo(() => {
     const loading = readme === undefined;
@@ -50,19 +76,23 @@ export function ReadmeContent({ name, version = 'latest', content }: { name: str
     if (typeof readme !== 'string') {
       return <Result title="未查询到相关文档信息" />;
     }
+    if (hasError) {
+      return <Result title="文档处理失败" subTitle="Markdown 解析错误" />;
+    }
+    if (!processedHtml) {
+      return <Skeleton active />;
+    }
     return (
       <div className={themeMode === 'dark' ? darkTheme.dark : lightTheme.light}>
         <div
           className={'markdown-body'}
           dangerouslySetInnerHTML={{
-            __html: marked(readme, {
-              gfm: true,
-            }),
+            __html: processedHtml,
           }}
         />
       </div>
     );
-  }, [readme, themeMode]);
+  }, [readme, themeMode, processedHtml, hasError]);
 
   useEffect(() => {
     if (location.hash) {
