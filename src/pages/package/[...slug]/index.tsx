@@ -14,6 +14,7 @@ import { Result, Spin } from 'antd';
 import Header from '@/components/Header';
 import { useTheme } from '@/hooks/useTheme';
 import Sync from '@/components/Sync';
+import AdHire from '@/components/AdHire';
 
 const DEFAULT_TYPE = 'home';
 const ThemeProvider = _ThemeProvider as any;
@@ -161,6 +162,7 @@ export default function PackagePage({}: {}) {
   return (
     <div>
       <ThemeProvider themeMode={themeMode}>
+        <AdHire />
         <Header
           title={`${resData.name}@${version}`}
           themeMode={themeMode}

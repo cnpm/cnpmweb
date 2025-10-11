@@ -11,9 +11,9 @@ export default function AdHire() {
           <Button href="https://zhuanlan.zhihu.com/p/598748057" target="_blank" type="link">
             蚂蚁体验技术部-上海招人啦
           </Button>
-          <Button href="https://galacean.antgroup.com/effects/" target="_blank" type="link">
+          {/* <Button href="https://galacean.antgroup.com/effects/" target="_blank" type="link">
             Galacean Effects · 所见即所得的动效新方案。前往了解
-          </Button>
+          </Button> */}
         </>
       }
       showIcon={false}
