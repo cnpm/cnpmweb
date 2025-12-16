@@ -2,7 +2,7 @@ import React from 'react';
 import { Space, Typography, Tooltip } from 'antd';
 import Link from 'next/link';
 import * as gitUrl from 'giturl';
-import { FileZipFilled, HomeFilled } from '@ant-design/icons';
+import { FileZipFilled, HomeFilled, FolderOpenFilled, FileOutlined } from '@ant-design/icons';
 
 const IconGit = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16">
@@ -18,6 +18,8 @@ type LinkContentProps = {
   dist?: {
     tarball: string;
     size: string;
+    unpackedSize?: number;
+    fileCount?: number;
   };
   homepage?: string;
 };
@@ -47,7 +49,7 @@ export function LinkContent({ git, dist, homepage }: LinkContentProps) {
           </Link>
         </Tooltip>
       )}
-      {url && (
+      {url && url !== homepage && (
         <Tooltip title="源码">
           <Link href={url} target="_blank">
             <Space>
@@ -65,10 +67,40 @@ export function LinkContent({ git, dist, homepage }: LinkContentProps) {
             <Space>
               <FileZipFilled />
               <Typography.Link ellipsis style={{ maxWidth: 358 }}>
-                {tarball.split('/').pop()}({formatFileSize(Number(dist?.size))})
+                {tarball.split('/').pop()}
               </Typography.Link>
             </Space>
           </Link>
+        </Tooltip>
+      )}
+      {dist?.size && (
+        <Tooltip title="包大小">
+          <Space>
+            <FileZipFilled />
+            <Typography.Text type="secondary">
+              Packed Size: {formatFileSize(Number(dist.size))}
+            </Typography.Text>
+          </Space>
+        </Tooltip>
+      )}
+      {dist?.unpackedSize !== undefined && dist.unpackedSize > 0 && (
+        <Tooltip title="解压后大小">
+          <Space>
+            <FolderOpenFilled />
+            <Typography.Text type="secondary">
+              Unpacked Size: {formatFileSize(dist.unpackedSize)}
+            </Typography.Text>
+          </Space>
+        </Tooltip>
+      )}
+      {dist?.fileCount !== undefined && dist.fileCount > 0 && (
+        <Tooltip title="文件数量">
+          <Space>
+            <FileOutlined />
+            <Typography.Text type="secondary">
+              Total Files: {dist.fileCount.toLocaleString()}
+            </Typography.Text>
+          </Space>
         </Tooltip>
       )}
     </Space>

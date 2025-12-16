@@ -16,6 +16,8 @@ export interface NpmPackageVersion {
   dist?: {
     tarball: string;
     size: string;
+    unpackedSize?: number;
+    fileCount?: number;
   };
   publish_time: number | string;
   keywords: string[];
