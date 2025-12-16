@@ -83,7 +83,7 @@ export function LinkContent({ git, dist, homepage }: LinkContentProps) {
           </Space>
         </Tooltip>
       )}
-      {dist?.unpackedSize !== undefined && dist.unpackedSize > 0 && (
+      {dist?.unpackedSize > 0 && (
         <Tooltip title="解压后大小">
           <Space>
             <FolderOpenFilled />
@@ -93,7 +93,7 @@ export function LinkContent({ git, dist, homepage }: LinkContentProps) {
           </Space>
         </Tooltip>
       )}
-      {dist?.fileCount !== undefined && dist.fileCount > 0 && (
+      {dist?.fileCount > 0 && (
         <Tooltip title="文件数量">
           <Space>
             <FileOutlined />
