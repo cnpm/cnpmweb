@@ -5,15 +5,19 @@ import React from 'react';
 import SizeContainer from '@/components/SizeContainer';
 import Link from 'next/link';
 import { PageProps } from '@/pages/package/[...slug]';
-import { useFileContent } from '@/hooks/useFile';
 
-const columns: TableColumnsType<object> = [
+interface DepRecord {
+  package: string;
+  spec: string;
+}
+
+const columns: TableColumnsType<DepRecord> = [
   {
     title: '名称',
     dataIndex: 'package',
-    render: (pkg: string) => {
+    render: (pkg: string, record: DepRecord) => {
       return (
-        <Link href={`/package/${pkg}`} target="_blank">
+        <Link href={`/package/${pkg}?version=${encodeURIComponent(record.spec)}`} target="_blank">
           {pkg}
         </Link>
       );
@@ -25,39 +29,33 @@ const columns: TableColumnsType<object> = [
   },
 ];
 
-export default function Deps({ manifest: pkg, version }: PageProps) {
-  const { data: versionManifest, isLoading } = useFileContent(
-    { fullname: pkg.name, spec: version },
-    '/package.json',
-  );
+export default function Deps({ manifest, version }: PageProps) {
   const depsInfo = React.useMemo(() => {
-    if (isLoading) return undefined;
-    const targetVersion = JSON.parse(versionManifest || '{}');
-    const deps = ['dependencies', 'devDependencies'] as const;
-    const res: Record<string, { package: string; spec: string }[]> = {
-      dependencies: [],
-      devDependencies: [],
+    const versionData = manifest.versions?.[version!];
+    if (!versionData) return { dependencies: [], devDependencies: [] };
+
+    const deps = versionData.dependencies || {};
+    const devDeps = versionData.devDependencies || {};
+
+    return {
+      dependencies: Object.entries(deps).map(([pkg, spec]) => ({
+        package: pkg,
+        spec,
+      })),
+      devDependencies: Object.entries(devDeps).map(([pkg, spec]) => ({
+        package: pkg,
+        spec,
+      })),
     };
-    deps.forEach((k) => {
-      if (targetVersion?.[k]) {
-        res[k] = Object.keys(targetVersion[k] || {}).map((pkg) => ({
-          package: pkg,
-          spec: targetVersion[k][pkg],
-        }));
-      }
-    });
-    return res;
-  }, [versionManifest, isLoading]);
+  }, [manifest, version]);
 
-  const loading = depsInfo === undefined;
-
-  const { dependencies = [], devDependencies = [] } = depsInfo || {};
+  const { dependencies, devDependencies } = depsInfo;
 
   return (
     <SizeContainer maxWidth="90%">
       <Row gutter={[8, 8]}>
         <Col span={12}>
-          <Card title={`Dependencies (${loading ? '-' : dependencies.length})`} loading={loading}>
+          <Card title={`Dependencies (${dependencies.length})`}>
             <Table
               dataSource={dependencies}
               rowKey={'package'}
@@ -67,10 +65,7 @@ export default function Deps({ manifest: pkg, version }: PageProps) {
           </Card>
         </Col>
         <Col span={12}>
-          <Card
-            title={`DevDependencies (${loading ? '-' : devDependencies.length})`}
-            loading={loading}
-          >
+          <Card title={`DevDependencies (${devDependencies.length})`}>
             <Table
               dataSource={devDependencies}
               columns={columns}
