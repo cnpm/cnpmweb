@@ -92,6 +92,10 @@ export function useSpec(
   spec: string | undefined,
   info: PackageManifest | undefined,
 ) {
+  // convert * to latest to avoid 404
+  if (spec === '*') {
+    spec = 'latest';
+  }
   const needFetch = useMemo(() => {
     return pkgName && spec && !info?.versions?.[spec];
   }, [pkgName, spec, info]);
