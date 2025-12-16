@@ -17,7 +17,7 @@ type LinkContentProps = {
   git?: string;
   dist?: {
     tarball: string;
-    size: string;
+    size: number;
     unpackedSize?: number;
     fileCount?: number;
   };
@@ -83,7 +83,7 @@ export function LinkContent({ git, dist, homepage }: LinkContentProps) {
           </Space>
         </Tooltip>
       )}
-      {dist?.unpackedSize > 0 && (
+      {dist?.unpackedSize && dist.unpackedSize > 0 && (
         <Tooltip title="解压后大小">
           <Space>
             <FolderOpenFilled />
@@ -93,7 +93,7 @@ export function LinkContent({ git, dist, homepage }: LinkContentProps) {
           </Space>
         </Tooltip>
       )}
-      {dist?.fileCount > 0 && (
+      {dist?.fileCount && dist.fileCount > 0 && (
         <Tooltip title="文件数量">
           <Space>
             <FileOutlined />
