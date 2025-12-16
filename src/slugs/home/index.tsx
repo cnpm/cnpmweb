@@ -70,7 +70,7 @@ export default function Home({ manifest, version, additionalInfo: needSync }: Pa
               <ContributorContent members={manifest.maintainers} />
             </PresetCard>
           )}
-          <PresetCard title="相关链接">
+          <PresetCard title="资源信息">
             <LinkContent
               git={manifest.repository?.url}
               dist={manifest.versions?.[version!]?.dist}
