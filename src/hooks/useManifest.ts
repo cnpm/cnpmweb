@@ -93,17 +93,15 @@ export function useSpec(
   info: PackageManifest | undefined,
 ) {
   // convert * to latest to avoid 404
-  if (spec === '*') {
-    spec = 'latest';
-  }
+  const normalizedSpec = spec === '*' ? 'latest' : spec;
   const needFetch = useMemo(() => {
-    return pkgName && spec && !info?.versions?.[spec];
-  }, [pkgName, spec, info]);
-  return useSwr(needFetch ? `spec: ${pkgName}_${spec}` : null, async () => {
-    const target = `${REGISTRY}/${pkgName || ''}/${spec}`;
+    return pkgName && normalizedSpec && !info?.versions?.[normalizedSpec];
+  }, [pkgName, normalizedSpec, info]);
+  return useSwr(needFetch ? `spec: ${pkgName}_${normalizedSpec}` : null, async () => {
+    const target = `${REGISTRY}/${pkgName || ''}/${normalizedSpec}`;
     const res = await fetch(target.toString());
     if (res.status === 404) {
-      throw new NotFoundError(`Not Found ${pkgName}@${spec}`);
+      throw new NotFoundError(`Not Found ${pkgName}@${normalizedSpec}`);
     }
 
     if (!res.ok) {
