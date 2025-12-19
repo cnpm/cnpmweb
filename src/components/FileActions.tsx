@@ -3,6 +3,7 @@ import { Button, Space, Tooltip, message } from "antd";
 import { isEmpty } from "lodash";
 import { create } from 'zustand'
 import { devtools } from 'zustand/middleware'
+import { useShallow } from 'zustand/react/shallow'
 
 // #region Store
 interface IState {
@@ -29,8 +30,8 @@ const useFileActionsStore = create<IState>()(
 // ===========================================================================
 
 // #region Component
-function _FileActions() {
-  const state = useFileActionsStore();
+function InnerFileActions() {
+  const state = useFileActionsStore(useShallow(s => s));
 
   function handleCopyRaw() {
     if (!state.fileContent) return;
@@ -72,7 +73,7 @@ function _FileActions() {
   )
 }
 
-export const FileActions = Object.assign(_FileActions, {
+export const FileActions = Object.assign(InnerFileActions, {
   setStore,
   restoreStore,
 });
