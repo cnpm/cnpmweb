@@ -137,9 +137,11 @@ export default function NPMVersionSelect({
     return null;
   }
 
-  // 版本选择器
-  return !isEmpty(targetOptions) ? (
-    <Space style={{ paddingRight: 32 }}>
+  // ========== render ==========
+  if (isEmpty(targetOptions)) return null
+
+  return (
+    <>
       <Cascader
         size="small"
         options={targetOptions}
@@ -164,6 +166,6 @@ export default function NPMVersionSelect({
         }}
         showSearch
       />
-    </Space>
-  ) : null;
+    </>
+  )
 }
