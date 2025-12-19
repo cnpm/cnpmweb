@@ -1,9 +1,10 @@
 'use client';
-import { Tabs } from 'antd';
+import { Flex, Space, Tabs } from 'antd';
 import Link from 'next/link';
 import NPMVersionSelect from './NPMVersionSelect';
 import { PackageManifest } from '@/hooks/useManifest';
 import { useRouter } from 'next/router';
+import { FileActions } from './FileActions';
 
 const presetTabs = [
   {
@@ -44,20 +45,23 @@ export default function CustomTabs({
       activeKey={activateKey}
       type={'line'}
       tabBarExtraContent={
-        <NPMVersionSelect
-          versions={Object.keys(pkg?.versions || {})}
-          tags={pkg?.['dist-tags']}
-          targetVersion={targetVersion}
-          setVersionStr={(v) => {
-            if (v === pkg?.['dist-tags']?.latest) {
-              push(`/package/${pkg.name}/${activateKey}`, undefined, { shallow: true });
-            } else {
-              push(`/package/${pkg.name}/${activateKey}?version=${v}`, undefined, {
-                shallow: true,
-              });
-            }
-          }}
-        />
+        <Flex gap="small" style={{ marginInlineEnd: 16 }}>
+          {activateKey === 'files' && <FileActions />}
+          <NPMVersionSelect
+            versions={Object.keys(pkg?.versions || {})}
+            tags={pkg?.['dist-tags']}
+            targetVersion={targetVersion}
+            setVersionStr={(v) => {
+              if (v === pkg?.['dist-tags']?.latest) {
+                push(`/package/${pkg.name}/${activateKey}`, undefined, { shallow: true });
+              } else {
+                push(`/package/${pkg.name}/${activateKey}?version=${v}`, undefined, {
+                  shallow: true,
+                });
+              }
+            }}
+          />
+        </Flex>
       }
       items={presetTabs.map((tab) => {
         return {

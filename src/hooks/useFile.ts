@@ -63,9 +63,11 @@ export const useDirs = (info: PkgInfo, path = '', ignore = false) => {
 };
 
 export const useFileContent = (info: PkgInfo, path: string) => {
-  return useSwr(`file: ${info.fullname}_${info.spec || 'latest'}_${path}`, async () => {
-    return fetch(`${REGISTRY}/${info.fullname}/${info.spec}/files${path}`).then((res) =>
-      res.text(),
-    );
-  });
+  const swrKey = `file: ${info.fullname}_${info.spec || 'latest'}_${path}`;
+  const fileUri = `${REGISTRY}/${info.fullname}/${info.spec || 'latest'}/files${path}`;
+
+  return [
+    useSwr(swrKey, () => fetch(fileUri).then((res) => res.text())),
+    { fileUri }
+  ] as const;
 };

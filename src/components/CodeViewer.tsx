@@ -4,8 +4,9 @@ import loader from '@monaco-editor/loader';
 import { File, useFileContent } from '@/hooks/useFile';
 import useHighlightHash, { parseHash } from '@/hooks/useHighlightHash';
 import { useThemeMode } from 'antd-style';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { REGISTRY } from '@/config';
+import { FileActions } from './FileActions';
 
 const LinkField = ['devDependencies', 'dependencies', 'peerDependencies', 'optionalDependencies', 'bundleDependencies'];
 
@@ -25,11 +26,11 @@ function highlightEditor(editor: any) {
 function registerLinkProvider(monaco: any) {
   monaco.languages.registerLinkProvider('json', {
     provideLinks: (model: any) => {
-      const links:any= [];
+      const links: any = [];
       const lines = model.getLinesContent();
       let startCatch = false;
       lines.forEach((line: string, lineIndex: number) => {
-        if (LinkField.some( _ => line === `  "${_}": {`)) {
+        if (LinkField.some(_ => line === `  "${_}": {`)) {
           startCatch = true;
           return;
         }
@@ -69,7 +70,7 @@ export const CodeViewer = ({
   const editorRef = useRef<any>(null);
   const { themeMode: theme } = useThemeMode();
 
-  const { data: code } = useFileContent({ fullname: pkgName, spec }, selectedFile?.path || '');
+  const [{ data: code }, { fileUri }] = useFileContent({ fullname: pkgName, spec }, selectedFile?.path || '');
 
   let language = selectedFile?.path.split('.').pop();
   if (language === 'js' || language === 'jsx' || language === 'map') language = 'javascript';
@@ -85,6 +86,19 @@ export const CodeViewer = ({
       setRange(startLineNumber, endLineNumber);
     }
   };
+
+  // inject file info to FileActions store
+  useEffect(() => {
+    FileActions.setStore({
+      rawUrl: fileUri,
+      fileContent: code
+    });
+
+    return function cleanup() {
+      FileActions.restoreStore();
+    }
+  }, [fileUri, code])
+
 
   if (!selectedFile) return <></>;
 
