@@ -65,7 +65,7 @@ export default function Deps({ manifest, version }: PageProps) {
               dataSource={dependencies}
               rowKey={'package'}
               columns={columns}
-              pagination={{ size: 'small' }}
+              pagination={{ size: 'small', pageSize: 50 }}
             />
           </Card>
         </Col>
@@ -75,7 +75,7 @@ export default function Deps({ manifest, version }: PageProps) {
               dataSource={devDependencies}
               columns={columns}
               rowKey={'package'}
-              pagination={{ size: 'small' }}
+              pagination={{ size: 'small', pageSize: 50 }}
             />
           </Card>
         </Col>
@@ -85,7 +85,7 @@ export default function Deps({ manifest, version }: PageProps) {
               dataSource={optionalDependencies}
               columns={columns}
               rowKey={'package'}
-              pagination={{ size: 'small' }}
+              pagination={{ size: 'small', pageSize: 50 }}
             />
           </Card>
         </Col>
