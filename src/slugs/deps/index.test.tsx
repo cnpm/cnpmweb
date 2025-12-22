@@ -1,19 +1,20 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import { describe, it, expect, vi } from 'vitest';
 import Deps from './index';
 import { PackageManifest } from '@/hooks/useManifest';
 
 // Mock next/link
-jest.mock('next/link', () => {
-  return ({ children, href }: { children: React.ReactNode; href: string }) => {
+vi.mock('next/link', () => ({
+  default: ({ children, href }: { children: React.ReactNode; href: string }) => {
     return <a href={href}>{children}</a>;
-  };
-});
+  },
+}));
 
 // Mock SizeContainer
-jest.mock('@/components/SizeContainer', () => {
-  return ({ children }: { children: React.ReactNode }) => <div>{children}</div>;
-});
+vi.mock('@/components/SizeContainer', () => ({
+  default: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
+}));
 
 const createMockManifest = (
   versionData: Partial<{

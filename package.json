@@ -7,8 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest",
-    "test:watch": "jest --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "ci": "npm run lint && npm run build"
   },
   "dependencies": {
@@ -42,19 +42,19 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.1",
-    "@types/jest": "^30.0.0",
     "@types/lodash": "^4.14.197",
     "@types/node": "^20.4.1",
     "@types/npm-package-arg": "^6.1.3",
     "@types/react": "^18.2.14",
     "@types/semver": "^7.5.0",
     "@vercel/node": "^2.15.5",
+    "@vitejs/plugin-react": "^5.1.2",
     "eslint": "^8.44.0",
     "eslint-config-next": "^13.4.4",
-    "jest": "^30.2.0",
-    "jest-environment-jsdom": "^30.2.0",
+    "jsdom": "^27.3.0",
     "prettier": "^3.0.3",
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "vitest": "^4.0.16"
   },
   "overrides": {
     "npm-package-arg": {
