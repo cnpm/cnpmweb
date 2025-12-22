@@ -9,7 +9,7 @@
     "lint": "next lint",
     "test": "vitest run",
     "test:watch": "vitest",
-    "ci": "npm run lint && npm run build"
+    "ci": "npm run lint && npm run build && npm test"
   },
   "dependencies": {
     "@ant-design/cssinjs": "^1.11.1",
