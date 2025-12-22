@@ -32,10 +32,11 @@ const columns: TableColumnsType<DepRecord> = [
 export default function Deps({ manifest, version }: PageProps) {
   const depsInfo = React.useMemo(() => {
     const versionData = manifest.versions?.[version!];
-    if (!versionData) return { dependencies: [], devDependencies: [] };
+    if (!versionData) return { dependencies: [], devDependencies: [], optionalDependencies: [] };
 
     const deps = versionData.dependencies || {};
     const devDeps = versionData.devDependencies || {};
+    const optionalDeps = versionData.optionalDependencies || {};
 
     return {
       dependencies: Object.entries(deps).map(([pkg, spec]) => ({
@@ -46,15 +47,19 @@ export default function Deps({ manifest, version }: PageProps) {
         package: pkg,
         spec,
       })),
+      optionalDependencies: Object.entries(optionalDeps).map(([pkg, spec]) => ({
+        package: pkg,
+        spec,
+      })),
     };
   }, [manifest, version]);
 
-  const { dependencies, devDependencies } = depsInfo;
+  const { dependencies, devDependencies, optionalDependencies } = depsInfo;
 
   return (
     <SizeContainer maxWidth="90%">
       <Row gutter={[8, 8]}>
-        <Col span={12}>
+        <Col span={8}>
           <Card title={`Dependencies (${dependencies.length})`}>
             <Table
               dataSource={dependencies}
@@ -64,10 +69,20 @@ export default function Deps({ manifest, version }: PageProps) {
             />
           </Card>
         </Col>
-        <Col span={12}>
+        <Col span={8}>
           <Card title={`DevDependencies (${devDependencies.length})`}>
             <Table
               dataSource={devDependencies}
+              columns={columns}
+              rowKey={'package'}
+              pagination={{ size: 'small' }}
+            />
+          </Card>
+        </Col>
+        <Col span={8}>
+          <Card title={`OptionalDependencies (${optionalDependencies.length})`}>
+            <Table
+              dataSource={optionalDependencies}
               columns={columns}
               rowKey={'package'}
               pagination={{ size: 'small' }}
