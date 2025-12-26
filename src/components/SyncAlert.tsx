@@ -1,7 +1,8 @@
 'use client';
 
 import { PackageManifest } from '@/hooks/useManifest';
-import { Alert, AlertProps, Button, Space } from 'antd';
+import { useNpmVersionCompare } from '@/hooks/useNpmVersionCompare';
+import { Alert, AlertProps, Button, Space, Spin } from 'antd';
 import Sync from './Sync';
 import { REGISTRY } from '@/config';
 
@@ -14,17 +15,16 @@ export const REGISTRY_MAP = {
 
 type SyncAlertProps = {
   pkg: PackageManifest;
-  needSync?: boolean;
 };
 
-export default function SyncAlert({ pkg, needSync }: SyncAlertProps) {
-  // const registry = useSourceRegistry(pkg!);
+export default function SyncAlert({ pkg }: SyncAlertProps) {
   const registry = pkg?._source_registry_name;
-  // const { needSync, isLoading } = useNeedSync(pkg!, registry);
+  const { needSync, isLoading, missingVersions, tagsDiff } = useNpmVersionCompare(pkg);
+
   let type: AlertProps['type'] = 'success';
-  let message = '所有版本均已同步';
+  let message: React.ReactNode = '所有版本均已同步';
   let sourceLink;
-  let description;
+  let description: React.ReactNode;
 
   if (registry === 'self') {
     description = `${pkg!.name} 为私有包，发布流程在 registry.npmmirror.com 上，无需进行同步`;
@@ -33,14 +33,35 @@ export default function SyncAlert({ pkg, needSync }: SyncAlertProps) {
     sourceLink = `${NPM_REGISTRY}/package/${pkg!.name}?activeTab=versions`;
   }
 
-  if (needSync === true) {
+  if (isLoading) {
+    type = 'info';
+    message = (
+      <Space>
+        <Spin size="small" />
+        <span>正在比对上游版本...</span>
+      </Space>
+    );
+  } else if (needSync) {
     type = 'warning';
     message = '版本和上游信息不一致';
-  }
 
-  if (needSync === undefined) {
-    type = 'info';
-    message = '目前暂不支持自动版本比对，需访问源站进行确认';
+    const details: string[] = [];
+    if (missingVersions.length > 0) {
+      const displayVersions =
+        missingVersions.length > 3
+          ? `${missingVersions.slice(0, 3).join(', ')} 等 ${missingVersions.length} 个版本`
+          : missingVersions.join(', ');
+      details.push(`缺失版本: ${displayVersions}`);
+    }
+    if (tagsDiff.length > 0) {
+      const tagDetails = tagsDiff
+        .map((d) => `${d.tag}: 本地 ${d.local || '无'} / 上游 ${d.npm || '无'}`)
+        .join('; ');
+      details.push(`Tags 差异: ${tagDetails}`);
+    }
+    if (details.length > 0) {
+      description = details.join(' | ');
+    }
   }
 
   return (
