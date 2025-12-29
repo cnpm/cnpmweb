@@ -1,82 +1,31 @@
 'use client';
 import { isEmpty } from 'lodash';
-import { Cascader, Select, Space } from 'antd';
+import { Select, Space } from 'antd';
 import React from 'react';
 
 import semver from 'semver';
 
-interface VersionNode {
-  label: string;
-  value: string;
-  children: VersionNode[];
-}
-
-function sortNodes(nodes: VersionNode[]): void {
-  nodes.sort((a, b) => {
-    if ([a.value, b.value].every(v => semver.clean(v) === v)) {
-      return semver.rcompare(a.value, b.value);
+// Simple version sorting - compare by semver descending
+function sortVersions(versions: string[]): string[] {
+  return [...versions].sort((a, b) => {
+    const aClean = semver.clean(a);
+    const bClean = semver.clean(b);
+    if (aClean && bClean) {
+      return semver.rcompare(aClean, bClean);
     }
-    const aVersion = semver.coerce(a.value);
-    const bVersion = semver.coerce(b.value);
-    if (!aVersion || !bVersion) {
-      return 0;
+    const aVersion = semver.coerce(a);
+    const bVersion = semver.coerce(b);
+    if (aVersion && bVersion) {
+      return semver.rcompare(aVersion, bVersion);
     }
-    return semver.rcompare(aVersion, bVersion);
+    return 0;
   });
-  for (const node of nodes) {
-    sortNodes(node.children);
-  }
 }
 
-function classifyVersions(versions: string[]): VersionNode[] {
-  const root: VersionNode = { label: '', value: '', children: [] };
-  const map: Map<string, VersionNode> = new Map();
-
-  for (const version of versions) {
-    const parsed = semver.parse(version);
-    if (!parsed) {
-      continue;
-    }
-
-    const major = `${parsed.major}.x`;
-    const minor = `${parsed.major}.${parsed.minor}.x`;
-    const patch = parsed.version;
-
-    let majorNode = map.get(major);
-    if (!majorNode) {
-      majorNode = { label: major, value: major, children: [] };
-      map.set(major, majorNode);
-      root.children.push(majorNode);
-    }
-
-    let minorNode = map.get(minor);
-    if (!minorNode) {
-      minorNode = { label: minor, value: minor, children: [] };
-      map.set(minor, minorNode);
-      majorNode.children.push(minorNode);
-    }
-
-    let patchNode = map.get(patch);
-    if (!patchNode) {
-      patchNode = { label: patch, value: version, children: [] };
-      map.set(patch, patchNode);
-      minorNode.children.push(patchNode);
-    }
-  }
-
-  sortNodes(root.children);
-
-  // 如果只有 0.0.x 的版本
-  // 就直接返回 children 不用额外返回 0.x 了
-  // 0.x
-  if (root.children.length === 1) {
-    // 0.0.x
-    const childrenNode = root.children[0].children;
-    if (childrenNode.length === 1) {
-      return childrenNode;
-    }
-  }
-  return root.children;
+// Build flat version options for Select with virtual scrolling
+function buildVersionOptions(versions: string[]): { label: string; value: string }[] {
+  const sorted = sortVersions(versions);
+  return sorted.map(v => ({ label: v, value: v }));
 }
 
 interface VersionSelectProps {
@@ -92,39 +41,15 @@ export default function NPMVersionSelect({
   tags = {},
   setVersionStr,
 }: VersionSelectProps) {
-  // Update tag in select label
-  const selectVersionRender = React.useMemo(() => {
-    const version = targetVersion;
-    return <Space>{version}</Space>;
-  }, [targetVersion]);
-
-  const targetOptions = React.useMemo(() => {
-    return classifyVersions(versions);
+  // Memoize version options - flat list for virtual scrolling
+  const versionOptions = React.useMemo(() => {
+    return buildVersionOptions(versions);
   }, [versions]);
 
-  const targetValue = React.useMemo(() => {
-    let value: string[] = [];
-
-    function findNode(nodes: VersionNode[] | undefined, prefixs: string[]) {
-      if (isEmpty(nodes) || !nodes) {
-        return;
-      }
-
-      nodes.some((item) => {
-        if (item.value === targetVersion) {
-          value = [...prefixs, targetVersion];
-          return true;
-        }
-        if (item.children) {
-          return findNode(item.children, [...prefixs, item.value]);
-        }
-        return false;
-      });
-    }
-
-    findNode(targetOptions, []);
-    return value;
-  }, [targetOptions, targetVersion]);
+  // Memoize tag options
+  const tagOptions = React.useMemo(() => {
+    return Object.keys(tags || {}).map((t) => ({ label: t, value: tags[t] }));
+  }, [tags]);
 
   const hasTag = React.useMemo(() => {
     if (!targetVersion) {
@@ -133,31 +58,32 @@ export default function NPMVersionSelect({
     return Object.values(tags).includes(targetVersion);
   }, [tags, targetVersion]);
 
-  if (isEmpty(targetOptions) || !targetVersion) {
+  if (isEmpty(versionOptions) || !targetVersion) {
     return null;
   }
 
-  // ========== render ==========
-  if (isEmpty(targetOptions)) return null
-
   return (
     <>
-      <Cascader
+      <Select
         size="small"
-        options={targetOptions}
-        value={targetValue}
-        displayRender={() => selectVersionRender}
+        options={versionOptions}
+        value={targetVersion}
         allowClear={false}
-        style={{ width: 'unset' }}
+        style={{ width: 'auto', minWidth: 100 }}
         showSearch
-        placement={'bottomRight'}
+        virtual
+        listHeight={300}
+        popupMatchSelectWidth={false}
         onChange={(val) => {
-          setVersionStr(val?.pop()?.toString() || '');
+          setVersionStr(val);
         }}
+        filterOption={(input, option) =>
+          (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+        }
       />
       <Select
         size="small"
-        options={Object.keys(tags || {}).map((t) => ({ label: t, value: tags[t] }))}
+        options={tagOptions}
         placeholder="选择 Tag"
         value={hasTag ? targetVersion : undefined}
         popupMatchSelectWidth={180}
@@ -167,5 +93,5 @@ export default function NPMVersionSelect({
         showSearch
       />
     </>
-  )
+  );
 }
