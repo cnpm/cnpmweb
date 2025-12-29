@@ -189,7 +189,7 @@ function VersionsList({ versions, pkg }: { versions: NpmPackageVersion[]; pkg: P
   );
 }
 
-export default function ReadOnlyVersions({ manifest: pkg, additionalInfo: needSync }: PageProps) {
+export default function ReadOnlyVersions({ manifest: pkg }: PageProps) {
   const versions = useVersions(pkg);
   const tagsInfo = useVersionTags(pkg);
   const publishedVersions = versions;
@@ -205,7 +205,7 @@ export default function ReadOnlyVersions({ manifest: pkg, additionalInfo: needSy
   return (
     <>
       <SizeContainer maxWidth={1072}>
-        <SyncAlert pkg={pkg} needSync={needSync} />
+        <SyncAlert pkg={pkg} />
         <Card style={{ marginTop: 24 }}>
           <TagsList pkg={pkg} tagsInfo={tagsInfo}></TagsList>
           <VersionsList pkg={pkg} versions={versions}></VersionsList>
