@@ -1,6 +1,6 @@
 'use client';
 import { isEmpty } from 'lodash';
-import { Select, Space } from 'antd';
+import { Select } from 'antd';
 import React from 'react';
 
 import semver from 'semver';
