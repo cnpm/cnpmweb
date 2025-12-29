@@ -8,7 +8,7 @@ import {
   useVersionTags,
 } from '@/hooks/useManifest';
 
-import { Card, Pagination, Result, Segmented, Space, Tag, Tooltip, Typography } from 'antd';
+import { Card, Pagination, Result, Segmented, Space, Tooltip, Typography } from 'antd';
 import dayjs from 'dayjs';
 import React from 'react';
 import semver from 'semver';
