@@ -21,6 +21,7 @@ const createMockManifest = (
     dependencies: Record<string, string>;
     devDependencies: Record<string, string>;
     optionalDependencies: Record<string, string>;
+    peerDependencies: Record<string, string>;
   }> = {}
 ): PackageManifest => ({
   name: 'test-package',
@@ -39,6 +40,7 @@ const createMockManifest = (
       dependencies: versionData.dependencies || {},
       devDependencies: versionData.devDependencies || {},
       optionalDependencies: versionData.optionalDependencies,
+      peerDependencies: versionData.peerDependencies,
     },
   },
 });
@@ -87,8 +89,51 @@ describe('Deps Component', () => {
     });
   });
 
+  describe('peerDependencies', () => {
+    it('should display peerDependencies section', () => {
+      const manifest = createMockManifest({
+        peerDependencies: {
+          'react': '^18.0.0',
+        },
+      });
+
+      render(<Deps manifest={manifest} version="1.0.0" />);
+
+      expect(screen.getByText('PeerDependencies (1)')).toBeInTheDocument();
+      expect(screen.getByText('react')).toBeInTheDocument();
+      expect(screen.getByText('^18.0.0')).toBeInTheDocument();
+    });
+
+    it('should display empty peerDependencies section when none exist', () => {
+      const manifest = createMockManifest({
+        dependencies: { 'lodash': '^4.17.21' },
+      });
+
+      render(<Deps manifest={manifest} version="1.0.0" />);
+
+      expect(screen.getByText('PeerDependencies (0)')).toBeInTheDocument();
+    });
+
+    it('should display multiple peerDependencies', () => {
+      const manifest = createMockManifest({
+        peerDependencies: {
+          'react': '^18.0.0',
+          'react-dom': '^18.0.0',
+          'next': '^13.0.0',
+        },
+      });
+
+      render(<Deps manifest={manifest} version="1.0.0" />);
+
+      expect(screen.getByText('PeerDependencies (3)')).toBeInTheDocument();
+      expect(screen.getByText('react')).toBeInTheDocument();
+      expect(screen.getByText('react-dom')).toBeInTheDocument();
+      expect(screen.getByText('next')).toBeInTheDocument();
+    });
+  });
+
   describe('all dependency types together', () => {
-    it('should display all three dependency types', () => {
+    it('should display all four dependency types', () => {
       const manifest = createMockManifest({
         dependencies: {
           'react': '^18.2.0',
@@ -102,6 +147,9 @@ describe('Deps Component', () => {
         optionalDependencies: {
           'fsevents': '^2.3.0',
         },
+        peerDependencies: {
+          'webpack': '^5.0.0',
+        },
       });
 
       render(<Deps manifest={manifest} version="1.0.0" />);
@@ -109,6 +157,7 @@ describe('Deps Component', () => {
       expect(screen.getByText('Dependencies (2)')).toBeInTheDocument();
       expect(screen.getByText('DevDependencies (3)')).toBeInTheDocument();
       expect(screen.getByText('OptionalDependencies (1)')).toBeInTheDocument();
+      expect(screen.getByText('PeerDependencies (1)')).toBeInTheDocument();
     });
 
     it('should handle missing version data gracefully', () => {
@@ -121,6 +170,7 @@ describe('Deps Component', () => {
       expect(screen.getByText('Dependencies (0)')).toBeInTheDocument();
       expect(screen.getByText('DevDependencies (0)')).toBeInTheDocument();
       expect(screen.getByText('OptionalDependencies (0)')).toBeInTheDocument();
+      expect(screen.getByText('PeerDependencies (0)')).toBeInTheDocument();
     });
   });
 
@@ -136,6 +186,19 @@ describe('Deps Component', () => {
 
       const link = screen.getByRole('link', { name: 'fsevents' });
       expect(link).toHaveAttribute('href', '/package/fsevents?version=%5E2.3.0');
+    });
+
+    it('should create correct links for peerDependencies', () => {
+      const manifest = createMockManifest({
+        peerDependencies: {
+          'react': '^18.0.0',
+        },
+      });
+
+      render(<Deps manifest={manifest} version="1.0.0" />);
+
+      const link = screen.getByRole('link', { name: 'react' });
+      expect(link).toHaveAttribute('href', '/package/react?version=%5E18.0.0');
     });
   });
 });

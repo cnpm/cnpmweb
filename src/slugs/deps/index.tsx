@@ -32,11 +32,12 @@ const columns: TableColumnsType<DepRecord> = [
 export default function Deps({ manifest, version }: PageProps) {
   const depsInfo = React.useMemo(() => {
     const versionData = manifest.versions?.[version!];
-    if (!versionData) return { dependencies: [], devDependencies: [], optionalDependencies: [] };
+    if (!versionData) return { dependencies: [], devDependencies: [], optionalDependencies: [], peerDependencies: [] };
 
     const deps = versionData.dependencies || {};
     const devDeps = versionData.devDependencies || {};
     const optionalDeps = versionData.optionalDependencies || {};
+    const peerDeps = versionData.peerDependencies || {};
 
     return {
       dependencies: Object.entries(deps).map(([pkg, spec]) => ({
@@ -51,15 +52,19 @@ export default function Deps({ manifest, version }: PageProps) {
         package: pkg,
         spec,
       })),
+      peerDependencies: Object.entries(peerDeps).map(([pkg, spec]) => ({
+        package: pkg,
+        spec,
+      })),
     };
   }, [manifest, version]);
 
-  const { dependencies, devDependencies, optionalDependencies } = depsInfo;
+  const { dependencies, devDependencies, optionalDependencies, peerDependencies } = depsInfo;
 
   return (
     <SizeContainer maxWidth="90%">
       <Row gutter={[8, 8]}>
-        <Col span={8}>
+        <Col span={6}>
           <Card title={`Dependencies (${dependencies.length})`}>
             <Table
               dataSource={dependencies}
@@ -69,7 +74,7 @@ export default function Deps({ manifest, version }: PageProps) {
             />
           </Card>
         </Col>
-        <Col span={8}>
+        <Col span={6}>
           <Card title={`DevDependencies (${devDependencies.length})`}>
             <Table
               dataSource={devDependencies}
@@ -79,10 +84,20 @@ export default function Deps({ manifest, version }: PageProps) {
             />
           </Card>
         </Col>
-        <Col span={8}>
+        <Col span={6}>
           <Card title={`OptionalDependencies (${optionalDependencies.length})`}>
             <Table
               dataSource={optionalDependencies}
+              columns={columns}
+              rowKey={'package'}
+              pagination={{ size: 'small', pageSize: 50 }}
+            />
+          </Card>
+        </Col>
+        <Col span={6}>
+          <Card title={`PeerDependencies (${peerDependencies.length})`}>
+            <Table
+              dataSource={peerDependencies}
               columns={columns}
               rowKey={'package'}
               pagination={{ size: 'small', pageSize: 50 }}
