@@ -46,7 +46,20 @@ const Viewer = ({ manifest, version }: PageProps) => {
   }
 
   return error ? (
-    <Result status="warning" title="产物预览失败" subTitle={error} />
+    <Result
+      status="warning"
+      title="产物预览失败"
+      subTitle={error}
+      extra={
+        <a
+          href={`https://npmx.dev/package-code/${manifest.name}/v/${spec}`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          在 npmx.dev 上查看代码
+        </a>
+      }
+    />
   ) : (
     <div style={{ display: 'flex', marginTop: -16, minHeight: '100%' }}>
       <Sidebar>
