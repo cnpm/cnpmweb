@@ -117,7 +117,7 @@ export function LinkContent({ git, dist, homepage, packageName, packageVersion }
         <Tooltip title="安全报告 (Socket.dev)">
           <Link href={socketUrl} target="_blank" rel="noopener noreferrer">
             <img
-              src={`${SOCKET_DEV_BADGE_BASE}/${encodedName}`}
+              src={`${SOCKET_DEV_BADGE_BASE}/${encodedName}${packageVersion ? `/${encodeURIComponent(packageVersion)}` : ''}`}
               alt="Socket Security Badge"
               style={{ height: 20 }}
             />
