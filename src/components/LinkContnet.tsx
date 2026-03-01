@@ -23,6 +23,7 @@ type LinkContentProps = {
   };
   homepage?: string;
   packageName?: string;
+  packageVersion?: string;
 };
 
 function formatFileSize(bytes: number) {
@@ -33,10 +34,13 @@ function formatFileSize(bytes: number) {
   return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
 }
 
-export function LinkContent({ git, dist, homepage, packageName }: LinkContentProps) {
+export function LinkContent({ git, dist, homepage, packageName, packageVersion }: LinkContentProps) {
   const url = gitUrl.parse(git);
   const tarball = dist?.tarball;
-  const socketUrl = packageName ? `https://socket.dev/npm/package/${encodeURIComponent(packageName)}` : undefined;
+  const encodedName = packageName ? encodeURIComponent(packageName) : undefined;
+  const socketUrl = encodedName
+    ? `https://socket.dev/npm/package/${encodedName}${packageVersion ? `/overview/${encodeURIComponent(packageVersion)}` : ''}`
+    : undefined;
   return (
     <Space direction="vertical" style={{ whiteSpace: 'nowrap' }}>
       {homepage && (
@@ -108,7 +112,7 @@ export function LinkContent({ git, dist, homepage, packageName }: LinkContentPro
       {socketUrl && (
         <Link href={socketUrl} target="_blank" rel="noopener noreferrer">
           <img
-            src={`https://socket.dev/api/badge/npm/package/${encodeURIComponent(packageName!)}`}
+            src={`https://socket.dev/api/badge/npm/package/${encodedName}${packageVersion ? `/${encodeURIComponent(packageVersion)}` : ''}`}
             alt="Socket Security Badge"
             style={{ height: 20 }}
           />

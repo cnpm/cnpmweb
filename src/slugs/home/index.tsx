@@ -76,6 +76,7 @@ export default function Home({ manifest, version, additionalInfo: needSync }: Pa
               dist={manifest.versions?.[version!]?.dist}
               homepage={manifest.homepage}
               packageName={manifest.name}
+              packageVersion={version}
             />
           </PresetCard>
           <PresetCard
