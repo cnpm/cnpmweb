@@ -22,7 +22,13 @@ type LinkContentProps = {
     fileCount?: number;
   };
   homepage?: string;
+  packageName?: string;
+  packageVersion?: string;
 };
+
+const SOCKET_DEV_BASE = 'https://socket.dev';
+const SOCKET_DEV_BADGE_BASE = `${SOCKET_DEV_BASE}/api/badge/npm/package`;
+const SOCKET_DEV_PACKAGE_BASE = `${SOCKET_DEV_BASE}/npm/package`;
 
 function formatFileSize(bytes: number) {
   if (bytes === 0) return '0';
@@ -32,9 +38,13 @@ function formatFileSize(bytes: number) {
   return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
 }
 
-export function LinkContent({ git, dist, homepage }: LinkContentProps) {
+export function LinkContent({ git, dist, homepage, packageName, packageVersion }: LinkContentProps) {
   const url = gitUrl.parse(git);
   const tarball = dist?.tarball;
+  const encodedName = packageName ? encodeURIComponent(packageName) : undefined;
+  const socketUrl = encodedName
+    ? `${SOCKET_DEV_PACKAGE_BASE}/${encodedName}${packageVersion ? `/overview/${encodeURIComponent(packageVersion)}` : ''}`
+    : undefined;
   return (
     <Space direction="vertical" style={{ whiteSpace: 'nowrap' }}>
       {homepage && (
@@ -101,6 +111,17 @@ export function LinkContent({ git, dist, homepage }: LinkContentProps) {
               Total Files: {dist.fileCount.toLocaleString()}
             </Typography.Text>
           </Space>
+        </Tooltip>
+      )}
+      {socketUrl && (
+        <Tooltip title="安全报告 (Socket.dev)">
+          <Link href={socketUrl} target="_blank" rel="noopener noreferrer">
+            <img
+              src={`${SOCKET_DEV_BADGE_BASE}/${encodedName}${packageVersion ? `/${encodeURIComponent(packageVersion)}` : ''}`}
+              alt="Socket Security Badge"
+              style={{ height: 20 }}
+            />
+          </Link>
         </Tooltip>
       )}
     </Space>
