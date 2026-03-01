@@ -2,7 +2,7 @@ import React from 'react';
 import { Space, Typography, Tooltip } from 'antd';
 import Link from 'next/link';
 import * as gitUrl from 'giturl';
-import { FileZipFilled, HomeFilled, FolderOpenFilled, FileOutlined, SafetyCertificateFilled } from '@ant-design/icons';
+import { FileZipFilled, HomeFilled, FolderOpenFilled, FileOutlined } from '@ant-design/icons';
 
 const IconGit = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16">
@@ -36,7 +36,7 @@ function formatFileSize(bytes: number) {
 export function LinkContent({ git, dist, homepage, packageName }: LinkContentProps) {
   const url = gitUrl.parse(git);
   const tarball = dist?.tarball;
-  const socketUrl = packageName ? `https://socket.dev/npm/package/${packageName}` : undefined;
+  const socketUrl = packageName ? `https://socket.dev/npm/package/${encodeURIComponent(packageName)}` : undefined;
   return (
     <Space direction="vertical" style={{ whiteSpace: 'nowrap' }}>
       {homepage && (
@@ -106,16 +106,13 @@ export function LinkContent({ git, dist, homepage, packageName }: LinkContentPro
         </Tooltip>
       )}
       {socketUrl && (
-        <Tooltip title="安全报告 (Socket.dev)">
-          <Link href={socketUrl} target="_blank">
-            <Space>
-              <SafetyCertificateFilled />
-              <Typography.Link ellipsis style={{ maxWidth: 358 }}>
-                Socket Security Report
-              </Typography.Link>
-            </Space>
-          </Link>
-        </Tooltip>
+        <Link href={socketUrl} target="_blank" rel="noopener noreferrer">
+          <img
+            src={`https://socket.dev/api/badge/npm/package/${encodeURIComponent(packageName!)}`}
+            alt="Socket Security Badge"
+            style={{ height: 20 }}
+          />
+        </Link>
       )}
     </Space>
   );
