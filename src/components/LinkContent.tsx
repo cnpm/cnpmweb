@@ -26,6 +26,10 @@ type LinkContentProps = {
   packageVersion?: string;
 };
 
+const SOCKET_DEV_BASE = 'https://socket.dev';
+const SOCKET_DEV_BADGE_BASE = `${SOCKET_DEV_BASE}/api/badge/npm/package`;
+const SOCKET_DEV_PACKAGE_BASE = `${SOCKET_DEV_BASE}/npm/package`;
+
 function formatFileSize(bytes: number) {
   if (bytes === 0) return '0';
   const k = 1024;
@@ -39,7 +43,7 @@ export function LinkContent({ git, dist, homepage, packageName, packageVersion }
   const tarball = dist?.tarball;
   const encodedName = packageName ? encodeURIComponent(packageName) : undefined;
   const socketUrl = encodedName
-    ? `https://socket.dev/npm/package/${encodedName}${packageVersion ? `/overview/${encodeURIComponent(packageVersion)}` : ''}`
+    ? `${SOCKET_DEV_PACKAGE_BASE}/${encodedName}${packageVersion ? `/overview/${encodeURIComponent(packageVersion)}` : ''}`
     : undefined;
   return (
     <Space direction="vertical" style={{ whiteSpace: 'nowrap' }}>
@@ -110,13 +114,15 @@ export function LinkContent({ git, dist, homepage, packageName, packageVersion }
         </Tooltip>
       )}
       {socketUrl && (
-        <Link href={socketUrl} target="_blank" rel="noopener noreferrer">
-          <img
-            src={`https://socket.dev/api/badge/npm/package/${encodedName}${packageVersion ? `/${encodeURIComponent(packageVersion)}` : ''}`}
-            alt="Socket Security Badge"
-            style={{ height: 20 }}
-          />
-        </Link>
+        <Tooltip title="安全报告 (Socket.dev)">
+          <Link href={socketUrl} target="_blank" rel="noopener noreferrer">
+            <img
+              src={`${SOCKET_DEV_BADGE_BASE}/${encodedName}`}
+              alt="Socket Security Badge"
+              style={{ height: 20 }}
+            />
+          </Link>
+        </Tooltip>
       )}
     </Space>
   );

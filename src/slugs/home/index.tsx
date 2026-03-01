@@ -4,7 +4,7 @@ import SizeContainer from '@/components/SizeContainer';
 import PresetCard from '@/components/PresetCard';
 import ReadmeContent from '@/components/ReadmeContent';
 import { ContributorContent } from '@/components/ContributorContent';
-import { LinkContent } from '@/components/LinkContnet';
+import { LinkContent } from '@/components/LinkContent';
 import AdBanner from '@/components/AdBanner';
 import AdVPS from '@/components/AdVPS';
 import { PageProps } from '@/pages/package/[...slug]';
