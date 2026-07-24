@@ -10,7 +10,6 @@ import { useTheme } from '@/hooks/useTheme';
 import RecentTrending from '@/components/RecentTrending';
 import { ConfigProvider, Flex, theme } from 'antd';
 import SizeContainer from '@/components/SizeContainer';
-import AdHire from '@/components/AdHire';
 
 export default function Home() {
   const [themeMode, setThemeMode] = useTheme();
@@ -19,7 +18,7 @@ export default function Home() {
     <ConfigProvider
       theme={{ algorithm: themeMode === 'dark' ? theme.darkAlgorithm : theme.defaultAlgorithm }}
     >
-      <AdHire />
+      {/* AFX 体验技术部招聘广告已下线 */}
       <Header themeMode={themeMode} setThemeMode={setThemeMode} />
       <main className={styles.main}>
         <AdBanner />
