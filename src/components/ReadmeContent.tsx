@@ -3,14 +3,45 @@ import { useReadme } from '@/hooks/useReadme';
 import Slugger from 'github-slugger';
 import hljs from 'highlight.js';
 import { marked, RendererObject } from 'marked';
+import sanitizeHtml from 'sanitize-html';
 import React, { useEffect, useState, useMemo } from 'react';
 import darkTheme from './dark.module.css';
 import lightTheme from './light.module.css';
+import styles from './ReadmeContent.module.css';
 import { Result, Skeleton, Typography } from 'antd';
 import SizeContainer from './SizeContainer';
 import { useThemeMode } from 'antd-style';
 
 const slugger = new Slugger();
+
+const sanitizeOptions: sanitizeHtml.IOptions = {
+  allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img', 'del', 'details', 'summary', 'input']),
+  allowedAttributes: {
+    a: ['href', 'title'],
+    img: ['src', 'alt', 'title'],
+    h1: ['id'],
+    h2: ['id'],
+    h3: ['id'],
+    h4: ['id'],
+    h5: ['id'],
+    h6: ['id'],
+    ol: ['start'],
+    th: ['colspan', 'rowspan'],
+    td: ['colspan', 'rowspan'],
+    details: ['open'],
+    input: ['type', 'checked', 'disabled'],
+  },
+  allowedClasses: {
+    '*': ['header-link'],
+    code: ['hljs', 'language-*'],
+    span: ['hljs-*', 'language_', 'class_', 'inherited__', 'function_'],
+  },
+  allowedSchemes: ['http', 'https', 'mailto'],
+  allowedSchemesByTag: { img: ['http', 'https'] },
+  transformTags: {
+    input: sanitizeHtml.simpleTransform('input', { type: 'checkbox', disabled: '' }),
+  },
+};
 
 const renderer: RendererObject = {
   heading({ tokens, depth: level }) {
@@ -18,7 +49,7 @@ const renderer: RendererObject = {
     const slug = slugger.slug(text);
     return `
             <h${level} class="header-link" id="h-${slug}">
-            <a href="#h-${slug}" style="color: inherit;text-decoration: none;">
+            <a href="#h-${slug}">
               ${text}
               </a>
             </h${level}>`;
@@ -33,7 +64,7 @@ const renderer: RendererObject = {
   code({ text, lang: language = 'plaintext' }) {
     const validLanguage = hljs.getLanguage(language) ? language : 'plaintext';
     const highlightedCode = hljs.highlight(text, { language: validLanguage }).value;
-    return `<pre><code class="hljs ${validLanguage}" style="padding: 0;">${highlightedCode}</code></pre>`;
+    return `<pre><code class="hljs language-${validLanguage}">${highlightedCode}</code></pre>`;
   },
 };
 marked.use({ renderer });
@@ -56,7 +87,8 @@ export function ReadmeContent({ name, version = 'latest', content }: { name: str
       try {
         const result = marked(readme, { gfm: true });
         const html = result instanceof Promise ? await result : result;
-        setProcessedHtml(html);
+        // Sanitize after every renderer (including highlighting) and before writing to the DOM.
+        setProcessedHtml(sanitizeHtml(html, sanitizeOptions));
         setHasError(false);
       } catch (error) {
         console.error('Error processing markdown:', error);
@@ -79,13 +111,13 @@ export function ReadmeContent({ name, version = 'latest', content }: { name: str
     if (hasError) {
       return <Result title="文档处理失败" subTitle="Markdown 解析错误" />;
     }
-    if (!processedHtml) {
+    if (processedHtml === null) {
       return <Skeleton active />;
     }
     return (
       <div className={themeMode === 'dark' ? darkTheme.dark : lightTheme.light}>
         <div
-          className={'markdown-body'}
+          className={`markdown-body ${styles.markdown}`}
           dangerouslySetInnerHTML={{
             __html: processedHtml,
           }}

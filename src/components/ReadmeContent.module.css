@@ -1,0 +1,8 @@
+.markdown:global(.markdown-body) :global(.header-link) > a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.markdown:global(.markdown-body) :global(pre code.hljs) {
+  padding: 0;
+}
