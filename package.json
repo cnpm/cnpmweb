@@ -9,7 +9,7 @@
     "lint": "next lint",
     "test": "vitest run",
     "test:watch": "vitest",
-    "ci": "npm run lint && npm run build && npm test"
+    "ci": "ut run lint && ut run build && ut run test"
   },
   "dependencies": {
     "@ant-design/cssinjs": "^1.11.1",
@@ -57,7 +57,8 @@
     "jsdom": "^27.3.0",
     "prettier": "^3.0.3",
     "typescript": "^5.3.3",
-    "vitest": "^4.0.16"
+    "vite": "^7.3.7",
+    "vitest": "4.0.16"
   },
   "overrides": {
     "npm-package-arg": {

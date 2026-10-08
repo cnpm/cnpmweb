@@ -12,8 +12,28 @@ on:
 
 jobs:
   Job:
-    name: Node.js
-    uses: node-modules/github-actions/.github/workflows/node-test.yml@master
-    with:
-      os: 'ubuntu-latest'
-      version: '22, 24'
+    name: Node.js / Test (ubuntu-latest, ${{ matrix.node }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: ['22', '24']
+    concurrency:
+      group: ${{ github.workflow }}-#${{ github.event.pull_request.number || github.ref }}-(${{ matrix.node }})
+      cancel-in-progress: true
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: ${{ matrix.node }}
+          check-latest: true
+          package-manager-cache: false
+      - uses: utooland/setup-utoo@v1
+      - name: Install dependencies
+        run: ut install --registry https://registry.npmjs.org
+      - name: Lint
+        run: ut run lint
+      - name: Build
+        run: ut run build
+      - name: Test
+        run: ut run test
