@@ -21,7 +21,7 @@ cnpmweb 是独立的前端应用，[npmmirror](https://npmmirror.com) 提供一�
 
 ## 开发指南
 
-使用 Node.js 22 或 24，并安装 Utoo 1.1.10，与 CI 保持一致。
+使用 Node.js 22 或 24，并安装 Utoo。CI 使用 `setup-utoo` 的默认版本。
 
 ```shell
 # 安装依赖
