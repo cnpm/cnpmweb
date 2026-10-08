@@ -18,7 +18,6 @@ export default function Home() {
     <ConfigProvider
       theme={{ algorithm: themeMode === 'dark' ? theme.darkAlgorithm : theme.defaultAlgorithm }}
     >
-      {/* AFX 体验技术部招聘广告已下线 */}
       <Header themeMode={themeMode} setThemeMode={setThemeMode} />
       <main className={styles.main}>
         <AdBanner />
