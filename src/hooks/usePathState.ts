@@ -26,7 +26,14 @@ export function usePathState(pattern: string): [string, (newValue: string) => vo
   }, [router, regexPattern]);
 
   const setPathState = (newValue: string) => {
-    const newPath = pattern.replace('*', newValue.replace(LEADING_SLASH, ''));
+    const wildcardIndex = pattern.indexOf('*');
+    // Only the first wildcard is the path placeholder; query values can contain '*'.
+    const newPath =
+      wildcardIndex === -1
+        ? pattern
+        : pattern.slice(0, wildcardIndex) +
+          newValue.replace(LEADING_SLASH, '') +
+          pattern.slice(wildcardIndex + 1);
     router.replace(newPath, newPath, { shallow: true });
   };
 
