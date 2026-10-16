@@ -5,4 +5,8 @@ module.exports = {
     keepAlive: false,
   },
   output: 'export',
+  typescript: {
+    // The build script runs tsrs after Next.js generates its type declarations.
+    ignoreBuildErrors: true,
+  },
 };
