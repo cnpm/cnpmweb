@@ -1,5 +1,7 @@
 name: deploy npmmirror.com
 
+permissions: {}
+
 on:
   push:
     branches:
