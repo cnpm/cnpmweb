@@ -30,6 +30,10 @@ yarn-error.log*
 # vercel
 .vercel
 
+# Void local project link and generated files
+.void/
+.void-wrangler.jsonc
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
