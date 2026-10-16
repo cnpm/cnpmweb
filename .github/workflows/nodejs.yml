@@ -5,15 +5,33 @@ permissions:
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
   merge_group:
 
 jobs:
+  zizmor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    concurrency:
+      group: zizmor-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+      cancel-in-progress: true
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+
+      - name: Audit GitHub Actions
+        uses: zizmorcore/zizmor-action@85b2b9fb8e3325e7a23d7d0a9d7ba5ae0f999e3e # v0.7.1
+        with:
+          advanced-security: false
+          annotations: true
+
   Job:
     name: Node.js
-    uses: node-modules/github-actions/.github/workflows/node-test.yml@master
+    uses: node-modules/github-actions/.github/workflows/node-test.yml@9deffd2a880a4e13010dd510b14ec90ea9b2b96a # master
     with:
       os: 'ubuntu-latest'
       version: '22, 24'
