@@ -4,8 +4,6 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "void": "npm exec --yes --package=void@1.1.11 -- void",
-    "deploy": "npm run void -- deploy --platform void --project cnpmweb",
     "build": "next build && npm run typecheck",
     "typecheck": "node scripts/tsrs.js --noEmit",
     "start": "next start",

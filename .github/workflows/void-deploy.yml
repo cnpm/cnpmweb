@@ -38,7 +38,7 @@ jobs:
         run: npm install
 
       - name: Connect to Void
-        run: npm run void -- connect "$VOID_API_URL" --no-login
+        run: npm exec --yes --package=void@1.1.11 -- void connect "$VOID_API_URL" --no-login
 
       - name: Deploy with GitHub OIDC
-        run: npm run deploy
+        run: npm exec --yes --package=void@1.1.11 -- void deploy --platform void --project cnpmweb

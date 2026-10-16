@@ -38,12 +38,12 @@ $ cnpm run build
 
 访问地址：[cnpmweb.void.app](https://cnpmweb.void.app)。
 
-使用 Node.js 24.22.0（npm 11），再登录具有 `cnpmweb` 项目权限的 Void 账号。`npm run void` 使用固定版本的 Void CLI，独立于应用的 Vite 依赖：
+使用 Node.js 24.22.0（npm 11），再登录具有 `cnpmweb` 项目权限的 Void 账号。通过 `npm exec` 直接调用固定版本的 Void CLI，独立于应用的 Vite 依赖：
 
 ```shell
 $ npm install
-$ npm run void -- connect https://api.void.cloud
-$ npm run deploy
+$ npm exec --yes --package=void@1.1.11 -- void connect https://api.void.cloud
+$ npm exec --yes --package=void@1.1.11 -- void deploy --platform void --project cnpmweb
 ```
 
 `void.config.ts` 指定执行 `npm run build` 并部署 `out/` 中的静态文件。路由规则将包详情、用户页面和搜索页面映射到 Next.js 导出的 HTML；短包名和 `~用户名` 路径使用兜底规则。动态页面的 JavaScript 文件另有规则，将 URL 中编码后的方括号映射到实际文件名。
@@ -53,7 +53,7 @@ $ npm run deploy
 仓库变量 `VOID_API_URL` 设置为 `https://api.void.cloud`，Void 项目 `cnpmweb` 的 GitHub executor 设置为 `github_actions`，并授权上述工作流。项目管理员可以使用以下命令查看连接：
 
 ```shell
-$ npm run void -- github status cnpmweb
+$ npm exec --yes --package=void@1.1.11 -- void github status cnpmweb
 ```
 
 ## 功能计划
