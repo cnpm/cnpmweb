@@ -29,6 +29,7 @@
     "node_modules",
     "vitest.config.ts",
     "vitest.setup.ts",
+    "void.config.ts",
     "**/*.test.ts",
     "**/*.test.tsx"
   ]

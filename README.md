@@ -38,20 +38,22 @@ $ cnpm run build
 
 访问地址：[cnpmweb.void.app](https://cnpmweb.void.app)。
 
-先安装提供 `void` 命令的 [Vite+](https://viteplus.dev/)，再登录具有 `cnpmweb` 项目权限的 Void 账号：
+使用 Node.js 24.22.0（npm 11），再登录具有 `cnpmweb` 项目权限的 Void 账号。`npm run void` 使用固定版本的 Void CLI，独立于应用的 Vite 依赖：
 
 ```shell
-$ void connect https://api.void.cloud
 $ npm install
+$ npm run void -- connect https://api.void.cloud
 $ npm run deploy
 ```
 
-`void.json` 指定执行 `npm run build` 并部署 `out/` 中的静态文件。路由规则将包详情、用户页面和搜索页面映射到 Next.js 导出的 HTML；短包名和 `~用户名` 路径使用兜底规则。动态页面的 JavaScript 文件另有规则，将 URL 中编码后的方括号映射到实际文件名。
+`void.config.ts` 指定执行 `npm run build` 并部署 `out/` 中的静态文件。路由规则将包详情、用户页面和搜索页面映射到 Next.js 导出的 HTML；短包名和 `~用户名` 路径使用兜底规则。动态页面的 JavaScript 文件另有规则，将 URL 中编码后的方括号映射到实际文件名。
 
-`cnpm/cnpmweb` 的 `master` 分支连接到 Void 的 `cnpmweb` 项目。合并部署配置后，推送到 `master` 会触发 Void 托管构建和部署，无需在 GitHub Actions 中保存部署令牌。项目管理员可以使用以下命令查看连接：
+根据 [Void 的 GitHub 部署文档](https://void.cloud/guide/deployment#deploy-from-github)，`.github/workflows/void-deploy.yml` 在推送到 `master` 时自动构建和部署，也支持在 `master` 上手动触发。工作流使用 GitHub OIDC 获取短期部署令牌，无需保存 `VOID_TOKEN` 密钥。
+
+仓库变量 `VOID_API_URL` 设置为 `https://api.void.cloud`，Void 项目 `cnpmweb` 的 GitHub executor 设置为 `github_actions`，并授权上述工作流。项目管理员可以使用以下命令查看连接：
 
 ```shell
-$ void github status cnpmweb
+$ npm run void -- github status cnpmweb
 ```
 
 ## 功能计划
