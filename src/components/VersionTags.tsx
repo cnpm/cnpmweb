@@ -1,5 +1,7 @@
 import { Popover, Space, Tag, Tooltip } from 'antd';
 
+const LATEST_VERSION_TAG = /latest-\d/;
+
 type VersionTagsProps = {
   tags?: string[];
   style?: React.CSSProperties;
@@ -18,7 +20,7 @@ function VersionTag({ tag }: VersionTagProps) {
       </Tooltip>
     );
   }
-  if (/latest-\d/.test(tag)) {
+  if (LATEST_VERSION_TAG.test(tag)) {
     const version = tag.split('-')[1];
     return (
       <Tooltip key={tag} title={`对于 ${version}.x.x 的版本，优先返回该版本`}>

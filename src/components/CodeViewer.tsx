@@ -8,6 +8,8 @@ import { useEffect, useRef } from 'react';
 import { REGISTRY } from '@/config';
 import { FileActions } from './FileActions';
 
+const DEPENDENCY_ENTRY_PATTERN = /"(.+?)": "(.+?)"/;
+
 const LinkField = ['devDependencies', 'dependencies', 'peerDependencies', 'optionalDependencies', 'bundleDependencies'];
 
 loader.config({
@@ -39,7 +41,7 @@ function registerLinkProvider(monaco: any) {
           return;
         }
         if (startCatch) {
-          const match = line.match(/"(.+?)": "(.+?)"/);
+          const match = line.match(DEPENDENCY_ENTRY_PATTERN);
           if (match?.[1] && match?.[2]) {
             links.push({
               range: new monaco.Range(
