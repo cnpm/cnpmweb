@@ -27,6 +27,12 @@ $ cnpm i
 
 # 启动本地开发环境
 $ cnpm run dev
+
+# 使用 tsrs 进行类型检查
+$ cnpm run typecheck
+
+# 生产构建（包含 tsrs 类型检查）
+$ cnpm run build
 ```
 
 ## 功能计划
