@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "next lint && npm run lint:e18e",
+    "lint:e18e": "oxlint src",
     "test": "vitest run",
     "test:watch": "vitest",
     "ci": "npm run lint && npm run build && npm test"
@@ -41,6 +42,7 @@
   },
   "repository": "https://github.com/cnpm/cnpmweb.git",
   "devDependencies": {
+    "@e18e/eslint-plugin": "^0.8.1",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.1",
@@ -55,12 +57,16 @@
     "eslint": "^8.44.0",
     "eslint-config-next": "^13.4.4",
     "jsdom": "^27.3.0",
+    "oxlint": "^1.88.0",
     "prettier": "^3.0.3",
     "typescript": "^5.3.3",
     "vite": "^7.3.7",
     "vitest": "4.0.16"
   },
   "overrides": {
+    "@e18e/eslint-plugin": {
+      "eslint": "$eslint"
+    },
     "npm-package-arg": {
       "validate-npm-package-name": "5.0.0"
     },

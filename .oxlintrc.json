@@ -1,0 +1,31 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  // e18e runs in oxlint. The package.json override resolves its unused ESLint peer.
+  "jsPlugins": ["@e18e/eslint-plugin"],
+  "plugins": [],
+  // The existing Next.js ESLint configuration handles the other lint rules.
+  "categories": {
+    "correctness": "off"
+  },
+  // Avoid rules that require newer browser APIs or type information from ESLint.
+  "rules": {
+    "e18e/prefer-array-fill": "error",
+    "e18e/prefer-includes": "error",
+    "e18e/prefer-nullish-coalescing": "error",
+    "e18e/prefer-array-from-map": "error",
+    "e18e/prefer-timer-args": "error",
+    "e18e/prefer-date-now": "error",
+    "e18e/prefer-regex-test": "error",
+    "e18e/prefer-array-some": "error",
+    "e18e/prefer-static-regex": "error",
+    "e18e/prefer-string-fromcharcode": "error"
+  },
+  "overrides": [
+    {
+      "files": ["**/*.test.ts", "**/*.test.tsx"],
+      "rules": {
+        "e18e/prefer-static-regex": "off"
+      }
+    }
+  ]
+}

@@ -1,6 +1,9 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/router';
 
+const LEADING_SLASH = /^\//;
+const TRAILING_QUESTION_MARK = /\?$/;
+
 export function usePathState(pattern: string): [string, (newValue: string) => void] {
   const router = useRouter();
   const regexPattern = useMemo(() => {
@@ -23,9 +26,16 @@ export function usePathState(pattern: string): [string, (newValue: string) => vo
   }, [router, regexPattern]);
 
   const setPathState = (newValue: string) => {
-    const newPath = pattern.replace('*', newValue.replace(/^\//, ''));
+    const wildcardIndex = pattern.indexOf('*');
+    // Only the first wildcard is the path placeholder; query values can contain '*'.
+    const newPath =
+      wildcardIndex === -1
+        ? pattern
+        : pattern.slice(0, wildcardIndex) +
+          newValue.replace(LEADING_SLASH, '') +
+          pattern.slice(wildcardIndex + 1);
     router.replace(newPath, newPath, { shallow: true });
   };
 
-  return [state?.split('#')[0].replace(/\?$/, ''), setPathState];
+  return [state?.split('#')[0].replace(TRAILING_QUESTION_MARK, ''), setPathState];
 }

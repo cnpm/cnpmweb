@@ -77,7 +77,7 @@ export function TotalDownloads({ pkgNameList }: TotalDownloadsProps) {
 
   const res = [pkg1Data, pkg2Data, pkg3Data, pkg4Data, pkg5Data];
 
-  if (!res.find(_ => _?.downloads)) {
+  if (!res.some(_ => _?.downloads)) {
     return <Empty description="暂无数据" />;
   }
 

@@ -1,9 +1,12 @@
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 
+const SINGLE_LINE_HASH = /^L(\d+)$/;
+const MULTI_LINE_HASH = /^L(\d+)-L(\d+)$/;
+
 export function parseHash(hash: string) {
-  const singleLineMatch = hash?.match(/^L(\d+)$/);
-  const multiLineMatch = hash?.match(/^L(\d+)-L(\d+)$/);
+  const singleLineMatch = hash?.match(SINGLE_LINE_HASH);
+  const multiLineMatch = hash?.match(MULTI_LINE_HASH);
   if (singleLineMatch) {
     const line = parseInt(singleLineMatch[1], 10);
     return [line, line];
