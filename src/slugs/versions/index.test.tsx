@@ -76,7 +76,7 @@ describe('ReadOnlyVersions Component', () => {
   describe('dependency filter', () => {
     const getVersionLinks = () =>
       screen
-        .queryAllByRole('link')
+        .queryAllByRole('link', { hidden: true })
         .filter((link) => link.getAttribute('href')?.startsWith('/package/test-package?version='));
 
     const filterBy = (value: string) => {
