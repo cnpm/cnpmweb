@@ -5,7 +5,7 @@ import PageVersions from '@/slugs/versions';
 import PageTrends from '@/slugs/trends';
 import PageDeps from '@/slugs/deps';
 import 'antd/dist/reset.css';
-import CustomTabs from '@/components/CustomTabs';
+import CustomTabs, { presetTabs } from '@/components/CustomTabs';
 import { NotFoundError, PackageManifest, useInfo, useSpec } from '@/hooks/useManifest';
 import Footer from '@/components/Footer';
 import { useRouter } from 'next/router';
@@ -14,6 +14,7 @@ import { Result, Spin } from 'antd';
 import Header from '@/components/Header';
 import { useTheme } from '@/hooks/useTheme';
 import Sync from '@/components/Sync';
+import PageTitle from '@/components/PageTitle';
 
 const DEFAULT_TYPE = 'home';
 const ThemeProvider = _ThemeProvider as any;
@@ -97,44 +98,70 @@ export default function PackagePage({}: {}) {
   const resData = data;
   const specVersion = specInfo?.version;
   const needSync = data?.needSync;
+  const version = routerVersion || specVersion || resData?.['dist-tags']?.latest;
+  const tabName = presetTabs.find((tab) => tab.key === type)?.name;
+  const pageTitle = (
+    <PageTitle
+      title={pkgName ? `${pkgName}${version ? `@${version}` : ''} - ${tabName}` : undefined}
+    />
+  );
 
   if (error) {
     if (error instanceof NotFoundError && pkgName) {
       return (
-        <Result
-          status="404"
-          title={`未查询到 ${pkgName}`}
-          subTitle="这可能是由于包尚未同步到本地镜像站导致"
-          extra={<Sync pkgName={pkgName} />}
-        />
+        <>
+          {pageTitle}
+          <Result
+            status="404"
+            title={`未查询到 ${pkgName}`}
+            subTitle="这可能是由于包尚未同步到本地镜像站导致"
+            extra={<Sync pkgName={pkgName} />}
+          />
+        </>
       );
     }
-    return <Result status="error" title="Error" subTitle={error?.message || '系统错误'} />;
+    return (
+      <>
+        {pageTitle}
+        <Result status="error" title="Error" subTitle={error?.message || '系统错误'} />
+      </>
+    );
   }
 
   if (specError) {
     if (specError instanceof NotFoundError && pkgName && routerVersion) {
       return (
-        <Result
-          status="404"
-          title={`未查询到 ${pkgName}@${routerVersion}`}
-          subTitle="请检查版本号是否正确"
-        />
+        <>
+          {pageTitle}
+          <Result
+            status="404"
+            title={`未查询到 ${pkgName}@${routerVersion}`}
+            subTitle="请检查版本号是否正确"
+          />
+        </>
       );
     }
-    return <Result status="error" title="Error" subTitle={specError?.message || '系统错误'} />;
+    return (
+      <>
+        {pageTitle}
+        <Result status="error" title="Error" subTitle={specError?.message || '系统错误'} />
+      </>
+    );
   }
 
   if (isLoading || !resData?.name) {
     return (
-      <Spin
-        style={{
-          position: 'fixed',
-          left: '50%',
-          top: '50%',
-          transform: 'translate(-50%, -50%)',
-        }}
-      />
+      <>
+        {pageTitle}
+        <Spin
+          style={{
+            position: 'fixed',
+            left: '50%',
+            top: '50%',
+            transform: 'translate(-50%, -50%)',
+          }}
+        />
+      </>
     );
   }
 
@@ -151,15 +178,14 @@ export default function PackagePage({}: {}) {
       undefined,
       { shallow: true },
     );
-    return <></>;
+    return pageTitle;
   }
 
   const Component = PageMap[type];
 
-  const version = routerVersion || specInfo?.version || resData?.['dist-tags']?.latest;
-
   return (
     <div>
+      {pageTitle}
       <ThemeProvider themeMode={themeMode}>
         <Header
           title={`${resData.name}@${version}`}

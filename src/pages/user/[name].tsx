@@ -10,6 +10,7 @@ import { Card, Col, Row, Space, Spin, Table, TableColumnsType, Typography } from
 import SizeContainer from '@/components/SizeContainer';
 import { Gravatar } from '@/components/Gravatar';
 import Link from 'next/link';
+import PageTitle from '@/components/PageTitle';
 
 const ThemeProvider = _ThemeProvider as any;
 
@@ -18,17 +19,21 @@ export default function Home() {
   const { query } = useRouter();
 
   const {data: resData, isLoading} = useUser(query.name as string | undefined);
+  const pageTitle = <PageTitle title={query.name ? `${query.name} - 用户信息` : '用户信息'} />;
 
   if (isLoading) {
     return (
-      <Spin
-        style={{
-          position: 'fixed',
-          left: '50%',
-          top: '50%',
-          transform: 'translate(-50%, -50%)',
-        }}
-      />
+      <>
+        {pageTitle}
+        <Spin
+          style={{
+            position: 'fixed',
+            left: '50%',
+            top: '50%',
+            transform: 'translate(-50%, -50%)',
+          }}
+        />
+      </>
     );
   }
 
@@ -66,6 +71,7 @@ export default function Home() {
 
   return (
     <ThemeProvider themeMode={themeMode as ThemeMode}>
+      {pageTitle}
       <Header themeMode={themeMode} setThemeMode={setThemeMode} />
       <main style={{ minHeight: 'calc( 100vh - 110px )' }}>
         <SizeContainer maxWidth={1184}>

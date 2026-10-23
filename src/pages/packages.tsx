@@ -10,6 +10,7 @@ import SizeContainer from '@/components/SizeContainer';
 import { SearchItem, useCachedSearch } from '@/hooks/useSearch';
 import { Col, Empty, Pagination, Row, Space } from 'antd';
 import { PackageCard } from '@/components/PackageCard';
+import PageTitle from '@/components/PageTitle';
 
 const ThemeProvider = _ThemeProvider as any;
 
@@ -42,6 +43,7 @@ export default function Packages({ page: initPage, q: initQ }: PageType) {
 
   return (
     <ThemeProvider themeMode={themeMode as ThemeMode}>
+      <PageTitle title={q ? `${q} - 搜索结果` : '搜索'} />
       <Header themeMode={themeMode} setThemeMode={setThemeMode} />
       <SizeContainer maxWidth={800}>
         <SearchBox
