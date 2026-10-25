@@ -72,7 +72,7 @@ const PageMap: Record<string, (params: PageProps) => JSX.Element> = {
 
 // 由于路由不支持 @scope 可选参数
 // 需要在页面中自行解析
-export default function PackagePage({}: {}) {
+export default function PackagePage(): JSX.Element {
   const router = useRouter();
 
   const [themeMode, setThemeMode] = useTheme();
@@ -100,73 +100,47 @@ export default function PackagePage({}: {}) {
   const needSync = data?.needSync;
   const version = routerVersion || specVersion || resData?.['dist-tags']?.latest;
   const tabName = presetTabs.find((tab) => tab.key === type)?.name;
-  const pageTitle = (
-    <PageTitle
-      title={pkgName ? `${pkgName}${version ? `@${version}` : ''} - ${tabName}` : undefined}
-    />
-  );
+  const packageSpec = version ? `${pkgName}@${version}` : pkgName;
+  const title = pkgName ? `${packageSpec} - ${tabName}` : undefined;
+  let content: JSX.Element | null = null;
 
   if (error) {
     if (error instanceof NotFoundError && pkgName) {
-      return (
-        <>
-          {pageTitle}
-          <Result
-            status="404"
-            title={`未查询到 ${pkgName}`}
-            subTitle="这可能是由于包尚未同步到本地镜像站导致"
-            extra={<Sync pkgName={pkgName} />}
-          />
-        </>
-      );
-    }
-    return (
-      <>
-        {pageTitle}
-        <Result status="error" title="Error" subTitle={error?.message || '系统错误'} />
-      </>
-    );
-  }
-
-  if (specError) {
-    if (specError instanceof NotFoundError && pkgName && routerVersion) {
-      return (
-        <>
-          {pageTitle}
-          <Result
-            status="404"
-            title={`未查询到 ${pkgName}@${routerVersion}`}
-            subTitle="请检查版本号是否正确"
-          />
-        </>
-      );
-    }
-    return (
-      <>
-        {pageTitle}
-        <Result status="error" title="Error" subTitle={specError?.message || '系统错误'} />
-      </>
-    );
-  }
-
-  if (isLoading || !resData?.name) {
-    return (
-      <>
-        {pageTitle}
-        <Spin
-          style={{
-            position: 'fixed',
-            left: '50%',
-            top: '50%',
-            transform: 'translate(-50%, -50%)',
-          }}
+      content = (
+        <Result
+          status="404"
+          title={`未查询到 ${pkgName}`}
+          subTitle="这可能是由于包尚未同步到本地镜像站导致"
+          extra={<Sync pkgName={pkgName} />}
         />
-      </>
+      );
+    } else {
+      content = <Result status="error" title="Error" subTitle={error?.message || '系统错误'} />;
+    }
+  } else if (specError) {
+    if (specError instanceof NotFoundError && pkgName && routerVersion) {
+      content = (
+        <Result
+          status="404"
+          title={`未查询到 ${pkgName}@${routerVersion}`}
+          subTitle="请检查版本号是否正确"
+        />
+      );
+    } else {
+      content = <Result status="error" title="Error" subTitle={specError?.message || '系统错误'} />;
+    }
+  } else if (isLoading || !resData?.name) {
+    content = (
+      <Spin
+        style={{
+          position: 'fixed',
+          left: '50%',
+          top: '50%',
+          transform: 'translate(-50%, -50%)',
+        }}
+      />
     );
-  }
-
-  // patchVersion
-  if (routerVersion && specVersion && router.query.version !== specVersion) {
+  } else if (routerVersion && specVersion && router.query.version !== specVersion) {
     router.replace(
       {
         pathname: router.pathname,
@@ -178,28 +152,32 @@ export default function PackagePage({}: {}) {
       undefined,
       { shallow: true },
     );
-    return pageTitle;
+  } else {
+    const Component = PageMap[type];
+    content = (
+      <div>
+        <ThemeProvider themeMode={themeMode}>
+          <Header
+            title={`${resData.name}@${version}`}
+            themeMode={themeMode}
+            setThemeMode={setThemeMode}
+          />
+          <section style={{ paddingLeft: 16 }}>
+            <CustomTabs activateKey={type!} pkg={resData}></CustomTabs>
+          </section>
+          <main style={{ minHeight: 'calc( 100vh - 110px )' }}>
+            <Component manifest={resData} version={version} additionalInfo={needSync} />
+          </main>
+          <Footer />
+        </ThemeProvider>
+      </div>
+    );
   }
 
-  const Component = PageMap[type];
-
   return (
-    <div>
-      {pageTitle}
-      <ThemeProvider themeMode={themeMode}>
-        <Header
-          title={`${resData.name}@${version}`}
-          themeMode={themeMode}
-          setThemeMode={setThemeMode}
-        />
-        <section style={{ paddingLeft: 16 }}>
-          <CustomTabs activateKey={type!} pkg={resData}></CustomTabs>
-        </section>
-        <main style={{ minHeight: 'calc( 100vh - 110px )' }}>
-          <Component manifest={resData} version={version} additionalInfo={needSync} />
-        </main>
-        <Footer />
-      </ThemeProvider>
-    </div>
+    <>
+      <PageTitle title={title} />
+      {content}
+    </>
   );
 }
