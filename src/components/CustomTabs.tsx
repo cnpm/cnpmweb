@@ -6,7 +6,7 @@ import { PackageManifest } from '@/hooks/useManifest';
 import { useRouter } from 'next/router';
 import { FileActions } from './FileActions';
 
-const presetTabs = [
+export const presetTabs = [
   {
     name: '首页',
     key: 'home',
